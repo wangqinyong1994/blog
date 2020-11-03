@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+
+  
+  <title>对象 | Reading fun</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="1.忽视点1.1 原话： 简单基本类型(string, boolean, number, null, undefined)本身并不是对象， null 有时会被当做一种对象类型， 但是这其实只是语言本身的一个 bug， 即对 null 执行 typeof 会返回字符串’object’。实际上， null 本身是基本类型。1.2.1 内置对象String Number Boolean Object F">
+<meta name="keywords" content="上卷 对象">
+<meta property="og:type" content="article">
+<meta property="og:title" content="对象">
+<meta property="og:url" content="https://github.com/wangqinyong1994/blog/2019/07/29/对象/index.html">
+<meta property="og:site_name" content="Reading fun">
+<meta property="og:description" content="1.忽视点1.1 原话： 简单基本类型(string, boolean, number, null, undefined)本身并不是对象， null 有时会被当做一种对象类型， 但是这其实只是语言本身的一个 bug， 即对 null 执行 typeof 会返回字符串’object’。实际上， null 本身是基本类型。1.2.1 内置对象String Number Boolean Object F">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-08-01T07:48:07.116Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="对象">
+<meta name="twitter:description" content="1.忽视点1.1 原话： 简单基本类型(string, boolean, number, null, undefined)本身并不是对象， null 有时会被当做一种对象类型， 但是这其实只是语言本身的一个 bug， 即对 null 执行 typeof 会返回字符串’object’。实际上， null 本身是基本类型。1.2.1 内置对象String Number Boolean Object F">
+  
+    <link rel="alternate" href="/blog/atom.xml" title="Reading fun" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/blog/css/style.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/blog/" id="logo">Reading fun</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/blog/" id="subtitle">啊 呀妈呀</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/blog/">Home</a>
+        
+          <a class="main-nav-link" href="/blog/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/blog/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://github.com/wangqinyong1994/blog"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-对象" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/blog/2019/07/29/对象/" class="article-date">
+  <time datetime="2019-07-29T15:19:24.000Z" itemprop="datePublished">2019-07-29</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      对象
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h4 id="1-忽视点"><a href="#1-忽视点" class="headerlink" title="1.忽视点"></a>1.忽视点</h4><h5 id="1-1-原话：-简单基本类型-string-boolean-number-null-undefined-本身并不是对象，-null-有时会被当做一种对象类型，-但是这其实只是语言本身的一个-bug，-即对-null-执行-typeof-会返回字符串’object’。实际上，-null-本身是基本类型。"><a href="#1-1-原话：-简单基本类型-string-boolean-number-null-undefined-本身并不是对象，-null-有时会被当做一种对象类型，-但是这其实只是语言本身的一个-bug，-即对-null-执行-typeof-会返回字符串’object’。实际上，-null-本身是基本类型。" class="headerlink" title="1.1 原话： 简单基本类型(string, boolean, number, null, undefined)本身并不是对象， null 有时会被当做一种对象类型， 但是这其实只是语言本身的一个 bug， 即对 null 执行 typeof 会返回字符串’object’。实际上， null 本身是基本类型。"></a>1.1 原话： 简单基本类型(string, boolean, number, null, undefined)本身并不是对象， null 有时会被当做一种对象类型， 但是这其实只是语言本身的一个 bug， 即对 null 执行 typeof 会返回字符串’object’。实际上， null 本身是基本类型。</h5><h5 id="1-2-1-内置对象"><a href="#1-2-1-内置对象" class="headerlink" title="1.2.1 内置对象"></a>1.2.1 内置对象</h5><h6 id="String-Number-Boolean-Object-Function-Array-Date-RegExp-Error"><a href="#String-Number-Boolean-Object-Function-Array-Date-RegExp-Error" class="headerlink" title="String Number Boolean Object Function Array Date RegExp Error"></a>String Number Boolean Object Function Array Date RegExp Error</h6><p>instanceof typeof Object.prototype.toString.call(xxx) 可以判断类型</p>
+<h5 id="1-2-2-对象的属性描述符"><a href="#1-2-2-对象的属性描述符" class="headerlink" title="1.2.2 对象的属性描述符"></a>1.2.2 对象的属性描述符</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">var obj = &#123;name: &apos;aaa&apos;&#125;;</span><br><span class="line"></span><br><span class="line">Object.getOwnPropertyDescriptor(obj, &quot;name&quot;);</span><br><span class="line"></span><br><span class="line">// &#123;</span><br><span class="line">//     value: &apos;aaa&apos;,</span><br><span class="line">//     writable: true,</span><br><span class="line">//     enumerable: true,</span><br><span class="line">//     configurable: true</span><br><span class="line">// &#125;</span><br></pre></td></tr></table></figure>
+
+<p>writable 决定是否可以修改属性值<br>configurable 为 true， 可用 Object.defineProperty 来修改属性描述符<br>enumerable 是否可枚举，影响对象 for…in 循环</p>
+<hr>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">var obj = &#123;</span><br><span class="line">    a: 2,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">console.log(&apos;a&apos; in obj); // true</span><br><span class="line">console.log(&apos;b&apos; in obj); // false</span><br><span class="line"></span><br><span class="line">console.log(obj.hasOwnProperty(a)) // true</span><br><span class="line">console.log(obj.hasOwnProperty(b)) // false</span><br><span class="line"></span><br><span class="line">// in 会检查属性是否在对象或原型链上， hasOwnProperty检查属性是否在当前对象上</span><br></pre></td></tr></table></figure>
+
+<hr>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">var myArray = [ 1, 2, 3 ];</span><br><span class="line">var it = myArray[Symbol.iterator]();</span><br><span class="line">it.next(); // &#123; value:1, done:false &#125;</span><br><span class="line">it.next(); // &#123; value:2, done:false &#125;</span><br><span class="line">it.next(); // &#123; value:3, done:false &#125;</span><br><span class="line">it.next(); // &#123; done:true &#125;</span><br><span class="line"></span><br><span class="line">// 数组内部有@@iterator属性， 可以进行es6的for...of遍历</span><br><span class="line"></span><br><span class="line">// 可以给予想遍历的对象添加@@iterator属性</span><br><span class="line"></span><br><span class="line">var obj = &#123;</span><br><span class="line">    a: 2,</span><br><span class="line">    b: 3</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">Object.defineProperty(obj, Symbol.iterator, &#123;</span><br><span class="line">    enumerable: false,</span><br><span class="line">    writable: false,</span><br><span class="line">    configurable: true,</span><br><span class="line">    value: function() &#123;</span><br><span class="line">        var o = this;</span><br><span class="line">        var idx = 0;</span><br><span class="line">        var ks = Object.keys(o);</span><br><span class="line">        return &#123;</span><br><span class="line">            next: function() &#123;</span><br><span class="line">                return &#123;</span><br><span class="line">                    value: o[ks[idx]],</span><br><span class="line">                    done: idx &gt; ks.length</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">var it = obj[Symbol.iterator](); </span><br><span class="line">it.next(); // &#123; value:2, done:false &#125; </span><br><span class="line">it.next(); // &#123; value:3, done:false &#125; </span><br><span class="line">it.next(); // &#123; value:undefined, done:true &#125;</span><br><span class="line">// 用 for..of 遍历 obj </span><br><span class="line">for (var v of obj) &#123; </span><br><span class="line">    console.log( v );</span><br><span class="line">&#125;</span><br><span class="line">// 2 // 3</span><br></pre></td></tr></table></figure>
+
+<h5 id="1-2-3-属性设置和屏蔽"><a href="#1-2-3-属性设置和屏蔽" class="headerlink" title="1.2.3 属性设置和屏蔽"></a>1.2.3 属性设置和屏蔽</h5><p>如果 foo 不直接存在于 myObject 中而是存在于原型链上层时 myObject.foo = “bar” 会出现的三种情况。</p>
+<ol>
+<li>如果在[[Prototype]]链上层存在名为foo的普通数据访问属性(参见第3章)并且没有被标记为只读(writable:false)，那就会直接在 myObject 中添加一个名为 foo 的新 属性，它是屏蔽属性。</li>
+<li>如果在[[Prototype]]链上层存在foo，但是它被标记为只读(writable:false)，那么 无法修改已有属性或者在 myObject 上创建屏蔽属性。如果运行在严格模式下，代码会 抛出一个错误。否则，这条赋值语句会被忽略。总之，不会发生屏蔽。</li>
+<li>如果在[[Prototype]]链上层存在foo并且它是一个setter(参见第3章)，那就一定会 调用这个 setter。foo 不会被添加到(或者说屏蔽于)myObject，也不会重新定义 foo 这 个 setter。</li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://github.com/wangqinyong1994/blog/2019/07/29/对象/" data-id="ckh20gajp000832cwhvtqeln4" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/上卷-对象/">上卷 对象</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/blog/2019/09/03/类型与语法/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          类型与语法
+        
+      </div>
+    </a>
+  
+  
+    <a href="/blog/2019/07/14/作用域和闭包/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">读读 作用域和闭包</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/webpack/">webpack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/上卷-this-原型对象/">上卷 this 原型对象</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/上卷-作用域和闭包/">上卷 作用域和闭包</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/上卷-对象/">上卷 对象</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/中卷-异步与性能/">中卷 异步与性能</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/中卷-类型-值/">中卷 类型 值</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/你不知道的JavaScript/">你不知道的JavaScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/序/">序</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/blog/tags/webpack/" style="font-size: 10px;">webpack</a> <a href="/blog/tags/上卷-this-原型对象/" style="font-size: 10px;">上卷 this 原型对象</a> <a href="/blog/tags/上卷-作用域和闭包/" style="font-size: 10px;">上卷 作用域和闭包</a> <a href="/blog/tags/上卷-对象/" style="font-size: 10px;">上卷 对象</a> <a href="/blog/tags/中卷-异步与性能/" style="font-size: 10px;">中卷 异步与性能</a> <a href="/blog/tags/中卷-类型-值/" style="font-size: 10px;">中卷 类型 值</a> <a href="/blog/tags/你不知道的JavaScript/" style="font-size: 10px;">你不知道的JavaScript</a> <a href="/blog/tags/序/" style="font-size: 10px;">序</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/07/">July 2019</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/blog/2019/09/15/异步与性能/">异步与性能</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2019/09/07/webpack相关/">webpack相关</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2019/09/03/类型与语法/">类型与语法</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2019/07/29/对象/">对象</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2019/07/14/作用域和闭包/">读读 作用域和闭包</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 WangQinyong<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/blog/" class="mobile-nav-link">Home</a>
+  
+    <a href="/blog/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/blog/fancybox/jquery.fancybox.css">
+  <script src="/blog/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/blog/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

@@ -7,18 +7,18 @@
   
   <title>读读 this和原型对象 | Reading fun</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="1.this和原型对象开始你的表演 1…..2…..">
+  <meta name="description" content="1.this和原型对象开始你的表演 1) this 概念一波this是在运行时绑定， 而非编写时绑定， 它的上下文取决于函数作用时的各种条件。this的绑定和函数声明的位置没有任何关系， 只取决于函数的调用方式。 当一个函数被调用时， 会创建一个活动记录， 包含函数调用栈， 调用方式， 传入的参数等信息。 2） this 绑定规则2.1 默认绑定 就是一般的绑定规则 非严格模式下， 默认绑定到全局">
 <meta name="keywords" content="上卷 this 原型对象">
 <meta property="og:type" content="article">
 <meta property="og:title" content="读读 this和原型对象">
 <meta property="og:url" content="https://github.com/wangqinyong1994/blog/2019/07/14/this和原型对象/index.html">
 <meta property="og:site_name" content="Reading fun">
-<meta property="og:description" content="1.this和原型对象开始你的表演 1…..2…..">
+<meta property="og:description" content="1.this和原型对象开始你的表演 1) this 概念一波this是在运行时绑定， 而非编写时绑定， 它的上下文取决于函数作用时的各种条件。this的绑定和函数声明的位置没有任何关系， 只取决于函数的调用方式。 当一个函数被调用时， 会创建一个活动记录， 包含函数调用栈， 调用方式， 传入的参数等信息。 2） this 绑定规则2.1 默认绑定 就是一般的绑定规则 非严格模式下， 默认绑定到全局">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-07-14T15:07:17.989Z">
+<meta property="og:updated_time" content="2019-07-29T15:16:54.332Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="读读 this和原型对象">
-<meta name="twitter:description" content="1.this和原型对象开始你的表演 1…..2…..">
+<meta name="twitter:description" content="1.this和原型对象开始你的表演 1) this 概念一波this是在运行时绑定， 而非编写时绑定， 它的上下文取决于函数作用时的各种条件。this的绑定和函数声明的位置没有任何关系， 只取决于函数的调用方式。 当一个函数被调用时， 会创建一个活动记录， 包含函数调用栈， 调用方式， 传入的参数等信息。 2） this 绑定规则2.1 默认绑定 就是一般的绑定规则 非严格模式下， 默认绑定到全局">
   
     <link rel="alternate" href="/blog/atom.xml" title="Reading fun" type="application/atom+xml">
   
@@ -92,12 +92,32 @@
     <div class="article-entry" itemprop="articleBody">
       
         <h4 id="1-this和原型对象"><a href="#1-this和原型对象" class="headerlink" title="1.this和原型对象"></a>1.this和原型对象</h4><h5 id="开始你的表演"><a href="#开始你的表演" class="headerlink" title="开始你的表演"></a>开始你的表演</h5><hr>
-<p>1…..<br>2…..</p>
+<h5 id="1-this-概念一波"><a href="#1-this-概念一波" class="headerlink" title="1) this 概念一波"></a>1) this 概念一波</h5><p>this是在<strong>运行时绑定</strong>， 而非编写时绑定， 它的上下文取决于函数作用时的各种条件。this的绑定和函数声明的位置没有任何关系， 只取决于函数的调用方式。</p>
+<p>当一个函数被调用时， 会创建一个活动记录， 包含函数调用栈， 调用方式， 传入的参数等信息。</p>
+<h5 id="2）-this-绑定规则"><a href="#2）-this-绑定规则" class="headerlink" title="2） this 绑定规则"></a>2） this 绑定规则</h5><h6 id="2-1-默认绑定-就是一般的绑定规则-非严格模式下，-默认绑定到全局对象。"><a href="#2-1-默认绑定-就是一般的绑定规则-非严格模式下，-默认绑定到全局对象。" class="headerlink" title="2.1 默认绑定 就是一般的绑定规则 非严格模式下， 默认绑定到全局对象。"></a>2.1 默认绑定 就是一般的绑定规则 非严格模式下， 默认绑定到全局对象。</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">function foo() &#123;</span><br><span class="line">    console.log(this.a);</span><br><span class="line">&#125;</span><br><span class="line">var a = 2;</span><br><span class="line">foo(); // 2</span><br></pre></td></tr></table></figure>
+
+<h5 id="2-2-隐式绑定"><a href="#2-2-隐式绑定" class="headerlink" title="2.2 隐式绑定"></a>2.2 隐式绑定</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">function foo() &#123;</span><br><span class="line">    console.log(this.a)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">var obj = &#123;</span><br><span class="line">    a: 2,</span><br><span class="line">    foo: foo</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">obj.foo(); // 2</span><br><span class="line">// 隐式绑定规则会把函数调用中的this绑定到这个上下文对象。</span><br></pre></td></tr></table></figure>
+
+<hr>
+<p>隐式丢失， 其实就是this上下文改变了， 随让this是谁调用就指向谁呢= =。<br>eg.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">function foo() &#123;</span><br><span class="line">    console.log(this.a)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function doFoo(fn) &#123;</span><br><span class="line">    fn()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">var obj = &#123;</span><br><span class="line">    a: 2,</span><br><span class="line">    foo: foo</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">var a = &apos;asdasd&apos;;</span><br><span class="line"></span><br><span class="line">doFoo(obj.foo); // asdasd</span><br></pre></td></tr></table></figure>
+
+<h5 id="2-3-显示绑定-直接指定this的绑定对象，-即call、apply"><a href="#2-3-显示绑定-直接指定this的绑定对象，-即call、apply" class="headerlink" title="2.3 显示绑定  直接指定this的绑定对象， 即call、apply"></a>2.3 显示绑定  直接指定this的绑定对象， 即call、apply</h5><h6 id="2-3-1-硬绑定"><a href="#2-3-1-硬绑定" class="headerlink" title="2.3.1 硬绑定"></a>2.3.1 硬绑定</h6><p>典型应用场景： 创建一个包裹函数， 负责接收参数并返回值。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">function foo(something) &#123;</span><br><span class="line">    console.log(this.a, something);</span><br><span class="line">    return this.a + something</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">var obj = &#123;</span><br><span class="line">    a: 2</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">var bar = function() &#123;</span><br><span class="line">    return foo.apply(obj, arguments)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">var b = bar(3); // 2 3</span><br><span class="line">console.log(b); // 5</span><br></pre></td></tr></table></figure>
+
+<p>另 bind</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">function foo(something) &#123;</span><br><span class="line">    console.log(this.a, something);</span><br><span class="line">    return this.a + something</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function bind(fn, obj) &#123;</span><br><span class="line">    return function() &#123;</span><br><span class="line">        return fn.apply(obj, arguments);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">var obj = &#123;</span><br><span class="line">    a: 2</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">var bar = bind(foo, obj);</span><br><span class="line"></span><br><span class="line">var b = bar(3); // 2 3</span><br><span class="line">console.log(b); // 5</span><br></pre></td></tr></table></figure>
+
+<h5 id="2-4-new绑定"><a href="#2-4-new绑定" class="headerlink" title="2.4 new绑定"></a>2.4 new绑定</h5><p>回顾一波new干了些啥<br>1.创建一个全新的对象<br>2.这个新对象会被执行[[Prototype]]连接<br>3.这个新对象会绑定到函数调用的this<br>4.如果函数没有返回其他对象， 那么new表达式中的函数调用会自动返回这个新对象。</p>
+<h5 id="2-5-软绑定"><a href="#2-5-软绑定" class="headerlink" title="2.5 软绑定"></a>2.5 软绑定</h5><h2 id="硬绑定会降低函数灵活性，-使用硬绑定之后无法使用隐式绑定或显示绑定修改this，如果可以给默认绑定指定一个全局对象和undefined以外的值，-可以实现相同效果，-同时保留隐式绑定或显示绑定修改this的能力。"><a href="#硬绑定会降低函数灵活性，-使用硬绑定之后无法使用隐式绑定或显示绑定修改this，如果可以给默认绑定指定一个全局对象和undefined以外的值，-可以实现相同效果，-同时保留隐式绑定或显示绑定修改this的能力。" class="headerlink" title="硬绑定会降低函数灵活性， 使用硬绑定之后无法使用隐式绑定或显示绑定修改this，如果可以给默认绑定指定一个全局对象和undefined以外的值， 可以实现相同效果， 同时保留隐式绑定或显示绑定修改this的能力。"></a>硬绑定会降低函数灵活性， 使用硬绑定之后无法使用隐式绑定或显示绑定修改this，<strong>如果可以给默认绑定指定一个全局对象和undefined以外的值</strong>， 可以实现相同效果， 同时保留隐式绑定或显示绑定修改this的能力。</h2><p>上代码。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">if(!Function.prototype.softBind) &#123;</span><br><span class="line">    Function.prototype.softBind = function(obj) &#123;</span><br><span class="line">        var fn = this;</span><br><span class="line">        var curried = [].slice.call(arguments, 1);</span><br><span class="line">        var bound = function() &#123;</span><br><span class="line">            return fn.apply(</span><br><span class="line">                (!this || this === (window || global)) ?</span><br><span class="line">                obj : this,</span><br><span class="line">                curried.concat.apply(curried, arguments)</span><br><span class="line">            )</span><br><span class="line">        &#125;</span><br><span class="line">        bound.prototype = Object.create(fn.prototype);</span><br><span class="line">        return bound;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">// 没看懂， 先放着。。。</span><br><span class="line">// 使用</span><br><span class="line"></span><br><span class="line">function foo() &#123;</span><br><span class="line">    console.log(&quot;name&quot; + this.name);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">var obj = &#123;name: &apos;obj&apos;&#125;, obj2 = &#123;name: &apos;obj2&apos;&#125;, obj3 = &#123;name: &apos;obj3&apos;&#125;;</span><br><span class="line"></span><br><span class="line">var fooObj = foo.softBind(obj);</span><br><span class="line"></span><br><span class="line">fooObj(); // obj</span><br><span class="line"></span><br><span class="line">obj2.foo = foo.softBind(obj);</span><br><span class="line">obj2.foo(); // obj2</span><br><span class="line"></span><br><span class="line">fooObj.call(obj3); // obj3</span><br><span class="line"></span><br><span class="line">setTimeout(obj.foo, 10); // obj</span><br></pre></td></tr></table></figure>
+
+<p>晚点消化。。。mark</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://github.com/wangqinyong1994/blog/2019/07/14/this和原型对象/" data-id="cjycwd3ip00058tcwt0e2yc8q" class="article-share-link">Share</a>
+      <a data-url="https://github.com/wangqinyong1994/blog/2019/07/14/this和原型对象/" data-id="ckh20gajl000332cw68ntylfm" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/上卷-this-原型对象/">上卷 this 原型对象</a></li></ul>
@@ -139,7 +159,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/上卷-this-原型对象/">上卷 this 原型对象</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/上卷-作用域和闭包/">上卷 作用域和闭包</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/你不知道的JavaScript/">你不知道的JavaScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/序/">序</a></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/webpack/">webpack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/上卷-this-原型对象/">上卷 this 原型对象</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/上卷-作用域和闭包/">上卷 作用域和闭包</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/上卷-对象/">上卷 对象</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/中卷-异步与性能/">中卷 异步与性能</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/中卷-类型-值/">中卷 类型 值</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/你不知道的JavaScript/">你不知道的JavaScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/序/">序</a></li></ul>
     </div>
   </div>
 
@@ -149,7 +169,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/blog/tags/上卷-this-原型对象/" style="font-size: 10px;">上卷 this 原型对象</a> <a href="/blog/tags/上卷-作用域和闭包/" style="font-size: 10px;">上卷 作用域和闭包</a> <a href="/blog/tags/你不知道的JavaScript/" style="font-size: 10px;">你不知道的JavaScript</a> <a href="/blog/tags/序/" style="font-size: 10px;">序</a>
+      <a href="/blog/tags/webpack/" style="font-size: 10px;">webpack</a> <a href="/blog/tags/上卷-this-原型对象/" style="font-size: 10px;">上卷 this 原型对象</a> <a href="/blog/tags/上卷-作用域和闭包/" style="font-size: 10px;">上卷 作用域和闭包</a> <a href="/blog/tags/上卷-对象/" style="font-size: 10px;">上卷 对象</a> <a href="/blog/tags/中卷-异步与性能/" style="font-size: 10px;">中卷 异步与性能</a> <a href="/blog/tags/中卷-类型-值/" style="font-size: 10px;">中卷 类型 值</a> <a href="/blog/tags/你不知道的JavaScript/" style="font-size: 10px;">你不知道的JavaScript</a> <a href="/blog/tags/序/" style="font-size: 10px;">序</a>
     </div>
   </div>
 
@@ -158,7 +178,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/07/">July 2019</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/07/">July 2019</a></li></ul>
     </div>
   </div>
 
@@ -171,23 +191,23 @@
       <ul>
         
           <li>
+            <a href="/blog/2019/09/15/异步与性能/">异步与性能</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2019/09/07/webpack相关/">webpack相关</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2019/09/03/类型与语法/">类型与语法</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2019/07/29/对象/">对象</a>
+          </li>
+        
+          <li>
             <a href="/blog/2019/07/14/作用域和闭包/">读读 作用域和闭包</a>
-          </li>
-        
-          <li>
-            <a href="/blog/2019/07/14/this和原型对象/">读读 this和原型对象</a>
-          </li>
-        
-          <li>
-            <a href="/blog/2019/07/14/hello-world/">Hello World</a>
-          </li>
-        
-          <li>
-            <a href="/blog/2019/07/14/读读-我不知道的JavaScript/">读读 我不知道的JavaScript</a>
-          </li>
-        
-          <li>
-            <a href="/blog/2019/07/14/post-title-with-whitespace/">序</a>
           </li>
         
       </ul>
@@ -202,7 +222,7 @@
   
   <div class="outer">
     <div id="footer-info" class="inner">
-      &copy; 2019 WangQinyong<br>
+      &copy; 2020 WangQinyong<br>
       Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>
