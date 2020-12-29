@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+
+  
+  <title>Java基础 | Reading fun</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="变量基本数据类型 整型 byte 1 字节=8bit -128~127 short 2 字节 -2^15~2^15 - 1 int 4 字节 -2^31~2^31 - 1(约 21 亿) long 8 字节 -2^63~2^63 - 1  浮点型 float 4 字节 -3.403E38 ～ 3.403E38 double 8 字节 -1.798E308 ～ 1.798E308  字符型 char">
+<meta name="keywords" content="Java">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java基础">
+<meta property="og:url" content="https://github.com/wangqinyong1994/blog/2020/12/28/java基础/index.html">
+<meta property="og:site_name" content="Reading fun">
+<meta property="og:description" content="变量基本数据类型 整型 byte 1 字节=8bit -128~127 short 2 字节 -2^15~2^15 - 1 int 4 字节 -2^31~2^31 - 1(约 21 亿) long 8 字节 -2^63~2^63 - 1  浮点型 float 4 字节 -3.403E38 ～ 3.403E38 double 8 字节 -1.798E308 ～ 1.798E308  字符型 char">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/0081Kckwly1glud0k0hhyj310s0lktkz.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/0081Kckwly1gm19brzfxsj316s0qsdl3.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/0081Kckwly1gm2dejbtb0j31ao0tigz3.jpg">
+<meta property="og:updated_time" content="2020-12-28T13:28:09.370Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Java基础">
+<meta name="twitter:description" content="变量基本数据类型 整型 byte 1 字节=8bit -128~127 short 2 字节 -2^15~2^15 - 1 int 4 字节 -2^31~2^31 - 1(约 21 亿) long 8 字节 -2^63~2^63 - 1  浮点型 float 4 字节 -3.403E38 ～ 3.403E38 double 8 字节 -1.798E308 ～ 1.798E308  字符型 char">
+<meta name="twitter:image" content="https://tva1.sinaimg.cn/large/0081Kckwly1glud0k0hhyj310s0lktkz.jpg">
+  
+    <link rel="alternate" href="/blog/atom.xml" title="Reading fun" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/blog/css/style.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/blog/" id="logo">Reading fun</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/blog/" id="subtitle">啊 呀妈呀</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/blog/">Home</a>
+        
+          <a class="main-nav-link" href="/blog/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/blog/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://github.com/wangqinyong1994/blog"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-java基础" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/blog/2020/12/28/java基础/" class="article-date">
+  <time datetime="2020-12-28T13:21:48.000Z" itemprop="datePublished">2020-12-28</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Java基础
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h2><h3 id="基本数据类型"><a href="#基本数据类型" class="headerlink" title="基本数据类型"></a>基本数据类型</h3><ul>
+<li><p>整型</p>
+<p>byte 1 字节=8bit -128~127</p>
+<p>short 2 字节 -2^15~2^15 - 1</p>
+<p>int 4 字节 -2^31~2^31 - 1(约 21 亿)</p>
+<p>long 8 字节 -2^63~2^63 - 1</p>
+</li>
+<li><p>浮点型</p>
+<p>float 4 字节 -3.403E38 ～ 3.403E38</p>
+<p>double 8 字节 -1.798E308 ～ 1.798E308</p>
+</li>
+<li><p>字符型</p>
+<p>char 1 字符 = 2 字节</p>
+</li>
+<li><p>布尔型 boolean</p>
+</li>
+</ul>
+<p>整型</p>
+<ol>
+<li>声明 long 变量，必须以”L”或”l”结尾</li>
+<li>一般 int 够用</li>
+</ol>
+<p>浮点型(表示带小数点的数值)</p>
+<ol>
+<li>Java 浮点型默认为 double，声明 float 型，后面要加”F”或”f”</li>
+<li>double 精度是 float 的两倍，一般默认采用 double</li>
+</ol>
+<p>字符型</p>
+<ol>
+<li>定义时，使用’’(单引号)</li>
+<li>内部只能是一个字符</li>
+<li>可以是转义字符(\n), 可以是 unicode 值</li>
+</ol>
+<p>布尔型</p>
+<h3 id="引用类型"><a href="#引用类型" class="headerlink" title="引用类型"></a>引用类型</h3><ul>
+<li>类 class</li>
+<li>接口 interface</li>
+<li>数组 array</li>
+<li>字符串 String 定义时””(双引号)</li>
+</ul>
+<h3 id="自动转换"><a href="#自动转换" class="headerlink" title="自动转换"></a>自动转换</h3><p>容量小的数据类型变量与容量大的做运算时，<strong>自动提升为容量大的数据类型</strong></p>
+<p><strong>容量大小值表示数范围的大和小</strong>，如 float 要比 long 大</p>
+<p>结论： byte、char、short –&gt; int –&gt; long –&gt; float –&gt; double</p>
+<p>当 byte、char、short 做运算时，结果为 int 类型</p>
+<h3 id="强制转换"><a href="#强制转换" class="headerlink" title="强制转换"></a>强制转换</h3><ol>
+<li>要使用强转符()</li>
+<li>可能导致精度损失</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">double</span> d1 = <span class="number">12.9</span>;</span><br><span class="line"><span class="keyword">int</span> i1 = (<span class="keyword">int</span>)d1;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 没有精度损失</span></span><br><span class="line"><span class="keyword">long</span> l1 = <span class="number">123</span>;</span><br><span class="line"><span class="keyword">short</span> s1 = (<span class="keyword">short</span>)l1;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 有精度损失</span></span><br><span class="line"><span class="keyword">int</span> i2 = <span class="number">128</span>;</span><br><span class="line"><span class="keyword">byte</span> b = (<span class="keyword">byte</span>)i2;</span><br><span class="line">System.out.printIn(b); <span class="comment">// -128</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="赋值运算"><a href="#赋值运算" class="headerlink" title="赋值运算"></a>赋值运算</h3><p>+=</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> num = <span class="number">10</span>;</span><br><span class="line">num += <span class="number">2</span>; <span class="comment">// num = num + 2; 12</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">short</span> s = <span class="number">10</span>;</span><br><span class="line">s = s + <span class="number">2</span>; <span class="comment">// error</span></span><br><span class="line">s += <span class="number">2</span>; <span class="comment">// ok +=不改变变量本身数据类型</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// &amp; 都为true才为true</span></span><br><span class="line"><span class="comment">// | 有一个为true就为true</span></span><br><span class="line"><span class="comment">// ^ 异才为true</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="位运算"><a href="#位运算" class="headerlink" title="位运算"></a>位运算</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> i = <span class="number">21</span>;</span><br><span class="line">i &lt;&lt; <span class="number">2</span> = <span class="number">21</span> * <span class="number">2</span> * <span class="number">2</span></span><br><span class="line">i &lt;&lt; <span class="number">2</span> = <span class="number">21</span> * <span class="number">2</span> * <span class="number">2</span> * <span class="number">2</span></span><br><span class="line"><span class="comment">// 每向左移 就是 * 2</span></span><br><span class="line"><span class="comment">// 一定程度（移出长度）为负，因为开头为1</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 一维数组声明与初始化</span></span><br><span class="line"><span class="comment">// 静态初始化: 数组的初始化和数组元素的赋值操作同时进行</span></span><br><span class="line"><span class="keyword">int</span>[] ids = <span class="keyword">new</span> <span class="keyword">int</span>[]&#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>,<span class="number">4</span>&#125;;</span><br><span class="line"><span class="comment">// 动态初始化: 数组的初始化和数组元素的赋值操作分开进行</span></span><br><span class="line">String[] names = <span class="keyword">new</span> String[<span class="number">4</span>];</span><br><span class="line"><span class="comment">// 二维数组</span></span><br><span class="line"><span class="keyword">int</span>[][] arr = <span class="keyword">new</span> <span class="keyword">int</span>[]&#123;&#123;<span class="number">1</span>, <span class="number">2</span>&#125;, &#123;<span class="number">3</span>, <span class="number">4</span>&#125;, &#123;<span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>&#125;&#125;;</span><br><span class="line">String[][] arr1 = <span class="keyword">new</span> String[<span class="number">3</span>][<span class="number">2</span>]</span><br></pre></td></tr></table></figure>
+
+<p>工具类方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// boolean equals(int[] a, int[] b); 判断两个数组是否相等</span></span><br><span class="line"><span class="keyword">int</span>[] arr1 = <span class="keyword">new</span> <span class="keyword">int</span>[]&#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>&#125;;</span><br><span class="line"><span class="keyword">int</span>[] arr2 = <span class="keyword">new</span> <span class="keyword">int</span>[]&#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>&#125;;</span><br><span class="line"><span class="keyword">boolean</span> isEquals = Arrays.equals(arr1, arr2);</span><br><span class="line"><span class="comment">// String toString(int[] a); 输出数组信息</span></span><br><span class="line">Arrays.toString(arr1);</span><br><span class="line"><span class="comment">// void fill(int[] a, int val); 填充</span></span><br><span class="line">Arrays.fill(arr1, <span class="number">10</span>);</span><br><span class="line"><span class="comment">// void sort(int[] a);</span></span><br><span class="line">Arrays.sort(arr1);</span><br><span class="line"><span class="comment">// int binarySearch(int[] a, int key)</span></span><br><span class="line">Arrays.binarySearch(arr1, <span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+
+<p>常见异常</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 数组越界异常: ArrayIndexOutOfBoundsException</span></span><br><span class="line"><span class="comment">// 空指针异常: NullPointerException</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="默认初始化值"><a href="#默认初始化值" class="headerlink" title="默认初始化值"></a>默认初始化值</h3><ul>
+<li>整型: 0</li>
+<li>浮点型: 0.0</li>
+<li>字符型: 0 或’\u0000’</li>
+<li>布尔型: false</li>
+<li>引用类型: null</li>
+</ul>
+<p>局部变量没有初始化值，意味着调用局部变量之前，一定要显示赋值。</p>
+<p>非 static 属性 局部变量加载到栈，属性加载到堆。</p>
+<h3 id="重载"><a href="#重载" class="headerlink" title="重载"></a>重载</h3><p>允许定义一个以上重名方法</p>
+<p>方法名相同， 参数可以各种不同，构成重载</p>
+<p><strong>重载判断标准</strong>：</p>
+<ul>
+<li>两同一不同：同一个类相同方法名</li>
+<li>参数列表不同、参数个数不同、参数类型不同</li>
+<li>跟方法的权限修饰符、返回值类型、形参变量名、方法体都没有关系</li>
+</ul>
+<p>​ <img src="https://tva1.sinaimg.cn/large/0081Kckwly1glud0k0hhyj310s0lktkz.jpg" alt></p>
+<p>​</p>
+<h3 id="关于构造器"><a href="#关于构造器" class="headerlink" title="关于构造器"></a>关于构造器</h3><ul>
+<li>如果没有显式定义类的构造器，则系统默认提供一个空参的构造器</li>
+<li>定义构造器的格式：权限修饰符 类名(形参列表){}</li>
+<li>一个类中定义的多个构造器，彼此构成重载</li>
+<li>一旦显式定义了类的构造器，系统就不再提供默认的空参构造器</li>
+<li>一个类中，至少会有一个构造器</li>
+</ul>
+<h3 id="对象属性的赋值顺序"><a href="#对象属性的赋值顺序" class="headerlink" title="对象属性的赋值顺序"></a>对象属性的赋值顺序</h3><ol>
+<li>默认初始化</li>
+<li>显式初始化</li>
+<li>构造器中赋值</li>
+<li>通过 <code>对象.方法</code> 或 <code>对象.属性</code> 的方式赋值</li>
+</ol>
+<h3 id="JavaBean"><a href="#JavaBean" class="headerlink" title="JavaBean"></a>JavaBean</h3><p>符合如下 Java 类</p>
+<ul>
+<li>类是公共的</li>
+<li>有一个无参的公共的构造器</li>
+<li>有属性，且有对应的 get、set 方法</li>
+</ul>
+<h3 id="this"><a href="#this" class="headerlink" title="this"></a>this</h3><ol>
+<li>可以用来修饰：属性、方法、构造器</li>
+<li>修饰属性和方法。this 理解为当前对象</li>
+<li>通常可以省略，但是当方法的形参鱼类属性同名时，必须显式去用<code>this</code></li>
+</ol>
+<h4 id="this-调用构造器"><a href="#this-调用构造器" class="headerlink" title="this 调用构造器"></a>this 调用构造器</h4><ol>
+<li>在类的构造器中，可以显式使用<code>this(形参列表)</code>方式，调用本类中指定的构造器</li>
+<li>构造器中不能通过<code>this(形参列表)</code>方式调用自己</li>
+<li>如果一个类中有 n 个构造器，则最多有 n-1 个构造器中使用了<code>this(形参列表)</code></li>
+<li>规定：<code>this(形参列表)</code>必须声明在当前构造器中的首行</li>
+<li>构造器内部，最多只能声明一个<code>this(形参列表)</code>，用来调用其他构造器</li>
+</ol>
+<h3 id="package"><a href="#package" class="headerlink" title="package"></a>package</h3><ol>
+<li>为了实现项目中类的管理</li>
+<li>使用 package 声明类或接口所属的包，放首行</li>
+<li>规范、看了要能懂，语义化</li>
+<li>每`.``一次，就代表一层文件目录</li>
+<li>同一个包下，不能命名同名的接口、类。</li>
+</ol>
+<h3 id="import"><a href="#import" class="headerlink" title="import"></a>import</h3><ol>
+<li>导入指定包下的类、接口</li>
+<li>声明在包与类之间</li>
+<li>可以使用<code>xxx.*</code>表示可以导入 xxx 包下的所有结构</li>
+<li><code>Java.lang</code>下面的可以省略</li>
+<li>类或接口是本包下定义的，可以省略</li>
+<li>源文件中使用不同包下重名的类，则必须至少有一个全类名的方式显示</li>
+<li>使用<code>xxx.*</code>表示可以导入 xxx 包下的所有结构，但是如果使用的是 xxx 子包下的结构，仍需要显示引入</li>
+<li>import static: 表示引入类或接口中的静态结构：属性或方法。</li>
+</ol>
+<h3 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h3><ol>
+<li>一旦子类 A 继承父类 B，子类 A 就获取了父类 B 中声明的结构(属性、方法)。私有也能获取，只是因为封装性影响，不能直接调用父类的结构。</li>
+<li>一个类只能有一个父类</li>
+<li>子类直接继承的父类叫直接父类，间接的叫间接父类</li>
+<li>子类继承父类后，就获取了直接父类以及所有间接父类中声明的属性和方法</li>
+<li>如果没有显式声明一个类的父类，则此类继承自 java.lang.Object 类</li>
+<li>所有的 java 类(除 java.lang.Object)，都直接或间接继承自 java.lang.Object 类</li>
+</ol>
+<h3 id="override"><a href="#override" class="headerlink" title="override"></a>override</h3><ol>
+<li>子类继承父类后，可以对父类中同名同参数的方法，进行覆盖操作</li>
+<li>应用重写以后，当创建子类对象以后，通过子类对象调用子父类中的同名同参数方法时，世纪执行的是子类重写父类的方法。</li>
+<li>重写规定<ul>
+<li>方法名和形参列表相同</li>
+<li>子类重写方法的权限修饰符不小于父类的</li>
+<li>子类不能重写父类的 private 方法</li>
+<li>返回值类型<ul>
+<li>父类被重写方法的返回值类型是 void，子也要 void</li>
+<li>父类被重写方法的返回值类型是 A 类型，子返回可以是 A 或 A 的子类</li>
+<li>父类被重写方法的返回值类型是基本数据类型，子也要一样</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>子类重写的方法抛出的异常类型不大于父类被重写方法抛出的异常类型。</li>
+<li>子类与父类中的同名参数方法要么都声明为非 static(考虑重写)，要么都声明为 static(不是重写)</li>
+</ol>
+<h3 id="super"><a href="#super" class="headerlink" title="super"></a>super</h3><ol>
+<li>理解为父类的</li>
+<li>可以调用 属性方法构造器</li>
+<li>super 调用属性和方法：通常子类中可以省略 this、super，子类没有就找父类，都有的话可以用 this、super 区分子父</li>
+<li>super 调用构造器 ：<ol>
+<li>可以在子类构造器中显示使用<code>super(形参列表)</code>的方式，调用父类中指定的构造器</li>
+<li><code>super(形参列表)</code>使用，必须声明在子类构造器首行</li>
+<li>类构造器中，针对<code>this(形参列表)</code>或<code>super(形参列表)</code>只能二选一，不能同时出现</li>
+<li>在构造球首行，没有显式声明<code>this(形参列表)</code>或<code>super(形参列表)</code>，则默认调用的是父类中空参的构造器。super()</li>
+<li>在类的多个构造器中，至少有一个类的构造器中使用了<code>super(形参列表)</code></li>
+</ol>
+</li>
+</ol>
+<h3 id="子类对象实例化全过程"><a href="#子类对象实例化全过程" class="headerlink" title="子类对象实例化全过程"></a>子类对象实例化全过程</h3><ol>
+<li>从结果上看，子类继承父类后，就获取了父类中声明的属性或方法。创建字类的对象，在堆空间中，就会加载所有父类中声明的属性。</li>
+<li>从过程上来看，跟 js 原型链一样，直到 java.lang.Object。</li>
+</ol>
+<p>虽然在创建子类对象时，调用了父类构造器，但是自始自终就创建一个对象，即为 new 的子类对象。</p>
+<p><img src="https://tva1.sinaimg.cn/large/0081Kckwly1gm19brzfxsj316s0qsdl3.jpg" alt></p>
+<h3 id="多态性-是一种运行时行为"><a href="#多态性-是一种运行时行为" class="headerlink" title="多态性(是一种运行时行为)"></a>多态性(是一种运行时行为)</h3><ol>
+<li><p>一个事物的多种形态</p>
+</li>
+<li><p>父类的引用指向子类的对象</p>
+</li>
+<li><p>多态使用，虚拟方法调用</p>
+<ol>
+<li>有了对象的多态以后，我们在编译期，只能调用父类中声明的方法，但在运行期，我们实际执行的是子类重写父类的方法。</li>
+<li>总结：编译看左边；执行看右边</li>
+</ol>
+</li>
+<li><p>使用前提：</p>
+<ol>
+<li>类的继承关系</li>
+<li>方法的重写</li>
+</ol>
+</li>
+<li><p>对象的多态性，只适用于方法，不适用于属性(编译运行都看左边)</p>
+</li>
+<li><p>如何调用子类特有的属性和方法？向下转型：使用强制类型转换符</p>
+<p>Eg. <code>Man m1 = (Man)p2</code>.</p>
+<p>使用强转时，可能出现<code>ClassCastException</code>异常。</p>
+</li>
+<li><p>若子类重写了父类方法，就意味着子类定义的方法彻底覆盖了父类里的同名方法，系统激情不可能把父类里的方法转移到子类中</p>
+</li>
+<li><p>对于实例变量则不存在这样的现象(7)，即使子类里定义了与父类完全相同的实例变量，这个实例变量依然不可能覆盖父类中定义的实例变量</p>
+</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PersonTest</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    Person p1 = <span class="keyword">new</span> Person();</span><br><span class="line">    p1.eat();</span><br><span class="line"></span><br><span class="line">    Man man = <span class="keyword">new</span> Man();</span><br><span class="line">    man.eat();</span><br><span class="line">    man.age = <span class="number">25</span>;</span><br><span class="line">    man.earnMoney();</span><br><span class="line"></span><br><span class="line">    Person p2 = <span class="keyword">new</span> Man();</span><br><span class="line"></span><br><span class="line">    Person p3 = <span class="keyword">new</span> Woman();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="instanceof"><a href="#instanceof" class="headerlink" title="instanceof"></a>instanceof</h4><p>同 js</p>
+<p><img src="https://tva1.sinaimg.cn/large/0081Kckwly1gm2dejbtb0j31ao0tigz3.jpg" alt></p>
+<ol>
+<li><p>a instanceof A: 判断对象 a 是否是类 A 的实例。</p>
+</li>
+<li><p>为了避免向下转型出现异常，进行 instanceof 判断。</p>
+</li>
+</ol>
+<h4 id="和-equals-区别"><a href="#和-equals-区别" class="headerlink" title="== 和 equals()区别"></a>== 和 equals()区别</h4><ol>
+<li><code>==</code>基本数据类型比较保存的数据是否相等（不一定要类型相同），引用类型比较地址</li>
+<li>equals()引用类型可以用<ul>
+<li>Object 类中定义的 equals 方法和==相同</li>
+<li>String、Date、File 包装类中都重写了 equals()，重写以后比较的是实体内容是否相同</li>
+</ul>
+</li>
+</ol>
+<p>通常情况下自定义类中如果使用 equals()，也通常是比较浪个对象的实体内容睡否相同，那么我们就需要对 Object 类中的 equals()进行重写。</p>
+<h3 id="toString-NaN"><a href="#toString-NaN" class="headerlink" title="toString"></a>toString</h3><ol>
+<li>当我们输出一个对象的引用值，实际就是调用当前对象的 toString()</li>
+<li>像 String、Date、File 包装类都重写了 Object 类中的 toString 方法。使得在调用对象的 toString 时，返回实体内容信息</li>
+<li>自定义类也可以重写 toString 方法，当调用此方法时，返回对象实体内容</li>
+</ol>
+<h3 id="包装类"><a href="#包装类" class="headerlink" title="包装类"></a>包装类</h3><h4 id="包装类使用"><a href="#包装类使用" class="headerlink" title="包装类使用"></a>包装类使用</h4><ol>
+<li>java 提供 8 种基本数据类型对应的包装类，使基本数据类型的变量有类的特性</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 基本数据类型 ---&gt; 包装类：调用包装类的构造器</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test1</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="keyword">int</span> num1 = <span class="number">10</span>;</span><br><span class="line">  Integer in1 = <span class="keyword">new</span> Integer(num1);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 包装类---&gt;基本数据类型：调用包装类XXX的XXXValue()</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test2</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  Integer in1 = <span class="keyword">new</span> Integer(<span class="number">12</span>);</span><br><span class="line">  <span class="keyword">int</span> i1 = in1.intValue();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 基本类型、包装类---&gt;String类型</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test3</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="keyword">int</span> num1 = <span class="number">10</span>;</span><br><span class="line">  <span class="comment">// 方法1</span></span><br><span class="line">  String str1 = num1 + <span class="string">""</span>;</span><br><span class="line">  <span class="comment">// 方法2</span></span><br><span class="line">  <span class="keyword">float</span> f1 = <span class="number">12.3f</span>;</span><br><span class="line">  String str2 = String.valueOf(f1);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// String类型---&gt;基本数据类型、包装类：调用包装类的parseXXX()</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test4</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  String str1 = <span class="string">"123"</span>;</span><br><span class="line">  <span class="keyword">int</span> num2 = Integer.parseInt(str1);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test5</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="comment">// 就是赋值来赋值去</span></span><br><span class="line">  <span class="comment">// 自动装箱</span></span><br><span class="line">  <span class="keyword">int</span> num2 = <span class="number">10</span>;</span><br><span class="line">  Integer in1 = num2;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">boolean</span> b1 = <span class="keyword">true</span>;</span><br><span class="line">  Boolean b2 = b1;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 自动拆箱</span></span><br><span class="line">  <span class="keyword">int</span> num3 = in1;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="static"><a href="#static" class="headerlink" title="static"></a>static</h3><ol>
+<li>静态的</li>
+<li>可以用来修饰：属性、方法、代码块、内部类</li>
+<li>修饰属性：静态变量(类变量)<ol>
+<li>属性按 static 修饰，分为静态属性和非静态属性(实例变量)</li>
+<li>静态变量，我们创建类的多个对象，多个对象共享同一个静态变量。一个变所有对象都变。</li>
+<li>静态变量随着类的加载而加载，静态变量加载早于对象创建</li>
+<li>类只加载一次，静态变量在内存中也加载一次，存在方法区的静态域中</li>
+</ol>
+</li>
+<li>修饰方法<ol>
+<li>静态方法中只能调用静态方法和属性</li>
+<li>非静态方法都可以调用</li>
+</ol>
+</li>
+<li>静态方法内，不能使用 this 和 super</li>
+<li>确定属性方法是否要声明为 static<ol>
+<li>确定属性：可以被多个对象共享，不随着对象不同而不同</li>
+<li>确定方法：操作静态属性的方法、工具类中的方法</li>
+</ol>
+</li>
+</ol>
+<h3 id="单例模式"><a href="#单例模式" class="headerlink" title="单例模式"></a>单例模式</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 饿汉式</span></span><br><span class="line"><span class="comment">// 好处：线程安全</span></span><br><span class="line"><span class="comment">// 坏处：加载时间过长</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Bank</span> </span>&#123;</span><br><span class="line">  <span class="comment">// 1.私有化类的构造器</span></span><br><span class="line">  <span class="function"><span class="keyword">private</span> <span class="title">Bank</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 2.内部创建类的对象</span></span><br><span class="line">  <span class="comment">// 4.要求此对象也必须声明为静态的</span></span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">static</span> Bank instance = <span class="keyword">new</span> Bank();</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 3.声明public、static的返回当前类对象的方法</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Bank <span class="title">getInstance</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> instance</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 懒汉式</span></span><br><span class="line"><span class="comment">// 好处：延迟对象加载</span></span><br><span class="line"><span class="comment">// 目前写法坏处：线程不安全</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Bank</span> </span>&#123;</span><br><span class="line">	<span class="comment">// 1.私有化类的构造器</span></span><br><span class="line">  <span class="function"><span class="keyword">private</span> <span class="title">Bank</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 2.声明当前类对象，没有初始化</span></span><br><span class="line">  <span class="comment">// 4.此对象也必须声明为static的</span></span><br><span class="line">  <span class="keyword">private</span> Bank instance = <span class="keyword">null</span>;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 3.声明public、static的返回当前类对象的方法</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Bank <span class="title">getInstance</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (instance == <span class="keyword">null</span>) &#123;</span><br><span class="line">      instance = <span class="keyword">new</span> Bank();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> instance;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://github.com/wangqinyong1994/blog/2020/12/28/java基础/" data-id="ckj9996yd0001url6jzkou911" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Java/">Java</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/blog/2020/11/29/react原理/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">React原理</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Java/">Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/React/">React</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/webpack/">webpack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/上卷-this-原型对象/">上卷 this 原型对象</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/上卷-作用域和闭包/">上卷 作用域和闭包</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/上卷-对象/">上卷 对象</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/中卷-异步与性能/">中卷 异步与性能</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/中卷-类型-值/">中卷 类型 值</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/你不知道的JavaScript/">你不知道的JavaScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/前端-工程化-npm/">前端 工程化 npm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/前端-设计模式/">前端 设计模式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/序/">序</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/blog/tags/Java/" style="font-size: 10px;">Java</a> <a href="/blog/tags/React/" style="font-size: 10px;">React</a> <a href="/blog/tags/webpack/" style="font-size: 10px;">webpack</a> <a href="/blog/tags/上卷-this-原型对象/" style="font-size: 10px;">上卷 this 原型对象</a> <a href="/blog/tags/上卷-作用域和闭包/" style="font-size: 10px;">上卷 作用域和闭包</a> <a href="/blog/tags/上卷-对象/" style="font-size: 10px;">上卷 对象</a> <a href="/blog/tags/中卷-异步与性能/" style="font-size: 10px;">中卷 异步与性能</a> <a href="/blog/tags/中卷-类型-值/" style="font-size: 10px;">中卷 类型 值</a> <a href="/blog/tags/你不知道的JavaScript/" style="font-size: 10px;">你不知道的JavaScript</a> <a href="/blog/tags/前端-工程化-npm/" style="font-size: 10px;">前端 工程化 npm</a> <a href="/blog/tags/前端-设计模式/" style="font-size: 10px;">前端 设计模式</a> <a href="/blog/tags/序/" style="font-size: 10px;">序</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2020/12/">December 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2020/11/">November 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2020/10/">October 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2020/07/">July 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/07/">July 2019</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/blog/2020/12/28/java基础/">Java基础</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2020/11/29/react原理/">React原理</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2020/10/14/设计模式/">前端路线</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2020/07/14/关于npm/">前端路线</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2019/09/15/异步与性能/">异步与性能</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 WangQinyong<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/blog/" class="mobile-nav-link">Home</a>
+  
+    <a href="/blog/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/blog/fancybox/jquery.fancybox.css">
+  <script src="/blog/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/blog/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>
