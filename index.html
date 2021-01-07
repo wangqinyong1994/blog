@@ -68,8 +68,8 @@
   
     <article id="post-java基础" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/blog/2020/12/28/java基础/" class="article-date">
-  <time datetime="2020-12-28T13:21:48.000Z" itemprop="datePublished">2020-12-28</time>
+    <a href="/blog/2020/12/30/java基础/" class="article-date">
+  <time datetime="2020-12-30T13:21:48.000Z" itemprop="datePublished">2020-12-30</time>
 </a>
     
   </div>
@@ -80,7 +80,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/blog/2020/12/28/java基础/">Java基础</a>
+      <a class="article-title" href="/blog/2020/12/30/java基础/">Java基础</a>
     </h1>
   
 
@@ -181,7 +181,7 @@
 </ul>
 <h3 id="对象属性的赋值顺序"><a href="#对象属性的赋值顺序" class="headerlink" title="对象属性的赋值顺序"></a>对象属性的赋值顺序</h3><ol>
 <li>默认初始化</li>
-<li>显式初始化</li>
+<li>显式初始化/代码块。看这两个声明 谁先谁后</li>
 <li>构造器中赋值</li>
 <li>通过 <code>对象.方法</code> 或 <code>对象.属性</code> 的方式赋值</li>
 </ol>
@@ -346,11 +346,167 @@
 </ol>
 <h3 id="单例模式"><a href="#单例模式" class="headerlink" title="单例模式"></a>单例模式</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 饿汉式</span></span><br><span class="line"><span class="comment">// 好处：线程安全</span></span><br><span class="line"><span class="comment">// 坏处：加载时间过长</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Bank</span> </span>&#123;</span><br><span class="line">  <span class="comment">// 1.私有化类的构造器</span></span><br><span class="line">  <span class="function"><span class="keyword">private</span> <span class="title">Bank</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 2.内部创建类的对象</span></span><br><span class="line">  <span class="comment">// 4.要求此对象也必须声明为静态的</span></span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">static</span> Bank instance = <span class="keyword">new</span> Bank();</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 3.声明public、static的返回当前类对象的方法</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Bank <span class="title">getInstance</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> instance</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 懒汉式</span></span><br><span class="line"><span class="comment">// 好处：延迟对象加载</span></span><br><span class="line"><span class="comment">// 目前写法坏处：线程不安全</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Bank</span> </span>&#123;</span><br><span class="line">	<span class="comment">// 1.私有化类的构造器</span></span><br><span class="line">  <span class="function"><span class="keyword">private</span> <span class="title">Bank</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 2.声明当前类对象，没有初始化</span></span><br><span class="line">  <span class="comment">// 4.此对象也必须声明为static的</span></span><br><span class="line">  <span class="keyword">private</span> Bank instance = <span class="keyword">null</span>;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 3.声明public、static的返回当前类对象的方法</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Bank <span class="title">getInstance</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (instance == <span class="keyword">null</span>) &#123;</span><br><span class="line">      instance = <span class="keyword">new</span> Bank();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> instance;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
+<h3 id="main"><a href="#main" class="headerlink" title="main"></a>main</h3><ol>
+<li>程序入口</li>
+<li>普通静态方法</li>
+<li>可以做哦为与控制台交互的方式（之前使用 scanner）</li>
+</ol>
+<h3 id="代码块"><a href="#代码块" class="headerlink" title="代码块"></a>代码块</h3><ol>
+<li>用来初始化类、对象</li>
+<li>有修饰的话，只能用 static</li>
+<li>静态代码块 与 非静态代码块<ol>
+<li>静态代码块<ol>
+<li>内部可以有输出语句</li>
+<li>随着类的加载而执行，只执行一次</li>
+<li>如果一个 类中定义了多个，则按照声明的先后顺序执行</li>
+</ol>
+</li>
+<li>非静态代码块<ol>
+<li>内部可以有输出语句</li>
+<li>随着对象的创建而执行，每创建一个就执行一次</li>
+<li>作用：可以在创建对象时，对对象的属性进行初始化</li>
+<li>如果一个 类中定义了多个，则按照声明的先后顺序执行</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+<p>执行顺序：由父及子，线性执行</p>
+<h3 id="final"><a href="#final" class="headerlink" title="final"></a>final</h3><ol>
+<li>可以用来修饰类、方法、变量<ol>
+<li>用来修饰类：此类不能被继承</li>
+<li>用来修饰方法：不能被重写</li>
+<li>修饰变量：即常量</li>
+<li>修饰形参时：表面此形参是一个常量</li>
+</ol>
+</li>
+</ol>
+<h3 id="抽象类和抽象方法"><a href="#抽象类和抽象方法" class="headerlink" title="抽象类和抽象方法"></a>抽象类和抽象方法</h3><h4 id="abstract"><a href="#abstract" class="headerlink" title="abstract"></a>abstract</h4><ol>
+<li>可以用来修饰类、方法</li>
+<li>修饰类：抽象类<ol>
+<li>此类不能实例化</li>
+<li>类中一定有构造器，便于子类对象实例化调用</li>
+<li>开发中都会提供抽象类的子类，让子类对象实例化，完成相关操作</li>
+</ol>
+</li>
+<li>修饰方法：抽象方法<ol>
+<li>只有方法声明，没有方法体</li>
+<li>包含抽象方法的类一定是抽象类，反之，抽象类中可以没有抽象方法</li>
+<li>若子类重写了父类中所有的抽象方法后，此子类方可实例化；若子类没有重写父类中所有的抽象方法，则此子类也是一个抽象类，需要 abstract</li>
+</ol>
+</li>
+<li>不能用来修饰属性、构造器</li>
+<li>不能用来修饰私有方法、静态方法、final 的方法、final 的类</li>
+</ol>
+<h3 id="接口-interface"><a href="#接口-interface" class="headerlink" title="接口(interface)"></a>接口(interface)</h3><p>同 ts</p>
+<ol>
+<li>关键字 interface 定义</li>
+<li>接口和类是并列的结构</li>
+<li>如何定义<ol>
+<li>JDK7 前<ol>
+<li>只能定义全局常量和抽象方法</li>
+<li>全局常量：public static final(书写时可以省略)；抽象方法： public abstract</li>
+</ol>
+</li>
+<li>JDK8: 除 7 之外，还可以定义静态方法、默认方法</li>
+</ol>
+</li>
+<li>接口中不能定义构造器，意味接口不能实例化</li>
+<li>java 开发中，接口通过让类去实现接口(implements)的方式来使用<ol>
+<li>如果实现类覆盖了接口中的所有抽象方法，则此实现类就可以完成实例化</li>
+<li>如果没有，则此实现类仍是一个抽象类</li>
+</ol>
+</li>
+<li>可以实现多个接口<ol>
+<li>格式：class AA extends BB implements CC, DD, EE 先写继承后写实现</li>
+</ol>
+</li>
+<li>接口与接口之间可以继承，而且可以多继承</li>
+<li>接口的使用，体现多态性</li>
+<li>接口实际上可以看作一种规范</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">Flyable</span> </span>&#123;</span><br><span class="line">  <span class="comment">// 全局变量</span></span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> MAX_SPEED = <span class="number">7900</span>;</span><br><span class="line">  <span class="keyword">int</span> MIN_SPEED = <span class="number">1</span>; <span class="comment">// 省略了public static final</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">// 抽象方法</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">fly</span><span class="params">()</span></span>;</span><br><span class="line">  <span class="keyword">void</span> stop; <span class="comment">// 省略了public abstract</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">Accackable</span> </span>&#123;</span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">abstract</span>. <span class="function"><span class="keyword">void</span> <span class="title">attack</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Plane</span> <span class="keyword">implements</span> <span class="title">Flyable</span> </span>&#123;</span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">fly</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">// code...</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">stop</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">// code...</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Bullet</span> <span class="keyword">extends</span> <span class="title">Object</span> <span class="keyword">implements</span> <span class="title">Flyable</span>, <span class="title">Accackable</span> </span>&#123;</span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">fly</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">// code...</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">stop</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">// code...</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">attack</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">// code...</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Aaa</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">method1</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">// code...</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">default</span> <span class="keyword">void</span> <span class="title">method2</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">// code...</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// 默认方法可以省略public</span></span><br><span class="line">  <span class="function"><span class="keyword">default</span> <span class="keyword">void</span> <span class="title">method3</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">// code...</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li><p>接口中定义的静态方法，只能 通过接口来调用</p>
+</li>
+<li><p>通过实现类的对象，可以调用接口中的默认方法，如果实现类重写了接口中的默认方法，调用时，仍然调用的是重写之后的方法</p>
+</li>
+<li><p>如果子类或实现类继承的父类和实现的接口中声明了同名同参数的方法，如果子类在没有重写此方法的情况下，默认调用的是父类中的同名同参数方法。—类优先原则</p>
+</li>
+<li><p>如果实现类实现了多个接口，而多个接口中定义了同名同参数的方法，那么在实现类没有重写此方法的情况下，报错，这就需要在实现类中实现此方法。—接口冲突</p>
+</li>
+<li><p>如何在子类或是实现类的方法中调用父类、接口中被重写的方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">SubClass</span> <span class="keyword">extends</span> <span class="title">SuperClass</span> <span class="keyword">implements</span> <span class="title">CompareA</span>, <span class="title">CompareB</span> </span>&#123;</span><br><span class="line">  <span class="comment">// code...</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">myMethod</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 调用自己的</span></span><br><span class="line">    method3();</span><br><span class="line">    <span class="comment">// 调用父类的</span></span><br><span class="line">    <span class="keyword">super</span>.method3();</span><br><span class="line">    <span class="comment">// 调用接口中默认的方法</span></span><br><span class="line">    CompareA.<span class="keyword">super</span>.method3();</span><br><span class="line">    CompareB.<span class="keyword">super</span>.method3();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h3 id="代理模式"><a href="#代理模式" class="headerlink" title="代理模式"></a>代理模式</h3><p>其实就是。代理类里传调用类</p>
+<p>开闭原则：对拓展开发，对修改封闭</p>
+<h3 id="内部类"><a href="#内部类" class="headerlink" title="内部类"></a>内部类</h3><p>类里面写类</p>
+<ol>
+<li>允许将一个类 A 声明在另一个类 B 中，则 A 就是内部类，B 是外部类</li>
+<li>内部类分类：成员内部类 、局部内部类(方法内、代码块内、构造器类)</li>
+</ol>
+<h3 id="异常处理"><a href="#异常处理" class="headerlink" title="异常处理"></a>异常处理</h3><ol>
+<li><p>异常体系结构</p>
+<ol>
+<li><p>Java.lang.Throwable</p>
+<p>—java.lang.Error: 一般不编写针对性代码进行处理</p>
+<p>—java.lang.Exception:可以进行异常的处理</p>
+<p>​ —编译时异常(checked)</p>
+<p>​ —运行时异常(unchecked)</p>
+</li>
+</ol>
+</li>
+</ol>
+<h4 id="抓抛模型"><a href="#抓抛模型" class="headerlink" title="抓抛模型"></a>抓抛模型</h4><ol>
+<li>抛：程序在正常执行过程中，一旦出现异常，会在异常代码处生成一个对应异常类对象，并将此对象抛出，一旦抛出，其后的代码就不再执行。</li>
+<li>抓：可以理解为异常的处理方式<ol>
+<li>try-catch-finally 可以嵌套</li>
+<li>throws</li>
+</ol>
+</li>
+<li>常用处理方式:<ol>
+<li>String getMessage()</li>
+<li>printStackTrace()</li>
+</ol>
+</li>
+<li>像数据库连接、输入输出流、网络编程 Socket 等资源，JVM 是不能自动回收的，我们需要自己手动进行资源的释放。此时的资源释放，就需要声明在 finally 中</li>
+<li>开发中，由于运行时异常比较常见，所以我们通常就不针对运行时异常编写 try-catch-finally。针对编译时异常，一定要考虑异常处理。</li>
+<li>throws + 异常类型<ol>
+<li>写在方法的声明处，指明此方法执行时，可能会抛出的异常类型，一旦方法体执行出现异常，仍会在异常代码处生成一个异常类的对象，此对象满足 throws 后异常类型时，就会被抛出。异常代码后续代码不再执行</li>
+</ol>
+</li>
+<li>try-catch-finally：真正将异常处理掉了</li>
+<li>throws 的方式只是将异常抛给了方法的调用者，并没有真正将异常处理掉</li>
+</ol>
+<h4 id="方法重写规定"><a href="#方法重写规定" class="headerlink" title="方法重写规定"></a>方法重写规定</h4><ol>
+<li>子类重写的方法抛出的异常类型不大于父类被重写的方法抛出的异常类型</li>
+</ol>
+<h4 id="开发中如何选择使用-try-catch-finally-还是-throws"><a href="#开发中如何选择使用-try-catch-finally-还是-throws" class="headerlink" title="开发中如何选择使用 try-catch-finally 还是 throws"></a>开发中如何选择使用 try-catch-finally 还是 throws</h4><ol>
+<li>如果父类中被重写的方法没有 throws 方式处理异常，则子类重写的方法也不能 throws，意味着如果子类重写的方法中有异常，必须使用 try-catch-finally 方式处理。</li>
+<li>执行的方法 a 中，先后调用了其他几个方法，而且是递进关系，我们建议这几个方法使用 throws 方式进行处理，而执行的方法 a 可以考虑使用 try-catch-finally 进行处理。</li>
+</ol>
+<h4 id="异常对象的产生"><a href="#异常对象的产生" class="headerlink" title="异常对象的产生"></a>异常对象的产生</h4><ol>
+<li>系统自动生成的异常对象</li>
+<li>手动的生成一个异常对象并抛出(throw)</li>
+</ol>
+<h4 id="自定义异常"><a href="#自定义异常" class="headerlink" title="自定义异常"></a>自定义异常</h4><ol>
+<li>继承现有的异常结构</li>
+<li>提供全局常量：serialVersinUID</li>
+<li>提供重载的构造器</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyException</span> <span class="keyword">extends</span> <span class="title">RuntimeException</span> </span>&#123;</span><br><span class="line">  <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">long</span> serialVersionUID = -<span class="number">2323232323L</span>;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="title">MyException</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="title">MyException</span><span class="params">(String msg)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">super</span>(msg);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://tva1.sinaimg.cn/large/0081Kckwly1gmajokd10qj319m0mqtjs.jpg" alt></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://github.com/wangqinyong1994/blog/2020/12/28/java基础/" data-id="ckj9996yd0001url6jzkou911" class="article-share-link">Share</a>
+      <a data-url="https://github.com/wangqinyong1994/blog/2020/12/30/java基础/" data-id="ckjmtquaz000430l698xgocj3" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Java/">Java</a></li></ul>
@@ -1001,7 +1157,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://github.com/wangqinyong1994/blog/2020/11/29/react原理/" data-id="ckj9996z3000yurl6b5if51wu" class="article-share-link">Share</a>
+      <a data-url="https://github.com/wangqinyong1994/blog/2020/11/29/react原理/" data-id="ckjmtqubw000y30l6779cv15a" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/React/">React</a></li></ul>
@@ -1364,7 +1520,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://github.com/wangqinyong1994/blog/2020/10/14/设计模式/" data-id="ckj9996ys000gurl6019oapuc" class="article-share-link">Share</a>
+      <a data-url="https://github.com/wangqinyong1994/blog/2020/10/14/设计模式/" data-id="ckjmtqub9000i30l6vyfhuuq4" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/前端-设计模式/">前端 设计模式</a></li></ul>
@@ -1553,7 +1709,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://github.com/wangqinyong1994/blog/2020/07/14/关于npm/" data-id="ckj9996yo000aurl6plvvd2n1" class="article-share-link">Share</a>
+      <a data-url="https://github.com/wangqinyong1994/blog/2020/07/14/关于npm/" data-id="ckjmtqub3000a30l60nfnkthi" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/前端-工程化-npm/">前端 工程化 npm</a></li></ul>
@@ -1598,7 +1754,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://github.com/wangqinyong1994/blog/2019/09/15/异步与性能/" data-id="ckj9996yr000eurl66usfrr06" class="article-share-link">Share</a>
+      <a data-url="https://github.com/wangqinyong1994/blog/2019/09/15/异步与性能/" data-id="ckjmtqub4000c30l6lxjbvssx" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/中卷-异步与性能/">中卷 异步与性能</a></li></ul>
@@ -1888,7 +2044,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://github.com/wangqinyong1994/blog/2019/09/07/webpack相关/" data-id="ckj9996yj0006url6rvz1vxnq" class="article-share-link">Share</a>
+      <a data-url="https://github.com/wangqinyong1994/blog/2019/09/07/webpack相关/" data-id="ckjmtqub2000930l6qx7uuzjw" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/webpack/">webpack</a></li></ul>
@@ -1967,7 +2123,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://github.com/wangqinyong1994/blog/2019/09/03/类型与语法/" data-id="ckj9996yt000iurl65o3egl8t" class="article-share-link">Share</a>
+      <a data-url="https://github.com/wangqinyong1994/blog/2019/09/03/类型与语法/" data-id="ckjmtqub6000e30l64kd4vpph" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/中卷-类型-值/">中卷 类型 值</a></li></ul>
@@ -2021,7 +2177,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://github.com/wangqinyong1994/blog/2019/07/29/对象/" data-id="ckj9996yk0009url6hrc6qacj" class="article-share-link">Share</a>
+      <a data-url="https://github.com/wangqinyong1994/blog/2019/07/29/对象/" data-id="ckjmtqub1000630l6lx647rzu" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/上卷-对象/">上卷 对象</a></li></ul>
@@ -2091,7 +2247,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://github.com/wangqinyong1994/blog/2019/07/14/作用域和闭包/" data-id="ckj9996yi0005url6cb5d8i9l" class="article-share-link">Share</a>
+      <a data-url="https://github.com/wangqinyong1994/blog/2019/07/14/作用域和闭包/" data-id="ckjmtqub0000530l6pisd010y" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/上卷-作用域和闭包/">上卷 作用域和闭包</a></li></ul>
@@ -2151,7 +2307,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://github.com/wangqinyong1994/blog/2019/07/14/this和原型对象/" data-id="ckj9996yh0004url6qoxinnu3" class="article-share-link">Share</a>
+      <a data-url="https://github.com/wangqinyong1994/blog/2019/07/14/this和原型对象/" data-id="ckjmtquaw000230l68m1zi2rn" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/上卷-this-原型对象/">上卷 this 原型对象</a></li></ul>
@@ -2213,7 +2369,7 @@
       <ul>
         
           <li>
-            <a href="/blog/2020/12/28/java基础/">Java基础</a>
+            <a href="/blog/2020/12/30/java基础/">Java基础</a>
           </li>
         
           <li>
@@ -2244,7 +2400,7 @@
   
   <div class="outer">
     <div id="footer-info" class="inner">
-      &copy; 2020 WangQinyong<br>
+      &copy; 2021 WangQinyong<br>
       Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>
