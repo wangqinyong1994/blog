@@ -66,6 +66,98 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-SSO实践" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/blog/2021/02/03/SSO实践/" class="article-date">
+  <time datetime="2021-02-03T12:18:58.000Z" itemprop="datePublished">2021-02-03</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2021/02/03/SSO实践/">SSO实践</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://github.com/wangqinyong1994/blog/2021/02/03/SSO实践/" data-id="ckkpg8jih0000l3yzeug7lzms" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/单点登录-SSO/">单点登录 SSO</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-微前端实践" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/blog/2021/02/03/微前端实践/" class="article-date">
+  <time datetime="2021-02-03T12:18:24.000Z" itemprop="datePublished">2021-02-03</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2021/02/03/微前端实践/">微前端实践</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>通过 umi 搭建了 4 个应用，1 个基座，3 个子应用<br><img src="https://tva1.sinaimg.cn/large/008eGmZEly1gnam4jeju2j31c80u0h8x.jpg" alt="项目示例"></p>
+<p>项目版本相关<br><img src="https://tva1.sinaimg.cn/large/008eGmZEly1gnand5hqy7j30wy0pejus.jpg" alt="版本"></p>
+<h2 id="基座"><a href="#基座" class="headerlink" title="基座"></a>基座</h2><p><code>.umirc</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ...</span></span><br><span class="line">&#123;</span><br><span class="line">    routes: [</span><br><span class="line">        &#123;</span><br><span class="line">            path: <span class="string">'/'</span>,</span><br><span class="line">            component: <span class="string">'@/pages/index'</span>,</span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">            path: <span class="string">'/login'</span>,</span><br><span class="line">            component: <span class="string">'@/pages/login/index'</span>,</span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">            path: <span class="string">'/app1'</span>,</span><br><span class="line">            microApp: <span class="string">'app1'</span>,</span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">            path: <span class="string">'/app2'</span>,</span><br><span class="line">            microApp: <span class="string">'app2'</span>,</span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">            path: <span class="string">'/app3'</span>,</span><br><span class="line">            microApp: <span class="string">'app3'</span>,</span><br><span class="line">        &#125;,</span><br><span class="line">    ],</span><br><span class="line">    devServer: &#123;</span><br><span class="line">        port: <span class="number">7000</span>,</span><br><span class="line">    &#125;,</span><br><span class="line"></span><br><span class="line">    qiankun: &#123;</span><br><span class="line">        master: &#123;</span><br><span class="line">        apps: [</span><br><span class="line">            &#123;</span><br><span class="line">                name: <span class="string">'app1'</span>, <span class="comment">// 唯一 id</span></span><br><span class="line">                entry: <span class="string">'//localhost:7001'</span>, <span class="comment">// app1 entry</span></span><br><span class="line">            &#125;,</span><br><span class="line">            &#123;</span><br><span class="line">                name: <span class="string">'app2'</span>, <span class="comment">// 唯一 id</span></span><br><span class="line">                entry: <span class="string">'//localhost:7002'</span>, <span class="comment">// app2 entry</span></span><br><span class="line">            &#125;,</span><br><span class="line">            &#123;</span><br><span class="line">                name: <span class="string">'app3'</span>, <span class="comment">// 唯一 id</span></span><br><span class="line">                entry: <span class="string">'//localhost:7003'</span>, <span class="comment">// app3 entry</span></span><br><span class="line">            &#125;,</span><br><span class="line">          ],</span><br><span class="line">        &#125;,</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="子应用配置"><a href="#子应用配置" class="headerlink" title="子应用配置"></a>子应用配置</h2><p>app1 <code>.umirc</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    devServer: &#123;</span><br><span class="line">        port: <span class="number">7001</span>,</span><br><span class="line">        headers: &#123;</span><br><span class="line">            <span class="string">'Access-Control-Allow-Origin'</span>: <span class="string">'*'</span>,</span><br><span class="line">        &#125;,</span><br><span class="line">    &#125;,</span><br><span class="line">    publicPath: <span class="string">'http://localhost:7001/'</span>,</span><br><span class="line">    runtimePublicPath: <span class="literal">true</span>,</span><br><span class="line">    qiankun: &#123;</span><br><span class="line">        slave: &#123;&#125;,</span><br><span class="line">    &#125;,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 同理app2、app3换下端口</span></span><br></pre></td></tr></table></figure>
+
+<p>对应项目<code>package.json</code>name 需换成<code>app1, app2, app3</code>与基座 id 对应注册</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"name"</span>: <span class="string">"app1"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="通信"><a href="#通信" class="headerlink" title="通信"></a>通信</h2><p>基座需在<code>app.ts</code>导出函数<code>useQiankunStateForSlave</code></p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">useQiankunStateForSlave</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> [masterState, setMasterState] = useState(&#123;</span><br><span class="line">    a: <span class="number">1</span>,</span><br><span class="line">    b: <span class="number">2</span>,</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 可自定义传入一些函数</span></span><br><span class="line">  <span class="keyword">const</span> showMasterMessage = (</span><br><span class="line">    msg: <span class="built_in">any</span>,</span><br><span class="line">    <span class="keyword">type</span>: Partial&lt;keyof MessageApi&gt;</span><br><span class="line">  ): <span class="function"><span class="params">void</span> =&gt;</span> &#123;</span><br><span class="line">    message[<span class="keyword">type</span>](msg, <span class="number">2</span>);</span><br><span class="line">  &#125;;</span><br><span class="line">  <span class="comment">// useModel获取model里的数据进行消费</span></span><br><span class="line">  <span class="keyword">const</span> user = useModel(<span class="string">"user"</span>);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> &#123;</span><br><span class="line">    masterState,</span><br><span class="line">    setMasterState,</span><br><span class="line">    user,</span><br><span class="line">    showMasterMessage,</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>主应用登录后的信息<br><img src="https://tva1.sinaimg.cn/large/008eGmZEly1gnangrbc37j315h0u0ae7.jpg" alt></p>
+<p>子应用同源使用 localstorage 的 token 与用户信息</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://github.com/wangqinyong1994/blog/2021/02/03/微前端实践/" data-id="ckkpg8jj0000ll3yzjw7hz8k2" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/qiankun-微前端-umi/">qiankun 微前端 umi</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-配置eslint与prettier" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/blog/2021/01/23/配置eslint与prettier/" class="article-date">
@@ -124,7 +216,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://github.com/wangqinyong1994/blog/2021/01/23/配置eslint与prettier/" data-id="ckkav366c000hbvl6tqbmsi01" class="article-share-link">Share</a>
+      <a data-url="https://github.com/wangqinyong1994/blog/2021/01/23/配置eslint与prettier/" data-id="ckkpg8jj0000ml3yzpwipiqp0" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/vscode-eslint-prettier/">vscode eslint prettier</a></li></ul>
@@ -576,7 +668,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://github.com/wangqinyong1994/blog/2020/12/30/java基础/" data-id="ckkav36600001bvl6bmqy0tlb" class="article-share-link">Share</a>
+      <a data-url="https://github.com/wangqinyong1994/blog/2020/12/30/java基础/" data-id="ckkpg8jin0004l3yz0fbmg76a" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Java/">Java</a></li></ul>
@@ -1227,7 +1319,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://github.com/wangqinyong1994/blog/2020/11/29/react原理/" data-id="ckkav366w0010bvl62a2mujv3" class="article-share-link">Share</a>
+      <a data-url="https://github.com/wangqinyong1994/blog/2020/11/29/react原理/" data-id="ckkpg8jje0016l3yzb8czuzug" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/React/">React</a></li></ul>
@@ -1590,7 +1682,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://github.com/wangqinyong1994/blog/2020/10/14/设计模式/" data-id="ckkav366g000jbvl60tmrx3ia" class="article-share-link">Share</a>
+      <a data-url="https://github.com/wangqinyong1994/blog/2020/10/14/设计模式/" data-id="ckkpg8jix000jl3yzrj5h8qab" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/前端-设计模式/">前端 设计模式</a></li></ul>
@@ -1779,7 +1871,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://github.com/wangqinyong1994/blog/2020/07/14/关于npm/" data-id="ckkav3668000bbvl683u28yhw" class="article-share-link">Share</a>
+      <a data-url="https://github.com/wangqinyong1994/blog/2020/07/14/关于npm/" data-id="ckkpg8jip0008l3yzsgdacyti" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/前端-工程化-npm/">前端 工程化 npm</a></li></ul>
@@ -1824,7 +1916,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://github.com/wangqinyong1994/blog/2019/09/15/异步与性能/" data-id="ckkav36670009bvl6gdp4sode" class="article-share-link">Share</a>
+      <a data-url="https://github.com/wangqinyong1994/blog/2019/09/15/异步与性能/" data-id="ckkpg8jir000bl3yzucl0lpgc" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/中卷-异步与性能/">中卷 异步与性能</a></li></ul>
@@ -2114,7 +2206,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://github.com/wangqinyong1994/blog/2019/09/07/webpack相关/" data-id="ckkav36640004bvl6wni9d4lz" class="article-share-link">Share</a>
+      <a data-url="https://github.com/wangqinyong1994/blog/2019/09/07/webpack相关/" data-id="ckkpg8jio0005l3yz0za6b43c" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/webpack/">webpack</a></li></ul>
@@ -2193,134 +2285,10 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://github.com/wangqinyong1994/blog/2019/09/03/类型与语法/" data-id="ckkav3668000dbvl6gkszypn5" class="article-share-link">Share</a>
+      <a data-url="https://github.com/wangqinyong1994/blog/2019/09/03/类型与语法/" data-id="ckkpg8jit000fl3yzhuhj5xxo" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/中卷-类型-值/">中卷 类型 值</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-对象" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/blog/2019/07/29/对象/" class="article-date">
-  <time datetime="2019-07-29T15:19:24.000Z" itemprop="datePublished">2019-07-29</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2019/07/29/对象/">对象</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h4 id="1-忽视点"><a href="#1-忽视点" class="headerlink" title="1.忽视点"></a>1.忽视点</h4><h5 id="1-1-原话：-简单基本类型-string-boolean-number-null-undefined-本身并不是对象，-null-有时会被当做一种对象类型，-但是这其实只是语言本身的一个-bug，-即对-null-执行-typeof-会返回字符串’object’。实际上，-null-本身是基本类型。"><a href="#1-1-原话：-简单基本类型-string-boolean-number-null-undefined-本身并不是对象，-null-有时会被当做一种对象类型，-但是这其实只是语言本身的一个-bug，-即对-null-执行-typeof-会返回字符串’object’。实际上，-null-本身是基本类型。" class="headerlink" title="1.1 原话： 简单基本类型(string, boolean, number, null, undefined)本身并不是对象， null 有时会被当做一种对象类型， 但是这其实只是语言本身的一个 bug， 即对 null 执行 typeof 会返回字符串’object’。实际上， null 本身是基本类型。"></a>1.1 原话： 简单基本类型(string, boolean, number, null, undefined)本身并不是对象， null 有时会被当做一种对象类型， 但是这其实只是语言本身的一个 bug， 即对 null 执行 typeof 会返回字符串’object’。实际上， null 本身是基本类型。</h5><h5 id="1-2-1-内置对象"><a href="#1-2-1-内置对象" class="headerlink" title="1.2.1 内置对象"></a>1.2.1 内置对象</h5><h6 id="String-Number-Boolean-Object-Function-Array-Date-RegExp-Error"><a href="#String-Number-Boolean-Object-Function-Array-Date-RegExp-Error" class="headerlink" title="String Number Boolean Object Function Array Date RegExp Error"></a>String Number Boolean Object Function Array Date RegExp Error</h6><p>instanceof typeof Object.prototype.toString.call(xxx) 可以判断类型</p>
-<h5 id="1-2-2-对象的属性描述符"><a href="#1-2-2-对象的属性描述符" class="headerlink" title="1.2.2 对象的属性描述符"></a>1.2.2 对象的属性描述符</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">var obj = &#123;name: &apos;aaa&apos;&#125;;</span><br><span class="line"></span><br><span class="line">Object.getOwnPropertyDescriptor(obj, &quot;name&quot;);</span><br><span class="line"></span><br><span class="line">// &#123;</span><br><span class="line">//     value: &apos;aaa&apos;,</span><br><span class="line">//     writable: true,</span><br><span class="line">//     enumerable: true,</span><br><span class="line">//     configurable: true</span><br><span class="line">// &#125;</span><br></pre></td></tr></table></figure>
-
-<p>writable 决定是否可以修改属性值<br>configurable 为 true， 可用 Object.defineProperty 来修改属性描述符<br>enumerable 是否可枚举，影响对象 for…in 循环</p>
-<hr>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">var obj = &#123;</span><br><span class="line">    a: 2,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">console.log(&apos;a&apos; in obj); // true</span><br><span class="line">console.log(&apos;b&apos; in obj); // false</span><br><span class="line"></span><br><span class="line">console.log(obj.hasOwnProperty(a)) // true</span><br><span class="line">console.log(obj.hasOwnProperty(b)) // false</span><br><span class="line"></span><br><span class="line">// in 会检查属性是否在对象或原型链上， hasOwnProperty检查属性是否在当前对象上</span><br></pre></td></tr></table></figure>
-
-<hr>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">var myArray = [ 1, 2, 3 ];</span><br><span class="line">var it = myArray[Symbol.iterator]();</span><br><span class="line">it.next(); // &#123; value:1, done:false &#125;</span><br><span class="line">it.next(); // &#123; value:2, done:false &#125;</span><br><span class="line">it.next(); // &#123; value:3, done:false &#125;</span><br><span class="line">it.next(); // &#123; done:true &#125;</span><br><span class="line"></span><br><span class="line">// 数组内部有@@iterator属性， 可以进行es6的for...of遍历</span><br><span class="line"></span><br><span class="line">// 可以给予想遍历的对象添加@@iterator属性</span><br><span class="line"></span><br><span class="line">var obj = &#123;</span><br><span class="line">    a: 2,</span><br><span class="line">    b: 3</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">Object.defineProperty(obj, Symbol.iterator, &#123;</span><br><span class="line">    enumerable: false,</span><br><span class="line">    writable: false,</span><br><span class="line">    configurable: true,</span><br><span class="line">    value: function() &#123;</span><br><span class="line">        var o = this;</span><br><span class="line">        var idx = 0;</span><br><span class="line">        var ks = Object.keys(o);</span><br><span class="line">        return &#123;</span><br><span class="line">            next: function() &#123;</span><br><span class="line">                return &#123;</span><br><span class="line">                    value: o[ks[idx]],</span><br><span class="line">                    done: idx &gt; ks.length</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">var it = obj[Symbol.iterator](); </span><br><span class="line">it.next(); // &#123; value:2, done:false &#125; </span><br><span class="line">it.next(); // &#123; value:3, done:false &#125; </span><br><span class="line">it.next(); // &#123; value:undefined, done:true &#125;</span><br><span class="line">// 用 for..of 遍历 obj </span><br><span class="line">for (var v of obj) &#123; </span><br><span class="line">    console.log( v );</span><br><span class="line">&#125;</span><br><span class="line">// 2 // 3</span><br></pre></td></tr></table></figure>
-
-<h5 id="1-2-3-属性设置和屏蔽"><a href="#1-2-3-属性设置和屏蔽" class="headerlink" title="1.2.3 属性设置和屏蔽"></a>1.2.3 属性设置和屏蔽</h5><p>如果 foo 不直接存在于 myObject 中而是存在于原型链上层时 myObject.foo = “bar” 会出现的三种情况。</p>
-<ol>
-<li>如果在[[Prototype]]链上层存在名为foo的普通数据访问属性(参见第3章)并且没有被标记为只读(writable:false)，那就会直接在 myObject 中添加一个名为 foo 的新 属性，它是屏蔽属性。</li>
-<li>如果在[[Prototype]]链上层存在foo，但是它被标记为只读(writable:false)，那么 无法修改已有属性或者在 myObject 上创建屏蔽属性。如果运行在严格模式下，代码会 抛出一个错误。否则，这条赋值语句会被忽略。总之，不会发生屏蔽。</li>
-<li>如果在[[Prototype]]链上层存在foo并且它是一个setter(参见第3章)，那就一定会 调用这个 setter。foo 不会被添加到(或者说屏蔽于)myObject，也不会重新定义 foo 这 个 setter。</li>
-</ol>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://github.com/wangqinyong1994/blog/2019/07/29/对象/" data-id="ckkav36660008bvl6w96oguht" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/上卷-对象/">上卷 对象</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-作用域和闭包" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/blog/2019/07/14/作用域和闭包/" class="article-date">
-  <time datetime="2019-07-14T15:05:28.000Z" itemprop="datePublished">2019-07-14</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2019/07/14/作用域和闭包/">读读 作用域和闭包</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h4 id="1-作用域是啥玩意"><a href="#1-作用域是啥玩意" class="headerlink" title="1.作用域是啥玩意"></a>1.作用域是啥玩意</h4><h5 id="开始你的表演"><a href="#开始你的表演" class="headerlink" title="开始你的表演"></a>开始你的表演</h5><hr>
-<h6 id="1）js编译原理-分词-语法分析-gt-解析-语法分析-gt-代码生成"><a href="#1）js编译原理-分词-语法分析-gt-解析-语法分析-gt-代码生成" class="headerlink" title="1）js编译原理 分词/语法分析 =&gt; 解析/语法分析 =&gt; 代码生成"></a>1）js编译原理 分词/语法分析 =&gt; 解析/语法分析 =&gt; 代码生成</h6><h5 id="分词词法分析，就是将语句分解成一块一块的，好好的-var-a-2-变成了-var、-a、-、-2、-做完这一步，-就到了解析-语法分析环节，这就要将词法单元流，转化成抽象语法树（AST），最后一步就是将这个树转换为可执行代码。"><a href="#分词词法分析，就是将语句分解成一块一块的，好好的-var-a-2-变成了-var、-a、-、-2、-做完这一步，-就到了解析-语法分析环节，这就要将词法单元流，转化成抽象语法树（AST），最后一步就是将这个树转换为可执行代码。" class="headerlink" title="分词词法分析，就是将语句分解成一块一块的，好好的 var a = 2;变成了 var、 a、 =、 2、 ;, 做完这一步， 就到了解析/语法分析环节，这就要将词法单元流，转化成抽象语法树（AST），最后一步就是将这个树转换为可执行代码。"></a>分词词法分析，就是将语句分解成一块一块的，好好的 <code>var a = 2;</code>变成了 <code>var、 a、 =、 2、 ;</code>, 做完这一步， 就到了解析/语法分析环节，这就要将<strong>词法单元流</strong>，转化成<strong>抽象语法树（AST）</strong>，最后一步就是将这个树转换为可执行代码。</h5><p>个人BB:<br>1.凡是这种树状结构的，类似vdom， 小程序的richText，都是一种中间层的转换，转换完之后再进行特定编译，这个中间商好像不赚差价。(*￣rǒ￣)<br>2.github有个<a href="https://github.com/benjamn/recast">recast库</a>，就是完成上述操作的，对于了解原理还是很好的，有机会再看 = =。</p>
-<h6 id="2）变量赋值操作-当前作用域声明一个变量-gt-运行时在作用域中查找该变量-gt-找到赋值。-很简单，-这时候引入一个LHS-左查-与RHS-右查-的概念。"><a href="#2）变量赋值操作-当前作用域声明一个变量-gt-运行时在作用域中查找该变量-gt-找到赋值。-很简单，-这时候引入一个LHS-左查-与RHS-右查-的概念。" class="headerlink" title="2）变量赋值操作: 当前作用域声明一个变量 =&gt; 运行时在作用域中查找该变量 =&gt; 找到赋值。 很简单， 这时候引入一个LHS(左查)与RHS(右查)的概念。"></a>2）变量赋值操作: 当前作用域声明一个变量 =&gt; 运行时在作用域中查找该变量 =&gt; 找到赋值。 很简单， 这时候引入一个LHS(左查)与RHS(右查)的概念。</h6><p>左查，变量出现在赋值操作左侧；右查反之。<br>直接拿书里的例子来说</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">function foo(a) &#123;</span><br><span class="line">    var b = a;</span><br><span class="line">    return a + b;</span><br><span class="line">&#125;</span><br><span class="line">var c = foo(2)</span><br><span class="line">// LHS: c = .. ;、 a = 2、 b = ..</span><br><span class="line">// RHS: foo(2.. 、 = 2 、 a.. 、 b..</span><br></pre></td></tr></table></figure>
-
-<p>非严格模式下<br>左查失败时候，隐式创建全局变量<br>右查失败时候，抛出异常 referenceError, eg. xxx is not undefined</p>
-<h6 id="3）-作用域嵌套-一个块或者函数嵌套在另一个块或者函数中。"><a href="#3）-作用域嵌套-一个块或者函数嵌套在另一个块或者函数中。" class="headerlink" title="3） 作用域嵌套: 一个块或者函数嵌套在另一个块或者函数中。"></a>3） 作用域嵌套: 一个块或者函数嵌套在另一个块或者函数中。</h6><p>想象成一个大建筑(全局)立面的n多小房间(局部块级作用域)。</p>
-<h4 id="2-词法作用域"><a href="#2-词法作用域" class="headerlink" title="2.词法作用域"></a>2.词法作用域</h4><h5 id="1）上码分析起来"><a href="#1）上码分析起来" class="headerlink" title="1）上码分析起来"></a>1）上码分析起来</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">function foo(a) &#123;</span><br><span class="line">    var b = a * 2;</span><br><span class="line">    </span><br><span class="line">    function bar(c) &#123;</span><br><span class="line">        console.log(a, b, c)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    bar(b * 3)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">foo(2); // 2, 4, 12</span><br></pre></td></tr></table></figure>
-
-<p>由最内部函数开始找变量，里面找不到找外面， a找到最外面2， b在bar外部foo内部， 找到赋值4， c为入参， 4*3赋值12.</p>
-<p><strong>注意事项： 作用域查找会在找到第一个匹配的标识符停止。 学名”遮蔽效应”。</strong></p>
-<h5 id="2）欺骗词法-eval-with-运行时创建新的词法作用域"><a href="#2）欺骗词法-eval-with-运行时创建新的词法作用域" class="headerlink" title="2）欺骗词法 eval with 运行时创建新的词法作用域"></a>2）欺骗词法 eval with 运行时创建新的词法作用域</h5><p>eval内部可执行代码，借此改变已存在的词法作用域。<br>with通过将一个对象的引用当做作用域来处理， 将对象属性当做作用域中的标识符处理，从而创建了一个新的词法作用域。</p>
-<p>eg.</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">function foo(str, a) &#123;</span><br><span class="line">    eval(str);</span><br><span class="line">    console.log(a, b)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">var b = 2;</span><br><span class="line"></span><br><span class="line">foo(&quot;var b = 3;&quot;, 1); // 1, 3</span><br></pre></td></tr></table></figure>
-
-<hr>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">function foo(obj) &#123;</span><br><span class="line">    with(obj) &#123;</span><br><span class="line">        a = 2;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">var o1 = &#123;</span><br><span class="line">    a: 3</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">var o2 = &#123;</span><br><span class="line">    b: 3</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">foo(o1);</span><br><span class="line">console.log(o1.a); // 2</span><br><span class="line"></span><br><span class="line">foo(o2);</span><br><span class="line">console.log(o2.a); // undefined</span><br><span class="line">console.log(a); // 2 a泄露到了全局作用域上</span><br><span class="line"></span><br><span class="line">// 原因： with可以将一个没有或有多个属性的对象处理为一个完全隔离的词法作用域。 没有o2.a，就创建一个a并且赋值2。</span><br></pre></td></tr></table></figure>
-
-<hr>
-<h6 id="let块变形"><a href="#let块变形" class="headerlink" title="let块变形"></a>let块变形</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">var foo = true;</span><br><span class="line"></span><br><span class="line">if(foo) &#123;</span><br><span class="line">    let bar = foo * 2;</span><br><span class="line">    bar = something(bar);</span><br><span class="line">    console.log(bar);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">console.log(bar); // ReferenceError</span><br><span class="line"></span><br><span class="line">// if语句同下面</span><br><span class="line"></span><br><span class="line">if(foo) &#123;</span><br><span class="line">    // let的作用</span><br><span class="line">    &#123;</span><br><span class="line">        let bar = foo * 2;</span><br><span class="line">        bar = something(bar);</span><br><span class="line">        console.log(bar)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">console.log(bar); // ReferenceError</span><br></pre></td></tr></table></figure>
-
-<hr>
-<h6 id="let-循环"><a href="#let-循环" class="headerlink" title="let 循环"></a>let 循环</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">for(let i = 0; i &lt; 10; i++) &#123;</span><br><span class="line">    console.log(i) // 0-9 每次迭代重新绑定</span><br><span class="line">&#125;</span><br><span class="line">console.log(i) // ReferenceError</span><br><span class="line"></span><br><span class="line">// 等同于</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">    let j;</span><br><span class="line">    for(j = 0; j &lt; 10; j++) &#123;</span><br><span class="line">        let i = j;</span><br><span class="line">        console.log(i);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<hr>
-<h5 id="提升-先声明，后赋值"><a href="#提升-先声明，后赋值" class="headerlink" title="提升 (先声明，后赋值)"></a>提升 (先声明，后赋值)</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">foo(); // 1</span><br><span class="line"></span><br><span class="line">var foo;</span><br><span class="line"></span><br><span class="line">function foo() &#123;</span><br><span class="line">    console.log(1);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">foo = function() &#123;</span><br><span class="line">    console.log(2);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 加了打印成3了</span><br><span class="line">// function foo() &#123;</span><br><span class="line">//    console.log(3)</span><br><span class="line">// &#125;</span><br><span class="line"></span><br><span class="line">// 变量提升， 函数优先， 后写同名函数声明可以覆盖之前。</span><br></pre></td></tr></table></figure>
-
-<p><strong>总而言之， 无论作用域中的声明出现在什么地方， 都将在代码本身被执行前首先进行处理。 可以将这个过程形象地想象成所有的声明(变量和函数)都会被移动到各自作用域的最顶端， 这个过程叫做提升。</strong></p>
-<hr>
-<h5 id="作用域闭包"><a href="#作用域闭包" class="headerlink" title="作用域闭包"></a>作用域闭包</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">function foo() &#123;</span><br><span class="line">    var a = 2;</span><br><span class="line"></span><br><span class="line">    function bar() &#123;</span><br><span class="line">        console.log(a);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    return bar;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">var baz = foo();</span><br><span class="line"></span><br><span class="line">baz(); // 2</span><br></pre></td></tr></table></figure>
-
-<p><strong>无论通过何种手段将内部函数传递到所在的词法作用域以外， 它都会持有对原始定义作用域的引用， 无论在何处执行这个函数都会使用闭包。</strong><br><strong>函数嵌套函数， 叫做闭包。官方一点， 内部函数传递到了其所在的词法作用域之外，叫做闭包。</strong></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://github.com/wangqinyong1994/blog/2019/07/14/作用域和闭包/" data-id="ckkav36640005bvl6lahtemf4" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/上卷-作用域和闭包/">上卷 作用域和闭包</a></li></ul>
 
     </footer>
   </div>
@@ -2347,7 +2315,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Java/">Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/React/">React</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/vscode-eslint-prettier/">vscode eslint prettier</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/webpack/">webpack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/上卷-this-原型对象/">上卷 this 原型对象</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/上卷-作用域和闭包/">上卷 作用域和闭包</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/上卷-对象/">上卷 对象</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/中卷-异步与性能/">中卷 异步与性能</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/中卷-类型-值/">中卷 类型 值</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/你不知道的JavaScript/">你不知道的JavaScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/前端-工程化-npm/">前端 工程化 npm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/前端-设计模式/">前端 设计模式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/序/">序</a></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Java/">Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/React/">React</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/qiankun-微前端-umi/">qiankun 微前端 umi</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/vscode-eslint-prettier/">vscode eslint prettier</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/webpack/">webpack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/上卷-this-原型对象/">上卷 this 原型对象</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/上卷-作用域和闭包/">上卷 作用域和闭包</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/上卷-对象/">上卷 对象</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/中卷-异步与性能/">中卷 异步与性能</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/中卷-类型-值/">中卷 类型 值</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/你不知道的JavaScript/">你不知道的JavaScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/前端-工程化-npm/">前端 工程化 npm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/前端-设计模式/">前端 设计模式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/单点登录-SSO/">单点登录 SSO</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/序/">序</a></li></ul>
     </div>
   </div>
 
@@ -2357,7 +2325,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/blog/tags/Java/" style="font-size: 10px;">Java</a> <a href="/blog/tags/React/" style="font-size: 10px;">React</a> <a href="/blog/tags/vscode-eslint-prettier/" style="font-size: 10px;">vscode eslint prettier</a> <a href="/blog/tags/webpack/" style="font-size: 10px;">webpack</a> <a href="/blog/tags/上卷-this-原型对象/" style="font-size: 10px;">上卷 this 原型对象</a> <a href="/blog/tags/上卷-作用域和闭包/" style="font-size: 10px;">上卷 作用域和闭包</a> <a href="/blog/tags/上卷-对象/" style="font-size: 10px;">上卷 对象</a> <a href="/blog/tags/中卷-异步与性能/" style="font-size: 10px;">中卷 异步与性能</a> <a href="/blog/tags/中卷-类型-值/" style="font-size: 10px;">中卷 类型 值</a> <a href="/blog/tags/你不知道的JavaScript/" style="font-size: 10px;">你不知道的JavaScript</a> <a href="/blog/tags/前端-工程化-npm/" style="font-size: 10px;">前端 工程化 npm</a> <a href="/blog/tags/前端-设计模式/" style="font-size: 10px;">前端 设计模式</a> <a href="/blog/tags/序/" style="font-size: 10px;">序</a>
+      <a href="/blog/tags/Java/" style="font-size: 10px;">Java</a> <a href="/blog/tags/React/" style="font-size: 10px;">React</a> <a href="/blog/tags/qiankun-微前端-umi/" style="font-size: 10px;">qiankun 微前端 umi</a> <a href="/blog/tags/vscode-eslint-prettier/" style="font-size: 10px;">vscode eslint prettier</a> <a href="/blog/tags/webpack/" style="font-size: 10px;">webpack</a> <a href="/blog/tags/上卷-this-原型对象/" style="font-size: 10px;">上卷 this 原型对象</a> <a href="/blog/tags/上卷-作用域和闭包/" style="font-size: 10px;">上卷 作用域和闭包</a> <a href="/blog/tags/上卷-对象/" style="font-size: 10px;">上卷 对象</a> <a href="/blog/tags/中卷-异步与性能/" style="font-size: 10px;">中卷 异步与性能</a> <a href="/blog/tags/中卷-类型-值/" style="font-size: 10px;">中卷 类型 值</a> <a href="/blog/tags/你不知道的JavaScript/" style="font-size: 10px;">你不知道的JavaScript</a> <a href="/blog/tags/前端-工程化-npm/" style="font-size: 10px;">前端 工程化 npm</a> <a href="/blog/tags/前端-设计模式/" style="font-size: 10px;">前端 设计模式</a> <a href="/blog/tags/单点登录-SSO/" style="font-size: 10px;">单点登录 SSO</a> <a href="/blog/tags/序/" style="font-size: 10px;">序</a>
     </div>
   </div>
 
@@ -2366,7 +2334,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2021/01/">January 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2020/12/">December 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2020/11/">November 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2020/10/">October 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2020/07/">July 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/07/">July 2019</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2021/02/">February 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2021/01/">January 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2020/12/">December 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2020/11/">November 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2020/10/">October 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2020/07/">July 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/07/">July 2019</a></li></ul>
     </div>
   </div>
 
@@ -2379,6 +2347,14 @@
       <ul>
         
           <li>
+            <a href="/blog/2021/02/03/SSO实践/">SSO实践</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2021/02/03/微前端实践/">微前端实践</a>
+          </li>
+        
+          <li>
             <a href="/blog/2021/01/23/配置eslint与prettier/">配置 eslint 与 prettier</a>
           </li>
         
@@ -2388,14 +2364,6 @@
         
           <li>
             <a href="/blog/2020/11/29/react原理/">React原理</a>
-          </li>
-        
-          <li>
-            <a href="/blog/2020/10/14/设计模式/">前端路线</a>
-          </li>
-        
-          <li>
-            <a href="/blog/2020/07/14/关于npm/">前端路线</a>
           </li>
         
       </ul>
