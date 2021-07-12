@@ -66,6 +66,122 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-Spring" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/blog/2021/07/12/Spring/" class="article-date">
+  <time datetime="2021-07-12T08:59:23.000Z" itemprop="datePublished">2021-07-12</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2021/07/12/Spring/">Spring</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>IOC AOP DI</p>
+<h2 id="Bean"><a href="#Bean" class="headerlink" title="Bean"></a>Bean</h2><h3 id="关于bean"><a href="#关于bean" class="headerlink" title="关于bean"></a>关于bean</h3><p>使用Spring创建对象，统称为Bean<br>⚠️：配置文件加载的时候，容器中管理的对象已经初始化了。</p>
+<p>bean</p>
+<ul>
+<li>id-变量名 相当于对象名</li>
+<li>class-类路径</li>
+<li>name-取别名，可以分隔取多个，比alias高级</li>
+<li>property 给对象中的属性设值</li>
+</ul>
+<p>ClassPathXmlApplicationContext类</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line"><span class="comment">// 获取spring上下文对象</span></span><br><span class="line">		ClassPathXmlApplicationContext classPathXmlApplicationContext = <span class="keyword">new</span> ClassPathXmlApplicationContext(<span class="string">"beans.xml"</span>);</span><br><span class="line"></span><br><span class="line">		Hello hello = (Hello) classPathXmlApplicationContext.getBean(<span class="string">"hello"</span>);</span><br><span class="line"></span><br><span class="line">		System.out.println(hello.toString());</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"hello"</span> <span class="attr">class</span>=<span class="string">"sp1.com.example.demo.Hello"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"str"</span> <span class="attr">value</span>=<span class="string">"Spring"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>bean别名</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"user"</span> <span class="attr">class</span>=<span class="string">"sp1.com.example.demo.User"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">constructor-arg</span> <span class="attr">index</span>=<span class="string">"0"</span> <span class="attr">value</span>=<span class="string">"下标参"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- getBean("biubiubiu") 也能取到 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">alias</span> <span class="attr">name</span>=<span class="string">"user"</span> <span class="attr">alias</span>=<span class="string">"biubiubiu"</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>import 导入</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">import</span> <span class="attr">resource</span>=<span class="string">"xxx1.xml"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">import</span> <span class="attr">resource</span>=<span class="string">"xxx2.xml"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">import</span> <span class="attr">resource</span>=<span class="string">"xxx3.xml"</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>bean作用域</strong><br>默认为单例模式</p>
+<ol>
+<li>单例模式</li>
+<li>原型模式: 每次从容器中get时候，都会产生一个新对象</li>
+<li>其余的request session application只能在web开发中使用到</li>
+</ol>
+<h3 id="关于构造器"><a href="#关于构造器" class="headerlink" title="关于构造器"></a>关于构造器</h3><ol>
+<li><p>默认使用无参构造</p>
+</li>
+<li><p>使用有参构造创建对象</p>
+<p> 1) 下标赋值</p>
+ <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"user"</span> <span class="attr">class</span>=<span class="string">"sp1.com.example.demo.User"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">constructor-arg</span> <span class="attr">index</span>=<span class="string">"0"</span> <span class="attr">value</span>=<span class="string">"下标参"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p> 2) 类型赋值 不建议使用</p>
+ <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"user"</span> <span class="attr">class</span>=<span class="string">"sp1.com.example.demo.User"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">constructor-arg</span> <span class="attr">type</span>=<span class="string">"java.lang.String"</span> <span class="attr">value</span>=<span class="string">"类型参数"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p> 3) 直接通过参数名设置</p>
+ <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"user"</span> <span class="attr">class</span>=<span class="string">"sp1.com.example.demo.User"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">constructor-arg</span> <span class="attr">name</span>=<span class="string">"name"</span> <span class="attr">value</span>=<span class="string">"name赋值"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h2 id="DI-依赖注入"><a href="#DI-依赖注入" class="headerlink" title="DI(依赖注入)"></a>DI(依赖注入)</h2><h3 id="构造器注入-如上-关于构造器"><a href="#构造器注入-如上-关于构造器" class="headerlink" title="构造器注入 如上(关于构造器)"></a>构造器注入 如上(<a href="#关于构造器">关于构造器</a>)</h3><h3 id="Set方式注入"><a href="#Set方式注入" class="headerlink" title="Set方式注入"></a>Set方式注入</h3><p>Address类</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> sp1.com.example.demo;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Address</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> String address;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getAddress</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> address;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setAddress</span><span class="params">(String address)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.address = address;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"Address&#123;"</span> +</span><br><span class="line">                <span class="string">"address='"</span> + address + <span class="string">'\''</span> +</span><br><span class="line">                <span class="string">'&#125;'</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Student类</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> sp1.com.example.demo;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.*;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Student</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="keyword">private</span> Address address;</span><br><span class="line">    <span class="keyword">private</span> String[] books;</span><br><span class="line">    <span class="keyword">private</span> List&lt;String&gt; hobbies;</span><br><span class="line">    <span class="keyword">private</span> Map&lt;String, String&gt; cards;</span><br><span class="line">    <span class="keyword">private</span> Set&lt;String&gt; games;</span><br><span class="line">    <span class="keyword">private</span> Properties info;</span><br><span class="line">    <span class="keyword">private</span> String wife;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"Student&#123;"</span> +</span><br><span class="line">                <span class="string">"name='"</span> + name + <span class="string">'\''</span> +</span><br><span class="line">                <span class="string">", address="</span> + address.toString() +</span><br><span class="line">                <span class="string">", books="</span> + Arrays.toString(books) +</span><br><span class="line">                <span class="string">", hobbys="</span> + hobbies +</span><br><span class="line">                <span class="string">", cards="</span> + cards +</span><br><span class="line">                <span class="string">", games="</span> + games +</span><br><span class="line">                <span class="string">", info="</span> + info +</span><br><span class="line">                <span class="string">", wife='"</span> + wife + <span class="string">'\''</span> +</span><br><span class="line">                <span class="string">'&#125;'</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setName</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Address <span class="title">getAddress</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> address;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setAddress</span><span class="params">(Address address)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.address = address;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> String[] getBooks() &#123;</span><br><span class="line">        <span class="keyword">return</span> books;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setBooks</span><span class="params">(String[] books)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.books = books;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> List&lt;String&gt; <span class="title">getHobbies</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> hobbies;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setHobbies</span><span class="params">(List&lt;String&gt; hobbies)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.hobbies = hobbies;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Map&lt;String, String&gt; <span class="title">getCards</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> cards;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setCards</span><span class="params">(Map&lt;String, String&gt; cards)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.cards = cards;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Set&lt;String&gt; <span class="title">getGames</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> games;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setGames</span><span class="params">(Set&lt;String&gt; games)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.games = games;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Properties <span class="title">getInfo</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> info;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setInfo</span><span class="params">(Properties info)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.info = info;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getWife</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> wife;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setWife</span><span class="params">(String wife)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.wife = wife;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>beans.xml</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"address"</span> <span class="attr">class</span>=<span class="string">"sp1.com.example.demo.Address"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"address"</span> <span class="attr">value</span>=<span class="string">"lll"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"student"</span> <span class="attr">class</span>=<span class="string">"sp1.com.example.demo.Student"</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!--普通值注入 value--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"name"</span> <span class="attr">value</span>=<span class="string">"学生"</span>/&gt;</span></span><br><span class="line"><span class="comment">&lt;!--bean注入 ref--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"address"</span> <span class="attr">ref</span>=<span class="string">"address"</span>/&gt;</span></span><br><span class="line"><span class="comment">&lt;!--数组 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"books"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">array</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">value</span>&gt;</span>哈哈哈<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">value</span>&gt;</span>啦啦啦<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">value</span>&gt;</span>哦哦哦<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">value</span>&gt;</span>呵呵呵<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">array</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!--List--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"hobbies"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">list</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">value</span>&gt;</span>吃<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">value</span>&gt;</span>吃<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">value</span>&gt;</span>吃<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">value</span>&gt;</span>吃<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">list</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!--Map--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"cards"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">map</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">entry</span> <span class="attr">key</span>=<span class="string">"id1"</span> <span class="attr">value</span>=<span class="string">"123"</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">entry</span> <span class="attr">key</span>=<span class="string">"id2"</span> <span class="attr">value</span>=<span class="string">"213"</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">entry</span> <span class="attr">key</span>=<span class="string">"id3"</span> <span class="attr">value</span>=<span class="string">"321"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">map</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!--Set--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"games"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">set</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">value</span>&gt;</span>aaa<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">value</span>&gt;</span>bbb<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">value</span>&gt;</span>ccc<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">set</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!--null--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"wife"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">null</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!--Properties--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"info"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">props</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">prop</span> <span class="attr">key</span>=<span class="string">"a"</span>&gt;</span>aaa<span class="tag">&lt;/<span class="name">prop</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">prop</span> <span class="attr">key</span>=<span class="string">"b"</span>&gt;</span>bbb<span class="tag">&lt;/<span class="name">prop</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">prop</span> <span class="attr">key</span>=<span class="string">"c"</span>&gt;</span>ccc<span class="tag">&lt;/<span class="name">prop</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">props</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h3><p>p命名c命名</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--</span></span><br><span class="line"><span class="comment">    p命名c命名都需要导入约束</span></span><br><span class="line"><span class="comment">    xmlns:p="http://www.springframework.org/schema/p"</span></span><br><span class="line"><span class="comment">    xmlns:c="http://www.springframework.org/schema/c"</span></span><br><span class="line"><span class="comment">--&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!--    属性注入--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"user"</span> <span class="attr">class</span>=<span class="string">"sp1.com.example.demo.User"</span> <span class="attr">p:name</span>=<span class="string">"哈哈哈哈"</span>/&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!--    构造器注入--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"user2"</span> <span class="attr">class</span>=<span class="string">"sp1.com.example.demo.User"</span> <span class="attr">c:name</span>=<span class="string">"啦啦啦啦啦"</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="自动装配"><a href="#自动装配" class="headerlink" title="自动装配"></a>自动装配</h2><h3 id="Autowired"><a href="#Autowired" class="headerlink" title="@Autowired"></a>@Autowired</h3><ol>
+<li>可以在属性上使用，也可在set方法上使用</li>
+<li>使用它可以不编写set方法，前提是这个自动装配的属性在IOC容器中存在，且符合名字byName</li>
+</ol>
+<p>Person类</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Person</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> Dog dog;</span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> Cat cat;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"Person&#123;"</span> +</span><br><span class="line">                <span class="string">"dog="</span> + dog +</span><br><span class="line">                <span class="string">", cat="</span> + cat +</span><br><span class="line">                <span class="string">", name='"</span> + name + <span class="string">'\''</span> +</span><br><span class="line">                <span class="string">'&#125;'</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Dog <span class="title">getDog</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> dog;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setDog</span><span class="params">(Dog dog)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.dog = dog;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Cat <span class="title">getCat</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> cat;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setCat</span><span class="params">(Cat cat)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.cat = cat;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setName</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>xml</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">beans</span> </span></span><br><span class="line"><span class="tag">      <span class="attr">xmlns</span>=<span class="string">"http://www.springframework.org/schema/beans"</span></span></span><br><span class="line"><span class="tag">      <span class="attr">xmlns:xsi</span>=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span></span></span><br><span class="line"><span class="tag">      <span class="attr">xmlns:context</span>=<span class="string">"http://www.springframework.org/schema/context"</span></span></span><br><span class="line"><span class="tag">      <span class="attr">xsi:schemaLocation</span>=<span class="string">"</span></span></span><br><span class="line"><span class="tag"><span class="string">        http://www.springframework.org/schema/beans</span></span></span><br><span class="line"><span class="tag"><span class="string">        http://www.springframework.org/schema/beans/spring-beans.xsd</span></span></span><br><span class="line"><span class="tag"><span class="string">        http://www.springframework.org/schema/context</span></span></span><br><span class="line"><span class="tag"><span class="string">        http://www.springframework.org/schema/context/spring-context.xsd"</span></span></span><br><span class="line"><span class="tag">&gt;</span></span><br><span class="line"><span class="comment">&lt;!--    开启注解支持--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">context:annotation-config</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"cat"</span> <span class="attr">class</span>=<span class="string">"sp2.com.example.demo.Cat"</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"dog"</span> <span class="attr">class</span>=<span class="string">"sp2.com.example.demo.Dog"</span> /&gt;</span></span><br><span class="line"><span class="comment">&lt;!--</span></span><br><span class="line"><span class="comment">    byName 自动在容器上下文中查找，和自己对象set方法后面的值对应的beanId</span></span><br><span class="line"><span class="comment">    byType 自动在容器上下文中查找，和自己对象属性类型相同的bean</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">    备注:</span></span><br><span class="line"><span class="comment">    byName的时候，需要保证所有的bean的id唯一，并且这个bean需要和自动注入的属性的set方法一致</span></span><br><span class="line"><span class="comment">    byType的时候，需要保证所有的bean的class唯一，并且这个bean需要和自动注入的属性类型一致</span></span><br><span class="line"><span class="comment">--&gt;</span></span><br><span class="line"><span class="comment">&lt;!--    &lt;bean id="person" class="sp2.com.example.demo.Person" autowire="byType"&gt;--&gt;</span></span><br><span class="line"><span class="comment">&lt;!--        &lt;property name="name" value="lala"/&gt;--&gt;</span></span><br><span class="line"><span class="comment">&lt;!--    &lt;/bean&gt;--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"person"</span> <span class="attr">class</span>=<span class="string">"sp2.com.example.demo.Person"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">beans</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Component"><a href="#Component" class="headerlink" title="@Component"></a>@Component</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">beans</span> <span class="attr">xmlns</span>=<span class="string">"http://www.springframework.org/schema/beans"</span></span></span><br><span class="line"><span class="tag">       <span class="attr">xmlns:xsi</span>=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span></span></span><br><span class="line"><span class="tag">       <span class="attr">xmlns:context</span>=<span class="string">"http://www.springframework.org/schema/context"</span></span></span><br><span class="line"><span class="tag">       <span class="attr">xsi:schemaLocation</span>=<span class="string">"http://www.springframework.org/schema/beans</span></span></span><br><span class="line"><span class="tag"><span class="string">        http://www.springframework.org/schema/beans/spring-beans.xsd</span></span></span><br><span class="line"><span class="tag"><span class="string">        http://www.springframework.org/schema/context</span></span></span><br><span class="line"><span class="tag"><span class="string">        http://www.springframework.org/schema/context/spring-context.xsd"</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- 扫描 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">context:component-scan</span> <span class="attr">base-package</span>=<span class="string">"sp4.com.example.demo"</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">context:annotation-config</span>/&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">beans</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>pojo/user</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> sp4.com.example.demo.pojo;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Value;</span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Component;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">User</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 设置值</span></span><br><span class="line">    <span class="meta">@Value</span>(<span class="string">"牛逼"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setName</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"User&#123;"</span> +</span><br><span class="line">                <span class="string">"name='"</span> + name + <span class="string">'\''</span> +</span><br><span class="line">                <span class="string">'&#125;'</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>controller/UserControll: @Controller<br>dao/UserDao: @Repository<br>service/UserService: @Service</p>
+<h3 id="java注解"><a href="#java注解" class="headerlink" title="java注解"></a>java注解</h3><p>pojo/User</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> sp4.com.example.demo.pojo;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Value;</span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Component;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">User</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Value</span>(<span class="string">"牛逼"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setName</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"User&#123;"</span> +</span><br><span class="line">                <span class="string">"name='"</span> + name + <span class="string">'\''</span> +</span><br><span class="line">                <span class="string">'&#125;'</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>config/MyConfig</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> sp4.com.example.demo.config;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.Bean;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.ComponentScan;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.Configuration;</span><br><span class="line"><span class="keyword">import</span> sp4.com.example.demo.pojo.User;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="comment">//@ComponentScan</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyConfig</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> User <span class="title">getUser</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> User();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>test</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> sp4.com.example.demo;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.junit.jupiter.api.Test;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.AnnotationConfigApplicationContext;</span><br><span class="line"><span class="keyword">import</span> sp4.com.example.demo.config.MyConfig;</span><br><span class="line"><span class="keyword">import</span> sp4.com.example.demo.pojo.User;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyTest</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test1</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        AnnotationConfigApplicationContext annotationConfigApplicationContext =</span><br><span class="line">                <span class="keyword">new</span> AnnotationConfigApplicationContext(MyConfig.class);</span><br><span class="line">        User getUser = (User) annotationConfigApplicationContext.getBean(<span class="string">"getUser"</span>);</span><br><span class="line">        System.out.println(getUser.getName());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="AOP"><a href="#AOP" class="headerlink" title="AOP"></a>AOP</h2>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://github.com/wangqinyong1994/blog/2021/07/12/Spring/" data-id="ckr0g7ue30000wyyz89alazb1" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Spring/">Spring</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-测试相关" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/blog/2021/03/26/测试相关/" class="article-date">
@@ -92,7 +208,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://github.com/wangqinyong1994/blog/2021/03/26/测试相关/" data-id="ckonxihv4000tttyz2798mesy" class="article-share-link">Share</a>
+      <a data-url="https://github.com/wangqinyong1994/blog/2021/03/26/测试相关/" data-id="ckr0g7ufg000xwyyz0fp8es62" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/测试/">测试</a></li></ul>
@@ -135,7 +251,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://github.com/wangqinyong1994/blog/2021/03/24/headless-chrome/" data-id="ckonxihuh0001ttyzyj5kk2py" class="article-share-link">Share</a>
+      <a data-url="https://github.com/wangqinyong1994/blog/2021/03/24/headless-chrome/" data-id="ckr0g7uec0004wyyzkw7j1erk" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Chrome/">Chrome</a></li></ul>
@@ -305,7 +421,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://github.com/wangqinyong1994/blog/2021/03/24/java高级/" data-id="ckonxihuw000dttyzmjickctu" class="article-share-link">Share</a>
+      <a data-url="https://github.com/wangqinyong1994/blog/2021/03/24/java高级/" data-id="ckr0g7ueg0009wyyzj2wb26og" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Java/">Java</a></li></ul>
@@ -343,7 +459,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://github.com/wangqinyong1994/blog/2021/02/03/SSO实践/" data-id="ckonxihud0000ttyzkyap4h5t" class="article-share-link">Share</a>
+      <a data-url="https://github.com/wangqinyong1994/blog/2021/02/03/SSO实践/" data-id="ckr0g7uea0003wyyzbpwi5xir" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/单点登录-SSO/">单点登录 SSO</a></li></ul>
@@ -423,7 +539,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://github.com/wangqinyong1994/blog/2021/02/03/微前端实践/" data-id="ckonxihuy000httyzg8e1i0tj" class="article-share-link">Share</a>
+      <a data-url="https://github.com/wangqinyong1994/blog/2021/02/03/微前端实践/" data-id="ckr0g7ufc000swyyz33nl89j9" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/qiankun-微前端-umi/">qiankun 微前端 umi</a></li></ul>
@@ -493,7 +609,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://github.com/wangqinyong1994/blog/2021/01/23/配置eslint与prettier/" data-id="ckonxihv3000rttyzx6l16acq" class="article-share-link">Share</a>
+      <a data-url="https://github.com/wangqinyong1994/blog/2021/01/23/配置eslint与prettier/" data-id="ckr0g7ufi000zwyyz73u8dexd" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/vscode-eslint-prettier/">vscode eslint prettier</a></li></ul>
@@ -945,7 +1061,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://github.com/wangqinyong1994/blog/2020/12/30/java基础/" data-id="ckonxihuk0003ttyzrwj7vf3o" class="article-share-link">Share</a>
+      <a data-url="https://github.com/wangqinyong1994/blog/2020/12/30/java基础/" data-id="ckr0g7ue70001wyyztnf61cgk" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Java/">Java</a></li></ul>
@@ -1347,7 +1463,7 @@
 <p>​ useEffect 则<strong>需要先调度，在 Layout 阶段完成后在异步执行</strong>。 先调度再异步执行</p>
 </li>
 <li><p>对 HostRoot，如果赋值了第三个参数回调函数，也会在此时调用。</p>
-<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ReactDOM.render(&lt;App /&gt;, document.querySelector("#root"), function () &#123;</span><br><span class="line">  console.log("mount");</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ReactDOM.render(<span class="xml"><span class="tag">&lt;<span class="name">App</span> /&gt;</span>, document.querySelector("#root"), function () &#123;</span></span><br><span class="line"><span class="xml">  console.log("mount");</span></span><br><span class="line"><span class="xml">&#125;);</span></span><br></pre></td></tr></table></figure>
 
 </li>
 </ul>
@@ -1450,7 +1566,7 @@
 
 <h4 id="this-forceUpdate"><a href="#this-forceUpdate" class="headerlink" title="this.forceUpdate"></a>this.forceUpdate</h4><p>this.updater 上，除了 enqueueSetState 外，还存在 enqueueForceUpdate，当我们调用 this.forceUpdate 时会调用他。</p>
 <p>除了<code>update.tag = ForceUpdate</code>，以及没有额外<code>payload</code>，其他逻辑与<code>this.setState</code>一致。。。</p>
-<h3 id="Hooks"><a href="#Hooks" class="headerlink" title="Hooks"></a>Hooks</h3><h4 id="极简-hooks-实现"><a href="#极简-hooks-实现" class="headerlink" title="极简 hooks 实现"></a>极简 hooks 实现</h4><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">App</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> [num, updateNum] = useState(<span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> &lt;p onClick=&#123;() =&gt; updateNum((num) =&gt; num + 1)&#125;&gt;&#123;num&#125;&lt;/p&gt;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Hooks"><a href="#Hooks" class="headerlink" title="Hooks"></a>Hooks</h3><h4 id="极简-hooks-实现"><a href="#极简-hooks-实现" class="headerlink" title="极简 hooks 实现"></a>极简 hooks 实现</h4><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">App</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> [num, updateNum] = useState(<span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">p</span> <span class="attr">onClick</span>=<span class="string">&#123;()</span> =&gt;</span> updateNum((num) =&gt; num + 1)&#125;&gt;&#123;num&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>可将工作分为两部：</p>
 <ol>
@@ -1466,7 +1582,7 @@
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> update = &#123;</span><br><span class="line">  <span class="comment">// 更新执行的函数</span></span><br><span class="line">  action,</span><br><span class="line">  <span class="comment">// 写同一个Hook的其他更新形成链表</span></span><br><span class="line">  next: <span class="literal">null</span>,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
 <p>改写下</p>
-<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 之前</span></span><br><span class="line"><span class="keyword">return</span> &lt;p onClick=&#123;() =&gt; updateNum((num) =&gt; num + 1)&#125;&gt;&#123;num&#125;&lt;/p&gt;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 之后</span></span><br><span class="line"><span class="keyword">return</span> (</span><br><span class="line">  &lt;p</span><br><span class="line">    onClick=&#123;() =&gt; &#123;</span><br><span class="line">      updateNum(<span class="function">(<span class="params">num</span>) =&gt;</span> num + <span class="number">1</span>);</span><br><span class="line">      updateNum(<span class="function">(<span class="params">num</span>) =&gt;</span> num + <span class="number">1</span>);</span><br><span class="line">      updateNum(<span class="function">(<span class="params">num</span>) =&gt;</span> num + <span class="number">1</span>);</span><br><span class="line">    &#125;&#125;</span><br><span class="line">  &gt;</span><br><span class="line">    &#123;num&#125;</span><br><span class="line">  &lt;<span class="regexp">/p&gt;</span></span><br><span class="line"><span class="regexp">);</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 之前</span></span><br><span class="line"><span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">p</span> <span class="attr">onClick</span>=<span class="string">&#123;()</span> =&gt;</span> updateNum((num) =&gt; num + 1)&#125;&gt;&#123;num&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 之后</span></span><br><span class="line"><span class="keyword">return</span> (</span><br><span class="line">  &lt;p</span><br><span class="line">    onClick=&#123;() =&gt; &#123;</span><br><span class="line">      updateNum(<span class="function">(<span class="params">num</span>) =&gt;</span> num + <span class="number">1</span>);</span><br><span class="line">      updateNum(<span class="function">(<span class="params">num</span>) =&gt;</span> num + <span class="number">1</span>);</span><br><span class="line">      updateNum(<span class="function">(<span class="params">num</span>) =&gt;</span> num + <span class="number">1</span>);</span><br><span class="line">    &#125;&#125;</span><br><span class="line">  &gt;</span><br><span class="line">    &#123;num&#125;</span><br><span class="line">  &lt;<span class="regexp">/p&gt;</span></span><br><span class="line"><span class="regexp">);</span></span><br></pre></td></tr></table></figure>
 
 <p>点 p 会产生 3 个 update</p>
 <h4 id="update-数据结构"><a href="#update-数据结构" class="headerlink" title="update 数据结构"></a>update 数据结构</h4><p>q: 这些 update 如何组合在一起？</p>
@@ -1596,7 +1712,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://github.com/wangqinyong1994/blog/2020/11/29/react原理/" data-id="ckonxihvg001ettyzch9ostzp" class="article-share-link">Share</a>
+      <a data-url="https://github.com/wangqinyong1994/blog/2020/11/29/react原理/" data-id="ckr0g7ufk0013wyyzg57zc93s" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/React/">React</a></li></ul>
@@ -1959,199 +2075,10 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://github.com/wangqinyong1994/blog/2020/10/14/设计模式/" data-id="ckonxihv0000mttyzsi5fdfdt" class="article-share-link">Share</a>
+      <a data-url="https://github.com/wangqinyong1994/blog/2020/10/14/设计模式/" data-id="ckr0g7ufe000twyyzlyzftjur" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/前端-设计模式/">前端 设计模式</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-关于npm" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/blog/2020/07/14/关于npm/" class="article-date">
-  <time datetime="2020-07-14T15:04:14.000Z" itemprop="datePublished">2020-07-14</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2020/07/14/关于npm/">前端路线</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>工程化</p>
-<h2 id="编辑器设置"><a href="#编辑器设置" class="headerlink" title="编辑器设置"></a>编辑器设置</h2><h3 id="Vscode-常用插件"><a href="#Vscode-常用插件" class="headerlink" title="Vscode 常用插件"></a>Vscode 常用插件</h3><ul>
-<li><p>Git History</p>
-</li>
-<li><p>GitLens</p>
-</li>
-<li><p>Path Intellisense</p>
-</li>
-<li><p>Auto Close Tag</p>
-</li>
-<li><p>Auto Rename Tag</p>
-</li>
-<li><p>Color Highlight</p>
-</li>
-<li><p>VSCode Highlight Matching Tag</p>
-</li>
-<li><p>HTML CSS Support</p>
-</li>
-<li><p>Vetur</p>
-</li>
-<li><p>ES7 React/Redux/GraphQL/React-Native snippets</p>
-</li>
-<li><p>npm</p>
-</li>
-<li><p>npm Intellisense</p>
-</li>
-<li><p>Prettier - Code formatter</p>
-</li>
-<li><p>Live Server</p>
-</li>
-</ul>
-<h2 id="Vscode-快捷键"><a href="#Vscode-快捷键" class="headerlink" title="Vscode 快捷键"></a>Vscode 快捷键</h2><ul>
-<li><p>快捷键列表查看 <code>cmd + k</code> &amp; <code>cmd + s</code></p>
-</li>
-<li><p>快速打开文件 <code>cmd + p</code></p>
-</li>
-<li><p>编辑器命令<code>cmd + p</code> &amp; 输入 <code>&gt;</code></p>
-</li>
-<li><p>快速打开和关闭侧边栏 <code>cmd + b</code></p>
-</li>
-<li><p>快速打开集成终端 <code>control</code> + <em>`</em></p>
-</li>
-<li><p>代码格式化 <code>shift + option + f</code> || <code>cmd + k &amp; cmd + f</code></p>
-</li>
-<li><p>清除多余空格 <code>cmd + k &amp; cmd + x</code></p>
-</li>
-<li><p>折叠代码 <code>cmd + k &amp; cmd + (0|1|2|3|4)</code> 伸展代码 <code>cmd + k &amp; cmd + j</code></p>
-</li>
-<li><p>往上/下复制行 <code>shift + option + 上/下箭头</code></p>
-</li>
-<li><p>选择单词 局部选中<code>cmd + d</code> 全部选中<code>cmd + shift + l</code></p>
-</li>
-<li><p>文件中跳转符号 <code>cmd + p</code>之后输入<code>@</code></p>
-</li>
-<li><p>快速复制当前行 <code>cmd + shift + d</code></p>
-</li>
-<li><p>删除当前行 <code>cmd + x</code></p>
-</li>
-<li><p>往上/下同时编辑 <code>cmd + option + 上/下箭头</code></p>
-</li>
-</ul>
-<h2 id="prettier"><a href="#prettier" class="headerlink" title="prettier"></a>prettier</h2><ol>
-<li><p>编辑器中安装 prettier 插件</p>
-</li>
-<li><p>项目中安装 prettier</p>
-</li>
-<li><p><code>shift + cmd + p</code>打开用户首选项，用户区全局设置，工作区当前项目设置，添加 prettier 规则之后，格式化文档方式可选择 prettier，就以 prettier 的规则去格式化代码。项目中使用 prettier，需要进行代码格式化，需要下载 prettier 到开发环境，添加 script 命令 <code>&quot;prettier&quot;: &quot;prettier -c --write &#39;**/*.{js,jsx,tsx,ts,less,md,json}&#39;&quot;,</code>,项目中添加.prettierrc 自定义规则，添加.prettierignore 进行无需格式化代码文件配置。<img src="https://tva1.sinaimg.cn/large/0081Kckwly1gk475fk5bcj311a0u01kx.jpg" alt="编辑器"></p>
-</li>
-</ol>
-<h2 id="githooks"><a href="#githooks" class="headerlink" title="githooks"></a>githooks</h2><p>安装<code>husky</code> <code>lint-staged</code></p>
-<p><code>package.json</code>添加如下配置，提交代码前进行 lint-staged 下的一系列流程，代码格式化之后进行 eslint 检测。</p>
-<p><img src="https://tva1.sinaimg.cn/large/0081Kckwly1gk47c7c6uqj311u0jqgo2.jpg" alt="package.json"></p>
-<h2 id="npm"><a href="#npm" class="headerlink" title="npm"></a>npm</h2><h3 id="semver-语义化版本"><a href="#semver-语义化版本" class="headerlink" title="semver(语义化版本)"></a>semver(语义化版本)</h3><p>约定一个包的版本必须包含 3 个数字，格式必须是<code>MAJOR.MINOR.PATCH</code>(主版本.小版本.修订版本号)</p>
-<ul>
-<li>MAJOR 对应大版本迭代，做了不兼容旧版的修改时要更新此版本号</li>
-<li>MINOR 对应小版本迭代，发生兼容旧版 API 的修改或功能更新时，更新 MINOR 版本号</li>
-<li>PATCH 对应修订版本号，一般针对修复 BUG 的版本号</li>
-</ul>
-<table>
-<thead>
-<tr>
-<th>range</th>
-<th>含义</th>
-<th>例子</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>^2.2.1</td>
-<td>制定 MAJOR 版本号下所有更新的版本</td>
-<td>匹配 2.2.3、2.3.0，不匹配 1.0.3、3.0.1</td>
-</tr>
-<tr>
-<td>~2.2.1</td>
-<td>制定 MAJOR.MINOR 版本号下所有更新的版本</td>
-<td>匹配 2.2.3、2.2.9，不匹配 2.3.0、2.4.5</td>
-</tr>
-<tr>
-<td>&gt;=2.1</td>
-<td>版本号大于等于 2.1.0</td>
-<td>匹配 2.1.2、3.1</td>
-</tr>
-<tr>
-<td>&lt;=2.2</td>
-<td>版本号小于等于 2.2.0</td>
-<td>匹配 1.0.0、2.2.1、2.2.11</td>
-</tr>
-<tr>
-<td>1.0.0-2.0.0</td>
-<td>版本号从 1.0.0-2.0.0、包含各自</td>
-<td>匹配 1.0.0、1.3.4、2.0.0</td>
-</tr>
-</tbody></table>
-<p>两版本号可用空格(与)或者<code>||</code>(或)。</p>
-<p>另外几种写法:</p>
-<ul>
-<li><code>*</code>或<code>x</code>匹配所有的主版本</li>
-<li><code>1</code>或<code>1.x</code>匹配主版本号为 1 的所有版本</li>
-<li><code>1.2</code>或<code>1.2.x</code>匹配版本号为 1.2 开头的所有版本</li>
-<li>M.M.P 后面加<code>-</code>被视为不稳定、不建议生产使用的版本</li>
-</ul>
-<h3 id="scripts"><a href="#scripts" class="headerlink" title="scripts"></a>scripts</h3><p><code>npm run</code>运行时变量：在<code>npm run</code>的脚本执行环境内，可以通过环境变量方式获取许多运行时相关信息。以下都可以通过<code>process.env</code>对象访问获得</p>
-<ul>
-<li><code>npm_lifecycle_enent</code>:正在运行的脚本名称</li>
-<li><code>npm_package_&lt;key&gt;</code>:获取当前包 package.json 中某个字段的配置值:如<code>npm_package_name</code>获取包名</li>
-<li><code>npm_package_&lt;key&gt;_&lt;sub-key&gt;</code>: package.json 中嵌套字段属性：如<code>npm_package_dependencied_webpack</code>可以获取到 package.json 中的<code>dependencies.webpack</code>字段的值，即为 webpack 版本号</li>
-</ul>
-<h2 id="package-json"><a href="#package-json" class="headerlink" title="package.json"></a>package.json</h2><h3 id="version"><a href="#version" class="headerlink" title="version"></a>version</h3><p>遵循 server 规范，</p>
-<p><code>npm view &lt;packageName&gt; version</code>查看某个模块的最新版本</p>
-<p><code>npm view &lt;packageName&gt; versions</code>查看某个模块的所有历史版本</p>
-<h3 id="descripting-amp-keywords"><a href="#descripting-amp-keywords" class="headerlink" title="descripting &amp; keywords"></a>descripting &amp; keywords</h3><p>相当于 npm 上的 seo</p>
-<h3 id="dependencies-amp-devDependencies"><a href="#dependencies-amp-devDependencies" class="headerlink" title="dependencies &amp; devDependencies"></a>dependencies &amp; devDependencies</h3><ul>
-<li>dependencies 生产环境依赖</li>
-<li>devDependencies 开发环境依赖</li>
-</ul>
-<h3 id="scripts-1"><a href="#scripts-1" class="headerlink" title="scripts"></a>scripts</h3><p>使用<code>npm run xxx</code>去执行里面的脚本</p>
-<h3 id="main"><a href="#main" class="headerlink" title="main"></a>main</h3><p>项目入口，不指定时默认根目录下<code>index.js</code>，发 npm 包会用到</p>
-<h3 id="files"><a href="#files" class="headerlink" title="files"></a>files</h3><p>用于描述我们使用<code>npm publish</code>命令后推送到<code>npm</code>服务器的文件列表，如果指定文件夹，则文件夹内所有内容都会包含进来。eg. <code>files: [&#39;dist&#39;, &#39;lib&#39;, &#39;es&#39;]</code></p>
-<h3 id="private"><a href="#private" class="headerlink" title="private"></a>private</h3><p>一般公司非开源项目，都会设置该值为<code>true</code>，因为<code>npm</code>拒绝发私有模块，通过设置该值可以防止私有模块被无意间发布出去。`</p>
-<h3 id="engines"><a href="#engines" class="headerlink" title="engines"></a>engines</h3><p>针对 node 版本不同可能会导致的问题。</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">"engines": &#123;</span><br><span class="line">   "node": "&gt;= 8.16.0"</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
-
-<p>也可以指定适用的<code>npm</code>版本</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">"engines": &#123;</span><br><span class="line">   "npm": "&gt;= 6.9.0"</span><br><span class="line"> &#125;,</span><br></pre></td></tr></table></figure>
-
-<h3 id="bin"><a href="#bin" class="headerlink" title="bin"></a>bin</h3><p>自定义命令</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">"bin": &#123;</span><br><span class="line">  "my-app-cli": "./bin/cli.js"</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>如上代码指定<code>my-app-cli</code>命令执行<code>bin</code>下的<code>cli.js</code>文件。</p>
-<p>自定义实现时，需要在<code>cli.js</code>第一行写入</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#!/usr/bin/env node</span><br></pre></td></tr></table></figure>
-
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://github.com/wangqinyong1994/blog/2020/07/14/关于npm/" data-id="ckonxihur0008ttyz6iv4il6o" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/前端-工程化-npm/">前端 工程化 npm</a></li></ul>
 
     </footer>
   </div>
@@ -2178,7 +2105,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Chrome/">Chrome</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Java/">Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/React/">React</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/qiankun-微前端-umi/">qiankun 微前端 umi</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/vscode-eslint-prettier/">vscode eslint prettier</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/webpack/">webpack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/上卷-this-原型对象/">上卷 this 原型对象</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/上卷-作用域和闭包/">上卷 作用域和闭包</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/上卷-对象/">上卷 对象</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/中卷-异步与性能/">中卷 异步与性能</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/中卷-类型-值/">中卷 类型 值</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/你不知道的JavaScript/">你不知道的JavaScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/前端-工程化-npm/">前端 工程化 npm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/前端-设计模式/">前端 设计模式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/单点登录-SSO/">单点登录 SSO</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/序/">序</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/测试/">测试</a></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Chrome/">Chrome</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Java/">Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/React/">React</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Spring/">Spring</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/qiankun-微前端-umi/">qiankun 微前端 umi</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/vscode-eslint-prettier/">vscode eslint prettier</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/webpack/">webpack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/上卷-this-原型对象/">上卷 this 原型对象</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/上卷-作用域和闭包/">上卷 作用域和闭包</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/上卷-对象/">上卷 对象</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/中卷-异步与性能/">中卷 异步与性能</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/中卷-类型-值/">中卷 类型 值</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/你不知道的JavaScript/">你不知道的JavaScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/前端-工程化-npm/">前端 工程化 npm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/前端-设计模式/">前端 设计模式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/单点登录-SSO/">单点登录 SSO</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/序/">序</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/测试/">测试</a></li></ul>
     </div>
   </div>
 
@@ -2188,7 +2115,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/blog/tags/Chrome/" style="font-size: 10px;">Chrome</a> <a href="/blog/tags/Java/" style="font-size: 20px;">Java</a> <a href="/blog/tags/React/" style="font-size: 10px;">React</a> <a href="/blog/tags/qiankun-微前端-umi/" style="font-size: 10px;">qiankun 微前端 umi</a> <a href="/blog/tags/vscode-eslint-prettier/" style="font-size: 10px;">vscode eslint prettier</a> <a href="/blog/tags/webpack/" style="font-size: 10px;">webpack</a> <a href="/blog/tags/上卷-this-原型对象/" style="font-size: 10px;">上卷 this 原型对象</a> <a href="/blog/tags/上卷-作用域和闭包/" style="font-size: 10px;">上卷 作用域和闭包</a> <a href="/blog/tags/上卷-对象/" style="font-size: 10px;">上卷 对象</a> <a href="/blog/tags/中卷-异步与性能/" style="font-size: 10px;">中卷 异步与性能</a> <a href="/blog/tags/中卷-类型-值/" style="font-size: 10px;">中卷 类型 值</a> <a href="/blog/tags/你不知道的JavaScript/" style="font-size: 10px;">你不知道的JavaScript</a> <a href="/blog/tags/前端-工程化-npm/" style="font-size: 10px;">前端 工程化 npm</a> <a href="/blog/tags/前端-设计模式/" style="font-size: 10px;">前端 设计模式</a> <a href="/blog/tags/单点登录-SSO/" style="font-size: 10px;">单点登录 SSO</a> <a href="/blog/tags/序/" style="font-size: 10px;">序</a> <a href="/blog/tags/测试/" style="font-size: 10px;">测试</a>
+      <a href="/blog/tags/Chrome/" style="font-size: 10px;">Chrome</a> <a href="/blog/tags/Java/" style="font-size: 20px;">Java</a> <a href="/blog/tags/React/" style="font-size: 10px;">React</a> <a href="/blog/tags/Spring/" style="font-size: 10px;">Spring</a> <a href="/blog/tags/qiankun-微前端-umi/" style="font-size: 10px;">qiankun 微前端 umi</a> <a href="/blog/tags/vscode-eslint-prettier/" style="font-size: 10px;">vscode eslint prettier</a> <a href="/blog/tags/webpack/" style="font-size: 10px;">webpack</a> <a href="/blog/tags/上卷-this-原型对象/" style="font-size: 10px;">上卷 this 原型对象</a> <a href="/blog/tags/上卷-作用域和闭包/" style="font-size: 10px;">上卷 作用域和闭包</a> <a href="/blog/tags/上卷-对象/" style="font-size: 10px;">上卷 对象</a> <a href="/blog/tags/中卷-异步与性能/" style="font-size: 10px;">中卷 异步与性能</a> <a href="/blog/tags/中卷-类型-值/" style="font-size: 10px;">中卷 类型 值</a> <a href="/blog/tags/你不知道的JavaScript/" style="font-size: 10px;">你不知道的JavaScript</a> <a href="/blog/tags/前端-工程化-npm/" style="font-size: 10px;">前端 工程化 npm</a> <a href="/blog/tags/前端-设计模式/" style="font-size: 10px;">前端 设计模式</a> <a href="/blog/tags/单点登录-SSO/" style="font-size: 10px;">单点登录 SSO</a> <a href="/blog/tags/序/" style="font-size: 10px;">序</a> <a href="/blog/tags/测试/" style="font-size: 10px;">测试</a>
     </div>
   </div>
 
@@ -2197,7 +2124,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2021/03/">March 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2021/02/">February 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2021/01/">January 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2020/12/">December 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2020/11/">November 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2020/10/">October 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2020/07/">July 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/07/">July 2019</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2021/07/">July 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2021/03/">March 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2021/02/">February 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2021/01/">January 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2020/12/">December 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2020/11/">November 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2020/10/">October 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2020/07/">July 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/07/">July 2019</a></li></ul>
     </div>
   </div>
 
@@ -2208,6 +2135,10 @@
     <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/blog/2021/07/12/Spring/">Spring</a>
+          </li>
         
           <li>
             <a href="/blog/2021/03/26/测试相关/">测试相关</a>
@@ -2223,10 +2154,6 @@
         
           <li>
             <a href="/blog/2021/02/03/SSO实践/">SSO实践</a>
-          </li>
-        
-          <li>
-            <a href="/blog/2021/02/03/微前端实践/">微前端实践</a>
           </li>
         
       </ul>

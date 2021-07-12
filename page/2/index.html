@@ -66,6 +66,195 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-关于npm" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/blog/2020/07/14/关于npm/" class="article-date">
+  <time datetime="2020-07-14T15:04:14.000Z" itemprop="datePublished">2020-07-14</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2020/07/14/关于npm/">前端路线</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>工程化</p>
+<h2 id="编辑器设置"><a href="#编辑器设置" class="headerlink" title="编辑器设置"></a>编辑器设置</h2><h3 id="Vscode-常用插件"><a href="#Vscode-常用插件" class="headerlink" title="Vscode 常用插件"></a>Vscode 常用插件</h3><ul>
+<li><p>Git History</p>
+</li>
+<li><p>GitLens</p>
+</li>
+<li><p>Path Intellisense</p>
+</li>
+<li><p>Auto Close Tag</p>
+</li>
+<li><p>Auto Rename Tag</p>
+</li>
+<li><p>Color Highlight</p>
+</li>
+<li><p>VSCode Highlight Matching Tag</p>
+</li>
+<li><p>HTML CSS Support</p>
+</li>
+<li><p>Vetur</p>
+</li>
+<li><p>ES7 React/Redux/GraphQL/React-Native snippets</p>
+</li>
+<li><p>npm</p>
+</li>
+<li><p>npm Intellisense</p>
+</li>
+<li><p>Prettier - Code formatter</p>
+</li>
+<li><p>Live Server</p>
+</li>
+</ul>
+<h2 id="Vscode-快捷键"><a href="#Vscode-快捷键" class="headerlink" title="Vscode 快捷键"></a>Vscode 快捷键</h2><ul>
+<li><p>快捷键列表查看 <code>cmd + k</code> &amp; <code>cmd + s</code></p>
+</li>
+<li><p>快速打开文件 <code>cmd + p</code></p>
+</li>
+<li><p>编辑器命令<code>cmd + p</code> &amp; 输入 <code>&gt;</code></p>
+</li>
+<li><p>快速打开和关闭侧边栏 <code>cmd + b</code></p>
+</li>
+<li><p>快速打开集成终端 <code>control</code> + <em>`</em></p>
+</li>
+<li><p>代码格式化 <code>shift + option + f</code> || <code>cmd + k &amp; cmd + f</code></p>
+</li>
+<li><p>清除多余空格 <code>cmd + k &amp; cmd + x</code></p>
+</li>
+<li><p>折叠代码 <code>cmd + k &amp; cmd + (0|1|2|3|4)</code> 伸展代码 <code>cmd + k &amp; cmd + j</code></p>
+</li>
+<li><p>往上/下复制行 <code>shift + option + 上/下箭头</code></p>
+</li>
+<li><p>选择单词 局部选中<code>cmd + d</code> 全部选中<code>cmd + shift + l</code></p>
+</li>
+<li><p>文件中跳转符号 <code>cmd + p</code>之后输入<code>@</code></p>
+</li>
+<li><p>快速复制当前行 <code>cmd + shift + d</code></p>
+</li>
+<li><p>删除当前行 <code>cmd + x</code></p>
+</li>
+<li><p>往上/下同时编辑 <code>cmd + option + 上/下箭头</code></p>
+</li>
+</ul>
+<h2 id="prettier"><a href="#prettier" class="headerlink" title="prettier"></a>prettier</h2><ol>
+<li><p>编辑器中安装 prettier 插件</p>
+</li>
+<li><p>项目中安装 prettier</p>
+</li>
+<li><p><code>shift + cmd + p</code>打开用户首选项，用户区全局设置，工作区当前项目设置，添加 prettier 规则之后，格式化文档方式可选择 prettier，就以 prettier 的规则去格式化代码。项目中使用 prettier，需要进行代码格式化，需要下载 prettier 到开发环境，添加 script 命令 <code>&quot;prettier&quot;: &quot;prettier -c --write &#39;**/*.{js,jsx,tsx,ts,less,md,json}&#39;&quot;,</code>,项目中添加.prettierrc 自定义规则，添加.prettierignore 进行无需格式化代码文件配置。<img src="https://tva1.sinaimg.cn/large/0081Kckwly1gk475fk5bcj311a0u01kx.jpg" alt="编辑器"></p>
+</li>
+</ol>
+<h2 id="githooks"><a href="#githooks" class="headerlink" title="githooks"></a>githooks</h2><p>安装<code>husky</code> <code>lint-staged</code></p>
+<p><code>package.json</code>添加如下配置，提交代码前进行 lint-staged 下的一系列流程，代码格式化之后进行 eslint 检测。</p>
+<p><img src="https://tva1.sinaimg.cn/large/0081Kckwly1gk47c7c6uqj311u0jqgo2.jpg" alt="package.json"></p>
+<h2 id="npm"><a href="#npm" class="headerlink" title="npm"></a>npm</h2><h3 id="semver-语义化版本"><a href="#semver-语义化版本" class="headerlink" title="semver(语义化版本)"></a>semver(语义化版本)</h3><p>约定一个包的版本必须包含 3 个数字，格式必须是<code>MAJOR.MINOR.PATCH</code>(主版本.小版本.修订版本号)</p>
+<ul>
+<li>MAJOR 对应大版本迭代，做了不兼容旧版的修改时要更新此版本号</li>
+<li>MINOR 对应小版本迭代，发生兼容旧版 API 的修改或功能更新时，更新 MINOR 版本号</li>
+<li>PATCH 对应修订版本号，一般针对修复 BUG 的版本号</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>range</th>
+<th>含义</th>
+<th>例子</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>^2.2.1</td>
+<td>制定 MAJOR 版本号下所有更新的版本</td>
+<td>匹配 2.2.3、2.3.0，不匹配 1.0.3、3.0.1</td>
+</tr>
+<tr>
+<td>~2.2.1</td>
+<td>制定 MAJOR.MINOR 版本号下所有更新的版本</td>
+<td>匹配 2.2.3、2.2.9，不匹配 2.3.0、2.4.5</td>
+</tr>
+<tr>
+<td>&gt;=2.1</td>
+<td>版本号大于等于 2.1.0</td>
+<td>匹配 2.1.2、3.1</td>
+</tr>
+<tr>
+<td>&lt;=2.2</td>
+<td>版本号小于等于 2.2.0</td>
+<td>匹配 1.0.0、2.2.1、2.2.11</td>
+</tr>
+<tr>
+<td>1.0.0-2.0.0</td>
+<td>版本号从 1.0.0-2.0.0、包含各自</td>
+<td>匹配 1.0.0、1.3.4、2.0.0</td>
+</tr>
+</tbody></table>
+<p>两版本号可用空格(与)或者<code>||</code>(或)。</p>
+<p>另外几种写法:</p>
+<ul>
+<li><code>*</code>或<code>x</code>匹配所有的主版本</li>
+<li><code>1</code>或<code>1.x</code>匹配主版本号为 1 的所有版本</li>
+<li><code>1.2</code>或<code>1.2.x</code>匹配版本号为 1.2 开头的所有版本</li>
+<li>M.M.P 后面加<code>-</code>被视为不稳定、不建议生产使用的版本</li>
+</ul>
+<h3 id="scripts"><a href="#scripts" class="headerlink" title="scripts"></a>scripts</h3><p><code>npm run</code>运行时变量：在<code>npm run</code>的脚本执行环境内，可以通过环境变量方式获取许多运行时相关信息。以下都可以通过<code>process.env</code>对象访问获得</p>
+<ul>
+<li><code>npm_lifecycle_enent</code>:正在运行的脚本名称</li>
+<li><code>npm_package_&lt;key&gt;</code>:获取当前包 package.json 中某个字段的配置值:如<code>npm_package_name</code>获取包名</li>
+<li><code>npm_package_&lt;key&gt;_&lt;sub-key&gt;</code>: package.json 中嵌套字段属性：如<code>npm_package_dependencied_webpack</code>可以获取到 package.json 中的<code>dependencies.webpack</code>字段的值，即为 webpack 版本号</li>
+</ul>
+<h2 id="package-json"><a href="#package-json" class="headerlink" title="package.json"></a>package.json</h2><h3 id="version"><a href="#version" class="headerlink" title="version"></a>version</h3><p>遵循 server 规范，</p>
+<p><code>npm view &lt;packageName&gt; version</code>查看某个模块的最新版本</p>
+<p><code>npm view &lt;packageName&gt; versions</code>查看某个模块的所有历史版本</p>
+<h3 id="descripting-amp-keywords"><a href="#descripting-amp-keywords" class="headerlink" title="descripting &amp; keywords"></a>descripting &amp; keywords</h3><p>相当于 npm 上的 seo</p>
+<h3 id="dependencies-amp-devDependencies"><a href="#dependencies-amp-devDependencies" class="headerlink" title="dependencies &amp; devDependencies"></a>dependencies &amp; devDependencies</h3><ul>
+<li>dependencies 生产环境依赖</li>
+<li>devDependencies 开发环境依赖</li>
+</ul>
+<h3 id="scripts-1"><a href="#scripts-1" class="headerlink" title="scripts"></a>scripts</h3><p>使用<code>npm run xxx</code>去执行里面的脚本</p>
+<h3 id="main"><a href="#main" class="headerlink" title="main"></a>main</h3><p>项目入口，不指定时默认根目录下<code>index.js</code>，发 npm 包会用到</p>
+<h3 id="files"><a href="#files" class="headerlink" title="files"></a>files</h3><p>用于描述我们使用<code>npm publish</code>命令后推送到<code>npm</code>服务器的文件列表，如果指定文件夹，则文件夹内所有内容都会包含进来。eg. <code>files: [&#39;dist&#39;, &#39;lib&#39;, &#39;es&#39;]</code></p>
+<h3 id="private"><a href="#private" class="headerlink" title="private"></a>private</h3><p>一般公司非开源项目，都会设置该值为<code>true</code>，因为<code>npm</code>拒绝发私有模块，通过设置该值可以防止私有模块被无意间发布出去。`</p>
+<h3 id="engines"><a href="#engines" class="headerlink" title="engines"></a>engines</h3><p>针对 node 版本不同可能会导致的问题。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">"engines": &#123;</span><br><span class="line">   "node": "&gt;= 8.16.0"</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+
+<p>也可以指定适用的<code>npm</code>版本</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">"engines": &#123;</span><br><span class="line">   "npm": "&gt;= 6.9.0"</span><br><span class="line"> &#125;,</span><br></pre></td></tr></table></figure>
+
+<h3 id="bin"><a href="#bin" class="headerlink" title="bin"></a>bin</h3><p>自定义命令</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">"bin": &#123;</span><br><span class="line">  "my-app-cli": "./bin/cli.js"</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>如上代码指定<code>my-app-cli</code>命令执行<code>bin</code>下的<code>cli.js</code>文件。</p>
+<p>自定义实现时，需要在<code>cli.js</code>第一行写入</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#!/usr/bin/env node</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://github.com/wangqinyong1994/blog/2020/07/14/关于npm/" data-id="ckr0g7uf9000owyyzx907qvyy" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/前端-工程化-npm/">前端 工程化 npm</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-异步与性能" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/blog/2019/09/15/异步与性能/" class="article-date">
@@ -99,7 +288,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://github.com/wangqinyong1994/blog/2019/09/15/异步与性能/" data-id="ckonxihux000fttyzciosw504" class="article-share-link">Share</a>
+      <a data-url="https://github.com/wangqinyong1994/blog/2019/09/15/异步与性能/" data-id="ckr0g7ufb000pwyyz5j1qole6" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/中卷-异步与性能/">中卷 异步与性能</a></li></ul>
@@ -389,7 +578,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://github.com/wangqinyong1994/blog/2019/09/07/webpack相关/" data-id="ckonxihuu000bttyzforu9i0n" class="article-share-link">Share</a>
+      <a data-url="https://github.com/wangqinyong1994/blog/2019/09/07/webpack相关/" data-id="ckr0g7uf4000lwyyzxca0ptkh" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/webpack/">webpack</a></li></ul>
@@ -468,7 +657,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://github.com/wangqinyong1994/blog/2019/09/03/类型与语法/" data-id="ckonxihuz000kttyzll3cpxyu" class="article-share-link">Share</a>
+      <a data-url="https://github.com/wangqinyong1994/blog/2019/09/03/类型与语法/" data-id="ckr0g7ufj0011wyyzykfns5by" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/中卷-类型-值/">中卷 类型 值</a></li></ul>
@@ -522,7 +711,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://github.com/wangqinyong1994/blog/2019/07/29/对象/" data-id="ckonxihut0009ttyzbirelpwt" class="article-share-link">Share</a>
+      <a data-url="https://github.com/wangqinyong1994/blog/2019/07/29/对象/" data-id="ckr0g7uf2000kwyyznvimwxqz" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/上卷-对象/">上卷 对象</a></li></ul>
@@ -592,7 +781,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://github.com/wangqinyong1994/blog/2019/07/14/作用域和闭包/" data-id="ckonxihv1000nttyzpor4qb91" class="article-share-link">Share</a>
+      <a data-url="https://github.com/wangqinyong1994/blog/2019/07/14/作用域和闭包/" data-id="ckr0g7uf5000nwyyzlld7rvm9" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/上卷-作用域和闭包/">上卷 作用域和闭包</a></li></ul>
@@ -652,7 +841,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://github.com/wangqinyong1994/blog/2019/07/14/this和原型对象/" data-id="ckonxihuq0005ttyz39z8m8ro" class="article-share-link">Share</a>
+      <a data-url="https://github.com/wangqinyong1994/blog/2019/07/14/this和原型对象/" data-id="ckr0g7uef0008wyyzrba1utkw" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/上卷-this-原型对象/">上卷 this 原型对象</a></li></ul>
@@ -690,7 +879,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://github.com/wangqinyong1994/blog/2019/07/14/读读-我不知道的JavaScript/" data-id="ckonxihv2000qttyzblszqf3e" class="article-share-link">Share</a>
+      <a data-url="https://github.com/wangqinyong1994/blog/2019/07/14/读读-我不知道的JavaScript/" data-id="ckr0g7uff000vwyyz0bw41zr1" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/你不知道的JavaScript/">你不知道的JavaScript</a></li></ul>
@@ -728,7 +917,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://github.com/wangqinyong1994/blog/2019/07/14/post-title-with-whitespace/" data-id="ckonxihuo0004ttyza3i9mksk" class="article-share-link">Share</a>
+      <a data-url="https://github.com/wangqinyong1994/blog/2019/07/14/post-title-with-whitespace/" data-id="ckr0g7ued0005wyyzhd1wdv1k" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/序/">序</a></li></ul>
@@ -758,7 +947,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Chrome/">Chrome</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Java/">Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/React/">React</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/qiankun-微前端-umi/">qiankun 微前端 umi</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/vscode-eslint-prettier/">vscode eslint prettier</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/webpack/">webpack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/上卷-this-原型对象/">上卷 this 原型对象</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/上卷-作用域和闭包/">上卷 作用域和闭包</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/上卷-对象/">上卷 对象</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/中卷-异步与性能/">中卷 异步与性能</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/中卷-类型-值/">中卷 类型 值</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/你不知道的JavaScript/">你不知道的JavaScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/前端-工程化-npm/">前端 工程化 npm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/前端-设计模式/">前端 设计模式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/单点登录-SSO/">单点登录 SSO</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/序/">序</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/测试/">测试</a></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Chrome/">Chrome</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Java/">Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/React/">React</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Spring/">Spring</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/qiankun-微前端-umi/">qiankun 微前端 umi</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/vscode-eslint-prettier/">vscode eslint prettier</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/webpack/">webpack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/上卷-this-原型对象/">上卷 this 原型对象</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/上卷-作用域和闭包/">上卷 作用域和闭包</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/上卷-对象/">上卷 对象</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/中卷-异步与性能/">中卷 异步与性能</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/中卷-类型-值/">中卷 类型 值</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/你不知道的JavaScript/">你不知道的JavaScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/前端-工程化-npm/">前端 工程化 npm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/前端-设计模式/">前端 设计模式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/单点登录-SSO/">单点登录 SSO</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/序/">序</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/测试/">测试</a></li></ul>
     </div>
   </div>
 
@@ -768,7 +957,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/blog/tags/Chrome/" style="font-size: 10px;">Chrome</a> <a href="/blog/tags/Java/" style="font-size: 20px;">Java</a> <a href="/blog/tags/React/" style="font-size: 10px;">React</a> <a href="/blog/tags/qiankun-微前端-umi/" style="font-size: 10px;">qiankun 微前端 umi</a> <a href="/blog/tags/vscode-eslint-prettier/" style="font-size: 10px;">vscode eslint prettier</a> <a href="/blog/tags/webpack/" style="font-size: 10px;">webpack</a> <a href="/blog/tags/上卷-this-原型对象/" style="font-size: 10px;">上卷 this 原型对象</a> <a href="/blog/tags/上卷-作用域和闭包/" style="font-size: 10px;">上卷 作用域和闭包</a> <a href="/blog/tags/上卷-对象/" style="font-size: 10px;">上卷 对象</a> <a href="/blog/tags/中卷-异步与性能/" style="font-size: 10px;">中卷 异步与性能</a> <a href="/blog/tags/中卷-类型-值/" style="font-size: 10px;">中卷 类型 值</a> <a href="/blog/tags/你不知道的JavaScript/" style="font-size: 10px;">你不知道的JavaScript</a> <a href="/blog/tags/前端-工程化-npm/" style="font-size: 10px;">前端 工程化 npm</a> <a href="/blog/tags/前端-设计模式/" style="font-size: 10px;">前端 设计模式</a> <a href="/blog/tags/单点登录-SSO/" style="font-size: 10px;">单点登录 SSO</a> <a href="/blog/tags/序/" style="font-size: 10px;">序</a> <a href="/blog/tags/测试/" style="font-size: 10px;">测试</a>
+      <a href="/blog/tags/Chrome/" style="font-size: 10px;">Chrome</a> <a href="/blog/tags/Java/" style="font-size: 20px;">Java</a> <a href="/blog/tags/React/" style="font-size: 10px;">React</a> <a href="/blog/tags/Spring/" style="font-size: 10px;">Spring</a> <a href="/blog/tags/qiankun-微前端-umi/" style="font-size: 10px;">qiankun 微前端 umi</a> <a href="/blog/tags/vscode-eslint-prettier/" style="font-size: 10px;">vscode eslint prettier</a> <a href="/blog/tags/webpack/" style="font-size: 10px;">webpack</a> <a href="/blog/tags/上卷-this-原型对象/" style="font-size: 10px;">上卷 this 原型对象</a> <a href="/blog/tags/上卷-作用域和闭包/" style="font-size: 10px;">上卷 作用域和闭包</a> <a href="/blog/tags/上卷-对象/" style="font-size: 10px;">上卷 对象</a> <a href="/blog/tags/中卷-异步与性能/" style="font-size: 10px;">中卷 异步与性能</a> <a href="/blog/tags/中卷-类型-值/" style="font-size: 10px;">中卷 类型 值</a> <a href="/blog/tags/你不知道的JavaScript/" style="font-size: 10px;">你不知道的JavaScript</a> <a href="/blog/tags/前端-工程化-npm/" style="font-size: 10px;">前端 工程化 npm</a> <a href="/blog/tags/前端-设计模式/" style="font-size: 10px;">前端 设计模式</a> <a href="/blog/tags/单点登录-SSO/" style="font-size: 10px;">单点登录 SSO</a> <a href="/blog/tags/序/" style="font-size: 10px;">序</a> <a href="/blog/tags/测试/" style="font-size: 10px;">测试</a>
     </div>
   </div>
 
@@ -777,7 +966,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2021/03/">March 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2021/02/">February 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2021/01/">January 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2020/12/">December 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2020/11/">November 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2020/10/">October 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2020/07/">July 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/07/">July 2019</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2021/07/">July 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2021/03/">March 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2021/02/">February 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2021/01/">January 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2020/12/">December 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2020/11/">November 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2020/10/">October 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2020/07/">July 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/07/">July 2019</a></li></ul>
     </div>
   </div>
 
@@ -788,6 +977,10 @@
     <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/blog/2021/07/12/Spring/">Spring</a>
+          </li>
         
           <li>
             <a href="/blog/2021/03/26/测试相关/">测试相关</a>
@@ -803,10 +996,6 @@
         
           <li>
             <a href="/blog/2021/02/03/SSO实践/">SSO实践</a>
-          </li>
-        
-          <li>
-            <a href="/blog/2021/02/03/微前端实践/">微前端实践</a>
           </li>
         
       </ul>
