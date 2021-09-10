@@ -5,15 +5,20 @@
   
 
   
-  <title>Archives: 2020/11 | 王秦勇的博客</title>
+  <title>vite | 王秦勇的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="王秦勇的博客">
-<meta property="og:url" content="https://github.com/wangqinyong1994/blog/archives/2020/11/index.html">
+  <meta name="description" content="vite知识点npm包处理成绝对路径引用 /node_modules/xxxx.js(裸模块地址重写),资源预加载 .jsx、.vue等转换成浏览器看得懂的js 1&amp;lt;script type=&quot;module&quot; src=&quot;/src/main.js&quot;&amp;gt;&amp;lt;/script&amp;gt;  浏览器识别type=&amp;quot;module&amp;quot;引入js文件，内部import会发出一个网络请求，尝">
+<meta name="keywords" content="vite 打包工具">
+<meta property="og:type" content="article">
+<meta property="og:title" content="vite">
+<meta property="og:url" content="https://github.com/wangqinyong1994/blog/2021/09/10/vite/index.html">
 <meta property="og:site_name" content="王秦勇的博客">
+<meta property="og:description" content="vite知识点npm包处理成绝对路径引用 /node_modules/xxxx.js(裸模块地址重写),资源预加载 .jsx、.vue等转换成浏览器看得懂的js 1&amp;lt;script type=&quot;module&quot; src=&quot;/src/main.js&quot;&amp;gt;&amp;lt;/script&amp;gt;  浏览器识别type=&amp;quot;module&amp;quot;引入js文件，内部import会发出一个网络请求，尝">
 <meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2021-09-10T08:24:19.243Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="王秦勇的博客">
+<meta name="twitter:title" content="vite">
+<meta name="twitter:description" content="vite知识点npm包处理成绝对路径引用 /node_modules/xxxx.js(裸模块地址重写),资源预加载 .jsx、.vue等转换成浏览器看得懂的js 1&amp;lt;script type=&quot;module&quot; src=&quot;/src/main.js&quot;&amp;gt;&amp;lt;/script&amp;gt;  浏览器识别type=&amp;quot;module&amp;quot;引入js文件，内部import会发出一个网络请求，尝">
   
     <link rel="alternate" href="/blog/atom.xml" title="王秦勇的博客" type="application/atom+xml">
   
@@ -64,40 +69,68 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main">
-  
-  
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/blog/archives/2020" class="archive-year">2020</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/blog/2020/11/29/react原理/" class="archive-article-date">
-  <time datetime="2020-11-29T07:05:48.000Z" itemprop="datePublished">Nov 29</time>
+        <section id="main"><article id="post-vite" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/blog/2021/09/10/vite/" class="article-date">
+  <time datetime="2021-09-10T05:56:04.000Z" itemprop="datePublished">2021-09-10</time>
 </a>
-      
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/blog/2020/11/29/react原理/">React原理</a>
+    <h1 class="article-title" itemprop="name">
+      vite
     </h1>
   
 
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="vite"><a href="#vite" class="headerlink" title="vite"></a>vite</h1><h4 id="知识点"><a href="#知识点" class="headerlink" title="知识点"></a>知识点</h4><p>npm包处理成绝对路径引用 <code>/node_modules/xxxx.js</code>(裸模块地址重写),资源预加载</p>
+<p>.jsx、.vue等转换成浏览器看得懂的js</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"module"</span> <span class="attr">src</span>=<span class="string">"/src/main.js"</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
+<p>浏览器识别<code>type=&quot;module&quot;</code>引入js文件，内部import会发出一个网络请求，尝试获取文件。</p>
+<p>vite就是起个http服务拦截请求去处理事情，一堆正则的路径解析。</p>
+<h5 id="import-meta-glob-动态导入"><a href="#import-meta-glob-动态导入" class="headerlink" title="import.meta.glob 动态导入"></a>import.meta.glob 动态导入</h5><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 转换前</span></span><br><span class="line"><span class="keyword">const</span> modules = <span class="keyword">import</span>.meta.glob(<span class="string">'./dir/*.js'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 转换后</span></span><br><span class="line"><span class="keyword">const</span> modules = &#123;</span><br><span class="line">  <span class="string">'./dir/foo.js'</span>: <span class="function"><span class="params">()</span> =&gt;</span> <span class="keyword">import</span>(<span class="string">'./dir/foo.js'</span>),</span><br><span class="line">  <span class="string">'./dir/bar.js'</span>: <span class="function"><span class="params">()</span> =&gt;</span> <span class="keyword">import</span>(<span class="string">'./dir/bar.js'</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 遍历modules对象的key来访问对应模块, 匹配到的文件默认懒加载, 通过动态导入实现, 并会在构建时分离为独立的 chunk</span></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">const</span> path <span class="keyword">in</span> modules) &#123;</span><br><span class="line">  modules[path]().then(<span class="function">(<span class="params">mod</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(path, mod)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="import-meta-globEager-直接导入"><a href="#import-meta-globEager-直接导入" class="headerlink" title="import.meta.globEager 直接导入"></a>import.meta.globEager 直接导入</h5><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 转换前</span></span><br><span class="line"><span class="keyword">const</span> modules = <span class="keyword">import</span>.meta.globEager(<span class="string">'./dir/*.js'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 转换后</span></span><br><span class="line"><span class="keyword">import</span> * <span class="keyword">as</span> __glob__0_0 <span class="keyword">from</span> <span class="string">'./dir/foo.js'</span></span><br><span class="line"><span class="keyword">import</span> * <span class="keyword">as</span> __glob__0_1 <span class="keyword">from</span> <span class="string">'./dir/bar.js'</span></span><br><span class="line"><span class="keyword">const</span> modules = &#123;</span><br><span class="line">  <span class="string">'./dir/foo.js'</span>: __glob__0_0,</span><br><span class="line">  <span class="string">'./dir/bar.js'</span>: __glob__0_1</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>注意</strong></p>
+<ul>
+<li>这是 Vite 独有的功能</li>
+<li>该Glob 模式会被当成导入标识符，必须是相对路径或绝对路径打头</li>
+</ul>
+<h5 id="其他-TODO"><a href="#其他-TODO" class="headerlink" title="其他 TODO"></a>其他 TODO</h5>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://github.com/wangqinyong1994/blog/2021/09/10/vite/" data-id="ckte3hbxf0009mmyz0fiyr2pr" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/vite-打包工具/">vite 打包工具</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/blog/2021/07/12/Spring/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Spring</div>
+    </a>
+  
+</nav>
+
+  
+</article>
 
 </section>
         

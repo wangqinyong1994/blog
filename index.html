@@ -66,6 +66,59 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-vite" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/blog/2021/09/10/vite/" class="article-date">
+  <time datetime="2021-09-10T05:56:04.000Z" itemprop="datePublished">2021-09-10</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2021/09/10/vite/">vite</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="vite"><a href="#vite" class="headerlink" title="vite"></a>vite</h1><h4 id="知识点"><a href="#知识点" class="headerlink" title="知识点"></a>知识点</h4><p>npm包处理成绝对路径引用 <code>/node_modules/xxxx.js</code>(裸模块地址重写),资源预加载</p>
+<p>.jsx、.vue等转换成浏览器看得懂的js</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"module"</span> <span class="attr">src</span>=<span class="string">"/src/main.js"</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>浏览器识别<code>type=&quot;module&quot;</code>引入js文件，内部import会发出一个网络请求，尝试获取文件。</p>
+<p>vite就是起个http服务拦截请求去处理事情，一堆正则的路径解析。</p>
+<h5 id="import-meta-glob-动态导入"><a href="#import-meta-glob-动态导入" class="headerlink" title="import.meta.glob 动态导入"></a>import.meta.glob 动态导入</h5><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 转换前</span></span><br><span class="line"><span class="keyword">const</span> modules = <span class="keyword">import</span>.meta.glob(<span class="string">'./dir/*.js'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 转换后</span></span><br><span class="line"><span class="keyword">const</span> modules = &#123;</span><br><span class="line">  <span class="string">'./dir/foo.js'</span>: <span class="function"><span class="params">()</span> =&gt;</span> <span class="keyword">import</span>(<span class="string">'./dir/foo.js'</span>),</span><br><span class="line">  <span class="string">'./dir/bar.js'</span>: <span class="function"><span class="params">()</span> =&gt;</span> <span class="keyword">import</span>(<span class="string">'./dir/bar.js'</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 遍历modules对象的key来访问对应模块, 匹配到的文件默认懒加载, 通过动态导入实现, 并会在构建时分离为独立的 chunk</span></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">const</span> path <span class="keyword">in</span> modules) &#123;</span><br><span class="line">  modules[path]().then(<span class="function">(<span class="params">mod</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(path, mod)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="import-meta-globEager-直接导入"><a href="#import-meta-globEager-直接导入" class="headerlink" title="import.meta.globEager 直接导入"></a>import.meta.globEager 直接导入</h5><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 转换前</span></span><br><span class="line"><span class="keyword">const</span> modules = <span class="keyword">import</span>.meta.globEager(<span class="string">'./dir/*.js'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 转换后</span></span><br><span class="line"><span class="keyword">import</span> * <span class="keyword">as</span> __glob__0_0 <span class="keyword">from</span> <span class="string">'./dir/foo.js'</span></span><br><span class="line"><span class="keyword">import</span> * <span class="keyword">as</span> __glob__0_1 <span class="keyword">from</span> <span class="string">'./dir/bar.js'</span></span><br><span class="line"><span class="keyword">const</span> modules = &#123;</span><br><span class="line">  <span class="string">'./dir/foo.js'</span>: __glob__0_0,</span><br><span class="line">  <span class="string">'./dir/bar.js'</span>: __glob__0_1</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>注意</strong></p>
+<ul>
+<li>这是 Vite 独有的功能</li>
+<li>该Glob 模式会被当成导入标识符，必须是相对路径或绝对路径打头</li>
+</ul>
+<h5 id="其他-TODO"><a href="#其他-TODO" class="headerlink" title="其他 TODO"></a>其他 TODO</h5>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://github.com/wangqinyong1994/blog/2021/09/10/vite/" data-id="ckte3hbxf0009mmyz0fiyr2pr" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/vite-打包工具/">vite 打包工具</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-Spring" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/blog/2021/07/12/Spring/" class="article-date">
@@ -170,7 +223,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://github.com/wangqinyong1994/blog/2021/07/12/Spring/" data-id="ckr0gf7sx0001ogt5ukm0wdf1" class="article-share-link">Share</a>
+      <a data-url="https://github.com/wangqinyong1994/blog/2021/07/12/Spring/" data-id="ckte3hbx40001mmyzh3m85v22" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Spring/">Spring</a></li></ul>
@@ -208,7 +261,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://github.com/wangqinyong1994/blog/2021/03/26/测试相关/" data-id="ckr0gf7tk000togt5ktnwn1w1" class="article-share-link">Share</a>
+      <a data-url="https://github.com/wangqinyong1994/blog/2021/03/26/测试相关/" data-id="ckte3hbxm000pmmyz5tdebgn6" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/测试/">测试</a></li></ul>
@@ -251,7 +304,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://github.com/wangqinyong1994/blog/2021/03/24/headless-chrome/" data-id="ckr0gf7t10004ogt5dr46hjor" class="article-share-link">Share</a>
+      <a data-url="https://github.com/wangqinyong1994/blog/2021/03/24/headless-chrome/" data-id="ckte3hbx90003mmyzvem1shno" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Chrome/">Chrome</a></li></ul>
@@ -421,7 +474,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://github.com/wangqinyong1994/blog/2021/03/24/java高级/" data-id="ckr0gf7tf000logt5oajs1jgy" class="article-share-link">Share</a>
+      <a data-url="https://github.com/wangqinyong1994/blog/2021/03/24/java高级/" data-id="ckte3hbxg000bmmyzu091wmfn" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Java/">Java</a></li></ul>
@@ -459,7 +512,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://github.com/wangqinyong1994/blog/2021/02/03/SSO实践/" data-id="ckr0gf7t00003ogt5jndh9enu" class="article-share-link">Share</a>
+      <a data-url="https://github.com/wangqinyong1994/blog/2021/02/03/SSO实践/" data-id="ckte3hbx00000mmyzem63oal0" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/单点登录-SSO/">单点登录 SSO</a></li></ul>
@@ -539,7 +592,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://github.com/wangqinyong1994/blog/2021/02/03/微前端实践/" data-id="ckr0gf7tb000fogt531rc3cfx" class="article-share-link">Share</a>
+      <a data-url="https://github.com/wangqinyong1994/blog/2021/02/03/微前端实践/" data-id="ckte3hbxl000mmmyz8ia4gj5y" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/qiankun-微前端-umi/">qiankun 微前端 umi</a></li></ul>
@@ -609,7 +662,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://github.com/wangqinyong1994/blog/2021/01/23/配置eslint与prettier/" data-id="ckr0gf7tl000vogt55n466knk" class="article-share-link">Share</a>
+      <a data-url="https://github.com/wangqinyong1994/blog/2021/01/23/配置eslint与prettier/" data-id="ckte3hbxr000wmmyz5iw7pvol" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/vscode-eslint-prettier/">vscode eslint prettier</a></li></ul>
@@ -1061,7 +1114,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://github.com/wangqinyong1994/blog/2020/12/30/java基础/" data-id="ckr0gf7st0000ogt517smup8h" class="article-share-link">Share</a>
+      <a data-url="https://github.com/wangqinyong1994/blog/2020/12/30/java基础/" data-id="ckte3hbxa0004mmyzfx5mvqxt" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Java/">Java</a></li></ul>
@@ -1712,373 +1765,10 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://github.com/wangqinyong1994/blog/2020/11/29/react原理/" data-id="ckr0gf7tz001hogt5kn3rweqc" class="article-share-link">Share</a>
+      <a data-url="https://github.com/wangqinyong1994/blog/2020/11/29/react原理/" data-id="ckte3hbxy001lmmyzy2om8aup" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/React/">React</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-设计模式" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/blog/2020/10/14/设计模式/" class="article-date">
-  <time datetime="2020-10-14T15:04:14.000Z" itemprop="datePublished">2020-10-14</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2020/10/14/设计模式/">前端路线</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="设计模式"><a href="#设计模式" class="headerlink" title="设计模式"></a>设计模式</h1><table>
-<thead>
-<tr>
-<th align="center">SN</th>
-<th align="center">描述</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">Creational</td>
-<td align="center">根据创建对象的概念分为以下几类</td>
-</tr>
-<tr>
-<td align="center">Class</td>
-<td align="center"></td>
-</tr>
-<tr>
-<td align="center">Factory Method(工厂方法)</td>
-<td align="center">通过将数据和事件接口化来构建若干个子类。</td>
-</tr>
-<tr>
-<td align="center">Object</td>
-<td align="center"></td>
-</tr>
-<tr>
-<td align="center">Abstract Factory(抽象工厂)</td>
-<td align="center">建立若干族类的一个实例，这个实例不需要具体类的细节信息。</td>
-</tr>
-<tr>
-<td align="center">Builder(建造者)</td>
-<td align="center">将对象的构建方法和其实现形式分离开来，总是构建相同类型的对象。</td>
-</tr>
-<tr>
-<td align="center">Prototype(原型)</td>
-<td align="center">一个完全初始化的实例，用于拷贝</td>
-</tr>
-<tr>
-<td align="center">Singleton(单例)</td>
-<td align="center">一个类只有唯一的一个实例，这个实例在镇哥哥程序中有一个全局的访问点。</td>
-</tr>
-</tbody></table>
-<table>
-<thead>
-<tr>
-<th>Structural</th>
-<th>根据创建对象块氛围以下几类</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>Class</td>
-<td></td>
-</tr>
-<tr>
-<td>Adapter(适配器)</td>
-<td>将不同类的接口进行匹配，调整，这样景观内部接口不兼容但是不同的类还是可以协同工作。</td>
-</tr>
-<tr>
-<td>Bridge(桥接)</td>
-<td>将对象的接口从其实现中分离出来，这样对象的实现和接口可以独立的变化。</td>
-</tr>
-<tr>
-<td>Composite(组合)</td>
-<td>通过将简单可组合的对象组合起来，构成一个完整的对象，这个对象的能力将会潮服哦这些组成部分的能力的综合，即会有新能力产生。</td>
-</tr>
-<tr>
-<td>Decorator(装饰器)</td>
-<td>动态给对象增加一些可替换的处理流程。</td>
-</tr>
-<tr>
-<td>Facada(外观)</td>
-<td>一个类隐藏了内部子系统的复杂度，只暴露出一些简单的接口。</td>
-</tr>
-<tr>
-<td>Flyweight(享元)</td>
-<td>一个细粒度对象，用于将包含在其他地方的信息在不同对象之间高效地共享。</td>
-</tr>
-<tr>
-<td>Proxy(代理)</td>
-<td>一个充当占位符的对象用来代表一个真实的对象。</td>
-</tr>
-</tbody></table>
-<table>
-<thead>
-<tr>
-<th>Behavioral</th>
-<th>基于对象间作用方式来分类</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>Class</td>
-<td></td>
-</tr>
-<tr>
-<td>Interpreter(解释器)</td>
-<td>将语言元素包含在一个应用的一种方式，用于匹配目标语言的语法。</td>
-</tr>
-<tr>
-<td>Template Method(模版方法)</td>
-<td>在一个方法中为某个算法简历一层外壳，将算法的具体步骤交给子类去做。</td>
-</tr>
-<tr>
-<td>Object</td>
-<td></td>
-</tr>
-<tr>
-<td>Chain of Responsibility(响应链)</td>
-<td>一种将请求在一串对象中传递的方式，寻找可以处理这个请求的对象。</td>
-</tr>
-<tr>
-<td>Command(命令)</td>
-<td>封装命令请求为一个对象，从而使记录日志，队列缓存请求，未处理请求进行错误处理 这些功能成为可能。？？？</td>
-</tr>
-<tr>
-<td>Iterator(迭代器)</td>
-<td>在不需要直到集合内部工作原理的情况下，顺序访问一个集合里的元素。</td>
-</tr>
-<tr>
-<td>Mediator(中介者)</td>
-<td>在类之间定义简化的通行方式，用于避免类之间显式的持有彼此的引用。</td>
-</tr>
-<tr>
-<td>Observer(观察者)</td>
-<td>用于将变化通知给多个类的方式，可以保证类之间的一致性。</td>
-</tr>
-<tr>
-<td>State(状态)</td>
-<td>当对象改变时，改变对象的行为。</td>
-</tr>
-<tr>
-<td>Strateg(策略)</td>
-<td>将算法封装到类中，将选择和实现分离开来。</td>
-</tr>
-<tr>
-<td>Visitor(访问者)</td>
-<td>为类增加新的操作而不改变类本身。</td>
-</tr>
-</tbody></table>
-<h2 id="构造器模式"><a href="#构造器模式" class="headerlink" title="构造器模式"></a>构造器模式</h2><p>原：构造器是一个当新建对象的内存被分配后，用来初始化该对象的一个特殊函数。它是用来创建特殊类型对象的，首先它要准备使用的对象，其次在对象初次被创建时，通过接收参数，构造器用来对成员的属性和方法进行赋值。</p>
-<p>白：其实就是创建一个空对象，然后赋值啊赋值。。。</p>
-<h3 id="对象创建"><a href="#对象创建" class="headerlink" title="对象创建"></a>对象创建</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 对象构建三种方式</span></span><br><span class="line"><span class="keyword">var</span> a = &#123;&#125;;</span><br><span class="line"><span class="keyword">var</span> a = <span class="built_in">Object</span>.create(<span class="literal">null</span>);</span><br><span class="line"><span class="keyword">var</span> a = <span class="keyword">new</span> <span class="built_in">Object</span>();</span><br></pre></td></tr></table></figure>
-
-<h3 id="属性设置"><a href="#属性设置" class="headerlink" title="属性设置"></a>属性设置</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 1. a.b</span></span><br><span class="line"><span class="comment">// 2. a[b]</span></span><br><span class="line"><span class="comment">// 3.</span></span><br><span class="line"><span class="built_in">Object</span>.defineProperty(newObject, <span class="string">'key'</span>, &#123;</span><br><span class="line">  value: <span class="string">'xxxxx'</span>,</span><br><span class="line">  writeable: <span class="literal">true</span>,</span><br><span class="line">  enumerable: <span class="literal">true</span>,</span><br><span class="line">  configurable: <span class="literal">true</span>,</span><br><span class="line">&#125;);</span><br><span class="line"><span class="comment">// 4.</span></span><br><span class="line"><span class="built_in">Object</span>.definePropertie(newObject, &#123;</span><br><span class="line">  key1: &#123;</span><br><span class="line">    value: <span class="string">'val1'</span>,</span><br><span class="line">    writeable: <span class="literal">true</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">  key2: &#123;</span><br><span class="line">    value: <span class="string">'val2'</span>,</span><br><span class="line">    writeable: <span class="literal">false</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-
-<h3 id="使用原型的构造器"><a href="#使用原型的构造器" class="headerlink" title="使用原型的构造器"></a>使用原型的构造器</h3><p>js 函数中的 prototype，当调用 js 构造器创建一个对象时，构造函数 prototype 上的属性对于所创建的对象来说都看见。这样就可以创建多访问相同 prototype 的 Car 对象。</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Car</span>(<span class="params">model, year, miles</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.model = model;</span><br><span class="line">  <span class="keyword">this</span>.year = year;</span><br><span class="line">  <span class="keyword">this</span>.miles = miles;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Car.prototype.toString = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">this</span>.model + <span class="string">''</span> + <span class="keyword">this</span>.miles;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// usage</span></span><br><span class="line"><span class="keyword">var</span> aaa = <span class="keyword">new</span> Car(<span class="string">'aaa'</span>, <span class="number">1</span>, <span class="number">1</span>);</span><br><span class="line"><span class="keyword">var</span> bbb = <span class="keyword">new</span> Car(<span class="string">'bbb'</span>, <span class="number">2</span>, <span class="number">2</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 这样的话，单个toString()实例被所有的Car对象所共享了。</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="模块化模式"><a href="#模块化模式" class="headerlink" title="模块化模式"></a>模块化模式</h2><p>原：用来进一步模拟类的概念，通过这样一种方式：我可以在一个单一的对象中包含公有/私有方法和变量，从而从全局范围中屏蔽特定的部分。这个结果是可以减少我们的函数名称在页面中其他脚本区域定义的函数名称冲突的可能性。</p>
-<p>白：建个模块对象，起个名字，类似[Symbol.xxx]，使上下文各种引用不冲突。其实就是闭包。</p>
-<h3 id="创建一个自包含模块实现模块化模式"><a href="#创建一个自包含模块实现模块化模式" class="headerlink" title="创建一个自包含模块实现模块化模式"></a>创建一个自包含模块实现模块化模式</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 闭包来一波</span></span><br><span class="line"><span class="keyword">var</span> module1 = (<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> count = <span class="number">1</span>;</span><br><span class="line">  <span class="keyword">return</span> &#123;</span><br><span class="line">    increment: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">      <span class="keyword">return</span> count++;</span><br><span class="line">    &#125;</span><br><span class="line">    reset: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">      count = <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)()</span><br><span class="line"></span><br><span class="line"><span class="comment">// usage</span></span><br><span class="line">module1.increment();</span><br><span class="line">module1.reset()</span><br></pre></td></tr></table></figure>
-
-<h3 id="含命名空间、公有-私有变量的模块化实现"><a href="#含命名空间、公有-私有变量的模块化实现" class="headerlink" title="含命名空间、公有/私有变量的模块化实现"></a>含命名空间、公有/私有变量的模块化实现</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> module2 = (<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> privateVar, privateMethod;</span><br><span class="line"></span><br><span class="line">  privateVar = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">  privateMethod = <span class="function"><span class="keyword">function</span> (<span class="params">foo</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(foo);</span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> &#123;</span><br><span class="line">    privateVar: <span class="string">'foo'</span>,</span><br><span class="line">    privateMethod: <span class="function"><span class="keyword">function</span> (<span class="params">bar</span>) </span>&#123;</span><br><span class="line">      privateVar++;</span><br><span class="line">      privateMethod(bar);</span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;)();</span><br></pre></td></tr></table></figure>
-
-<h3 id="购物车例子"><a href="#购物车例子" class="headerlink" title="购物车例子"></a>购物车例子</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> basketModule = (<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="comment">// 私有</span></span><br><span class="line">  <span class="keyword">var</span> basket = [];</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">privatefn1</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">privatefn2</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> &#123;</span><br><span class="line">    addItem: <span class="function"><span class="keyword">function</span>(<span class="params">values</span>) </span>&#123;</span><br><span class="line">      basket.push(values);</span><br><span class="line">    &#125;,</span><br><span class="line">    getItemCount: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">      <span class="keyword">return</span> basket.length;</span><br><span class="line">    &#125;,</span><br><span class="line">    doSomething: privatefn1,</span><br><span class="line">    getTotal: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    	<span class="keyword">var</span> q = <span class="keyword">this</span>.getItemCount();</span><br><span class="line">      retun q;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)()</span><br><span class="line"></span><br><span class="line"><span class="comment">// 就是把同类相关东西放到一起，一顿操作，拿到相关数据信息返回或者其他。。。</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="模块模式变体"><a href="#模块模式变体" class="headerlink" title="模块模式变体"></a>模块模式变体</h3><h4 id="import-mixing-导入混合"><a href="#import-mixing-导入混合" class="headerlink" title="import mixing(导入混合)"></a>import mixing(导入混合)</h4><p>展现如何将全局作为一个参数传入模块的匿名函数，这种方式允许我们导入全局，并且按照我们的想法在本地为这些全局起一个别名。</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> module3 = (<span class="function"><span class="keyword">function</span> (<span class="params">JQ, _</span>) </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">privateMethod1</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    JQ(<span class="string">'.container'</span>).html(<span class="string">'test'</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">privateMethod2</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(_.min([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]));</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> &#123;</span><br><span class="line">    publicMethod: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">      privateMethod1();</span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;)(JQuery, _);</span><br><span class="line"></span><br><span class="line">module3.publicMethod();</span><br></pre></td></tr></table></figure>
-
-<h4 id="Exports-导出"><a href="#Exports-导出" class="headerlink" title="Exports(导出)"></a>Exports(导出)</h4><p>这个变体允许我们声明全局对象而不用使用他们。</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> module4 = (<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> <span class="built_in">module</span> = &#123;&#125;,</span><br><span class="line">    privateVar = <span class="string">'123'</span>;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">privateMethod</span>(<span class="params"></span>) </span>&#123;&#125;</span><br><span class="line"></span><br><span class="line">  <span class="built_in">module</span>.publicProperty = <span class="string">'aaa'</span>;</span><br><span class="line">  <span class="built_in">module</span>.publicMethod = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(privateMethod);</span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">module</span>;</span><br><span class="line">&#125;)();</span><br></pre></td></tr></table></figure>
-
-<h3 id="优-缺点"><a href="#优-缺点" class="headerlink" title="优/缺点"></a>优/缺点</h3><p>优点：对于真正封装概念更清晰；支持私有数据，内部能访问私有外部不能访问。</p>
-<p>缺点：</p>
-<ol>
-<li>因为我们采用不同的方式访问公有私有成员，因此当我们想改变这些成员可见性时，不得不在所有使用这些成员地方修改代码。</li>
-<li>不能在对象之后添加的方法里面访问这些私有变量。</li>
-</ol>
-<h2 id="单例模式"><a href="#单例模式" class="headerlink" title="单例模式"></a>单例模式</h2><p>特点：全局、唯一</p>
-<p>原则：单一职责</p>
-<p>基本版：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> CreateSingleton = (<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">let</span> instance = <span class="literal">null</span>;</span><br><span class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> (<span class="params">name</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.name = name;</span><br><span class="line">    <span class="keyword">if</span> (instance) &#123;</span><br><span class="line">      <span class="keyword">return</span> instance;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> (instance = <span class="keyword">this</span>);</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;)();</span><br><span class="line"></span><br><span class="line">CreateSingleton.prototype.getName = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="keyword">this</span>.name);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> a = <span class="keyword">new</span> CreateSingleton(<span class="string">'a'</span>);</span><br><span class="line"><span class="keyword">let</span> b = <span class="keyword">new</span> CreateSingleton(<span class="string">'b'</span>);</span><br><span class="line">a.getName(); <span class="comment">// a</span></span><br><span class="line">b.getName(); <span class="comment">// a</span></span><br></pre></td></tr></table></figure>
-
-<p>代理版：将创建对象的操作和实例判断的操作进行解耦拆分，实现更小粒度的划分，符合单一职责原则。</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 只负责创建实例</span></span><br><span class="line"><span class="keyword">let</span> Singleton = <span class="function"><span class="keyword">function</span> (<span class="params">name</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.name = name;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">Singleton.prototype.getName = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="keyword">this</span>.name);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 只负责判断实例</span></span><br><span class="line"><span class="keyword">let</span> ProxyCreateSingleton = (<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">let</span> instance = <span class="literal">null</span>;</span><br><span class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> (<span class="params">name</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (instance) &#123;</span><br><span class="line">      <span class="keyword">return</span> instance;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> (instance = <span class="keyword">new</span> Singleton(name));</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;)();</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> a = <span class="keyword">new</span> ProxyCreateSingleton(<span class="string">'a'</span>);</span><br><span class="line"><span class="keyword">let</span> b = <span class="keyword">new</span> ProxyCreateSingleton(<span class="string">'b'</span>);</span><br><span class="line">a.getName(); <span class="comment">// a</span></span><br><span class="line">b.getName(); <span class="comment">// a</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="惰性单例"><a href="#惰性单例" class="headerlink" title="惰性单例"></a>惰性单例</h3><p>页面开始加载时候我们的实例是没有进行创建的，当我们点击之后才开始，通过惰性单例按需创建实例，提高性能。</p>
-<h2 id="观察者模式"><a href="#观察者模式" class="headerlink" title="观察者模式"></a>观察者模式</h2><p>原：</p>
-<ol>
-<li>一个被称作被观察者的对象，维护一组被称为观察者的对象，这些对象依赖于被观察者，被观察者自动将自身的状态的任何变化通知给他们。</li>
-<li>当一个被观察者需要将一些变化通知给观察者的时候，将采用广播的方式，这条广播可能包含特定于这条通知的一些数据。</li>
-<li>当特定的观察者不再需要接受来自它所注册的被观察者的通知的时候，被观察者可以将其从无所维护的组中删除。</li>
-<li>包含如下组件：<ol>
-<li>被观察者：维护一组观察者，提供用于增加或移除观察者的方法。</li>
-<li>观察者： 提供一个更新接口，用于当被观察者状态变化时得到通知。</li>
-<li>具体的被观察者：状态变化时广播通知给观察者，保持具体的观察者信息。</li>
-<li>具体的观察者：保持一个指向具体被观察者的引用，实现一个更新接口，用于观察，以便保证自身状态总是和观察者状态一致的。</li>
-</ol>
-</li>
-</ol>
-<p>白：被观察者放着(订阅)观察者(数组)，也就是观察者要注册到被观察者上，然后遍历执行。。</p>
-<p>创建观察者:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ObserverList</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>() &#123;</span><br><span class="line">    <span class="keyword">this</span>.observerList = [];</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  add(obj) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.observerList.push(obj)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  empty()&#123;</span><br><span class="line">    <span class="keyword">this</span>.observerList = [];</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  count() &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.observerList.length;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">get</span>(index) &#123;</span><br><span class="line">    <span class="keyword">if</span> (index &gt; <span class="number">-1</span> &amp;&amp; index &lt; <span class="keyword">this</span>.observerList.length) &#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="keyword">this</span>.observerList[index]<span class="string">''</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  insert(obj, index) &#123;</span><br><span class="line">    <span class="keyword">let</span> pointer = <span class="number">-1</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (index === <span class="number">0</span>) &#123;</span><br><span class="line">      <span class="keyword">this</span>.observerList.unshift(obj);</span><br><span class="line">      pointer = index;</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (index === <span class="keyword">this</span>.observerList.length) &#123;</span><br><span class="line">      <span class="keyword">this</span>.observerList.push(obj);</span><br><span class="line">      pointer = index;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> pointer</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  indexOf(obj, startIndex) &#123;</span><br><span class="line">    <span class="keyword">let</span> i = startIndex, pointer = <span class="number">-1</span>;</span><br><span class="line">    <span class="keyword">while</span>(i &lt; <span class="keyword">this</span>.observerList.length) &#123;</span><br><span class="line">      <span class="keyword">if</span> (<span class="keyword">this</span>.observerList[i] === obj) &#123;</span><br><span class="line">        pointer = i;</span><br><span class="line">      &#125;</span><br><span class="line">      i++;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> pointer;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  removeAt(index) &#123;</span><br><span class="line">    <span class="keyword">if</span> (index === <span class="number">0</span>) &#123;</span><br><span class="line">     <span class="keyword">this</span>.observerList.shift()</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (index === <span class="keyword">this</span>.observerList.length - <span class="number">1</span>) &#123;</span><br><span class="line">      <span class="keyword">this</span>.observerList.pop()</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>创建被观察者</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Subject</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>() &#123;</span><br><span class="line">    <span class="keyword">this</span>.observers = <span class="keyword">new</span> ObserverList();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  addObserver(observer) &#123;</span><br><span class="line">    <span class="keyword">this</span>.observers.add(observer);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  removeObserver(observer) &#123;</span><br><span class="line">    <span class="keyword">this</span>.observers.removeAt(<span class="keyword">this</span>.observers.indexOf(observer, <span class="number">0</span>));</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  notify(context) &#123;</span><br><span class="line">    <span class="keyword">let</span> observerCount = <span class="keyword">this</span>.observers.count();</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; observerCount; i++) &#123;</span><br><span class="line">      <span class="keyword">this</span>.observers.get(i).update(context);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>建立新的观察者的一个框架</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Observer</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>() &#123;</span><br><span class="line">    <span class="keyword">this</span>.update = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">      <span class="comment">// ...</span></span><br><span class="line">    &#125;;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="观察者模式与发布订阅模式的不同"><a href="#观察者模式与发布订阅模式的不同" class="headerlink" title="观察者模式与发布订阅模式的不同"></a>观察者模式与发布订阅模式的不同</h3><p>原：</p>
-<ol>
-<li>观察者模式要求想要接受相关通知的观察者<strong>必须到发起这个事件的被观察者上注册这个事件</strong>。</li>
-<li>发布订阅模式使用一个主题/事件频道，这个频道处于想要获取通知的订阅者和发起事件的发布者之间。这个事件系统允许代码定义应用相关的事件，这个事件可以传递特殊的参数，参数重包含有订阅着所需要的值。<strong>这种想法是为了避免订阅者和发布者之间的依赖性。</strong>这种使订阅着可以实现一个合适的事件处理函数，用于注册和接受由发布者广播的相关通知。</li>
-</ol>
-<p>白：发布订阅由中间商处理。</p>
-<p><img src="https://tva1.sinaimg.cn/large/0081Kckwly1gk9m5h2kalj313w0u049e.jpg" alt></p>
-<h3 id="优缺点"><a href="#优缺点" class="headerlink" title="优缺点"></a>优缺点</h3><p>优点：</p>
-<ol>
-<li>鼓励人找出不同部门间的关系，同时帮助我们找出这样的层，该层中包含的直接关系，可以通过一系列的观察者和被观察者替换掉。这种方式将应用程序切割降耦。</li>
-<li>当我们需要维护相关对象的一致性时，可以避免对象之间的紧密耦合。eg. 一个对象可以通知及另一个对象，而不需要知道这个对象的信息。</li>
-</ol>
-<p>缺点：其实都是没有强关联导致的，既是好处也是坏处。</p>
-<ol>
-<li>假设发布者有一个或者多个订阅着正在监听它们，基于这种假设，在某些应用处理过程中来记录或者输出错误日志，如果订阅者执行日志功能崩溃了，因为系统解耦，发布者没法感知道这些事情。。。(订阅者坏掉了，发布者感知不到。 = =那肯定啊)</li>
-<li>订阅者对彼此之间存在没有感知，对切换发布者的代价无从得知，因为订阅者和发布者之间的动态关系，更新依赖也很难去追踪。</li>
-</ol>
-<p>EventEmitter</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">EventEmitter</span> </span>&#123;</span><br><span class="line">  consturctor() &#123;</span><br><span class="line">    <span class="keyword">this</span>._event = <span class="built_in">Object</span>.create(<span class="literal">null</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  on(type, handler) &#123;</span><br><span class="line">    (<span class="keyword">this</span>._event[type] || (<span class="keyword">this</span>._event[type] = [])).push(handler);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  off(type, handler) &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">this</span>._event[type]) &#123;</span><br><span class="line">      <span class="keyword">this</span>._event[type].splice(<span class="keyword">this</span>._event[type].indexOf(handler) &gt;&gt;&gt; <span class="number">0</span>, <span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  once(type, handler) &#123;</span><br><span class="line">    <span class="keyword">let</span> fired = <span class="literal">false</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">magic</span>(<span class="params">...args</span>) </span>&#123;</span><br><span class="line">      <span class="keyword">this</span>.off(type, magic);</span><br><span class="line">      <span class="keyword">if</span> (fired) &#123;</span><br><span class="line">        fired = <span class="literal">true</span>;</span><br><span class="line">        handler.apply(<span class="keyword">this</span>, args);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">this</span>.on(type, magic);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  emit(type) &#123;</span><br><span class="line">    <span class="keyword">let</span> payload = [].slice.call(<span class="built_in">arguments</span>, <span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> array = <span class="keyword">this</span>._event[type] || [];</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; array.length; i++) &#123;</span><br><span class="line">      <span class="keyword">let</span> handler = <span class="keyword">this</span>._event[type][i];</span><br><span class="line">      handler.apply(<span class="keyword">this</span>, payload);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// usage</span></span><br><span class="line"><span class="keyword">var</span> em = <span class="keyword">new</span> EventEmitter();</span><br><span class="line">em.on(<span class="string">'test'</span>, (aaa) =&gt; &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="number">123</span>, aaa);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">em.emit(<span class="string">'test'</span>, <span class="string">'dssd'</span>);</span><br></pre></td></tr></table></figure>
-
-<h2 id="中介者模式"><a href="#中介者模式" class="headerlink" title="中介者模式"></a>中介者模式</h2><p>原：如果系统组件之间存在大量的直接关系，就可能是时候，使用一个中心的控制点，来让不同的组件通过它来通信。中介者通过将组件之间显式的直接引用替换成通过中心点来交互的方式，来做到松耦合。举个 🌰，飞行控制系统，一个航站塔(中介者)处理哪个飞机可以起飞哪个可以降落，因为所有通信(监听的通知或者广播的通知)都是飞机和控制塔之间进行的，而不是飞机与飞机之间。一个中央集权的控制中心是这个系统成功的关键。</p>
-<p>白：就是上面 🌰。。。</p>
-<p>从实现角度来讲，中介者模式是观察者模式中的共享被观察者对象，在这个系统中的对象之间直接的发布订阅关系被牺牲掉了，取代的是维护一个通信的中心节点。</p>
-<p>也可以认为是一种补充——用于应用级别的通知，例如不同子系统之间的通信，子系统本身很复杂，可能需要使用发布订阅模式来做内部组件之间的解耦。</p>
-<h3 id="基础实现"><a href="#基础实现" class="headerlink" title="基础实现"></a>基础实现</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> mediator = (<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="comment">// 可广播或收听的主题的存储器</span></span><br><span class="line">  <span class="keyword">var</span> topics = &#123;&#125;;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 订阅主题时，提供要执行的回调</span></span><br><span class="line">  <span class="comment">// 当那个话题被广播</span></span><br><span class="line">  <span class="keyword">var</span> subscribe = <span class="function"><span class="keyword">function</span> (<span class="params">topic, fn</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (!topics[topic]) &#123;</span><br><span class="line">      topics[topic] = [];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    topics[topic].push(&#123; <span class="attr">context</span>: <span class="keyword">this</span>, <span class="attr">callback</span>: fn &#125;);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 将事件发布/广播到应用程序的其余部分</span></span><br><span class="line">  <span class="keyword">var</span> publish = <span class="function"><span class="keyword">function</span> (<span class="params">topic</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> args;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (!topics[topic]) &#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    args = <span class="built_in">Array</span>.prototypr.slice.call(<span class="built_in">arguments</span>, <span class="number">1</span>);</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>, l = topics[topic].length; i &lt; l; i++) &#123;</span><br><span class="line">      <span class="keyword">var</span> subscription = topics[topic][i];</span><br><span class="line">      subscription.callback.apply(subscription.context, args);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> &#123;</span><br><span class="line">    publish,</span><br><span class="line">    subscribe,</span><br><span class="line">    installTo: <span class="function"><span class="keyword">function</span> (<span class="params">obj</span>) </span>&#123;</span><br><span class="line">      obj.subscribe = subscribe;</span><br><span class="line">      obj.publish = publish;</span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;)();</span><br></pre></td></tr></table></figure>
-
-<h3 id="优缺点-1"><a href="#优缺点-1" class="headerlink" title="优缺点"></a>优缺点</h3><p>优点：</p>
-<ol>
-<li>节约了对象或者组件之间的通信信道，这些对象或者组件存在于从多对多到多对一的系统之中。</li>
-</ol>
-<p>缺点：</p>
-<ol>
-<li>它引入一个单点故障。在模块直击爱你防止一个中间人也可能会造成性能损失，因为它们经常是间接的进行通信的。</li>
-</ol>
-<h3 id="中介者-VS-观察者-？？"><a href="#中介者-VS-观察者-？？" class="headerlink" title="中介者 VS 观察者 ？？"></a>中介者 VS 观察者 ？？</h3><ol>
-<li>在观察者模式中，没有封装约束的单一对象。取而代之，观察者和主题必须合作来维护约束，通信的模式决定于观察者和主题相互关联的方式：一个单独的主题经常有许多的观察者，而有时候一个主题的观察者是另一个观察者的主题。</li>
-<li>中间人和观察者都提倡松耦合，然而中间人默认使用让对象严格通过中间人进行通信的方式实现松耦合。观察者模式则创造了观察者对象，这些观察者对象会发布触发对象认购的感兴趣的事件。</li>
-</ol>
-<h2 id="原型模式"><a href="#原型模式" class="headerlink" title="原型模式"></a>原型模式</h2><p>原：基于原型的继承中，我们创建作为其他对象原型的对象。原型对象自身被当作构造器创建的每一个对象的蓝本高效的使用着。如果构造函数使用的原型包含例如叫做 name 的属性，那么每一个通过同一个构造器创建的对象豆浆拥有这个相同的属性。</p>
-<p>白：其实就是创建一个 base 原型。使用 Object.create。。。。</p>
-<p>eg：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> myCar = &#123;</span><br><span class="line">  name: <span class="string">'aaa'</span>,</span><br><span class="line">  dirve: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'dirve'</span>);</span><br><span class="line">  &#125;,</span><br><span class="line">  panic: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'panic'</span>);</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> yourCar = <span class="built_in">Object</span>.create(myCar);</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(yourCar.name); <span class="comment">// 可以看见原型</span></span><br></pre></td></tr></table></figure>
-
-<p>Object.create。。。实现思路</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">create</span>(<span class="params">obj</span>) </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">F</span>(<span class="params"></span>) </span>&#123;&#125;</span><br><span class="line">  F.prototype = obj;</span><br><span class="line">  F.prototype.constructor = F;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> F();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="命令模式"><a href="#命令模式" class="headerlink" title="命令模式"></a>命令模式</h2><p>原：该模式目标是将方法的调用，请求或者操作封装到一个单独的对象中，给我们酌情执行同时参数化和传递方法调用的能力。</p>
-<p>白：封装完调用方法。。。lodash、underscore??</p>
-<p>实现简单明智的命令对象，将一个行为和对象对调用这个行为的需求都绑定到了一起，它们始终都包含一个执行操作(run()或者 execute())，所有带有相同接口的命令对象能够被简单的根据需要调换。</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> CarManager = &#123;</span><br><span class="line">    requestInfo: <span class="function"><span class="keyword">function</span> (<span class="params">model, id</span>) </span>&#123;</span><br><span class="line">      <span class="keyword">return</span> model + id + <span class="string">''</span>;</span><br><span class="line">    &#125;,</span><br><span class="line">    buyVehicle: <span class="function"><span class="keyword">function</span> (<span class="params">model, id</span>) </span>&#123;</span><br><span class="line">      <span class="keyword">return</span> model + id + <span class="string">''</span>;</span><br><span class="line">    &#125;,</span><br><span class="line">    arrangeViewing: <span class="function"><span class="keyword">function</span> (<span class="params">model, id</span>) </span>&#123;</span><br><span class="line">      <span class="keyword">return</span> model + id + <span class="string">''</span>;</span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;)();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 这样的话，如果CarManager核心api改变了，者可能需要所有直接访问这些方法的对象也跟着被修改，这可以被看作是种耦合。咋办？</span></span><br><span class="line"><span class="comment">// 扩展一波，以便我们这个命令模式的应用程序得到这种效果：接受任何可以在CarManager对象上面执行的方法，传送任何可以被使用的数据，如Car模型和ID</span></span><br></pre></td></tr></table></figure>
-
-<p>希望的效果</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">CarManager.execute = <span class="function"><span class="keyword">function</span> (<span class="params">name</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    CarManager[name] &amp;&amp;</span><br><span class="line">    CarManager[name].apply(CarManager, [].slice.call(<span class="built_in">arguments</span>, <span class="number">1</span>))</span><br><span class="line">  );</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-<p>最终调用</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">CarManager.execute(<span class="string">'arrangeViewing'</span>, <span class="string">'Ferrari'</span>, <span class="string">'14523'</span>);</span><br><span class="line">CarManager.execute(<span class="string">'requestInfo'</span>, <span class="string">'Ford Mondeo'</span>, <span class="string">'54323'</span>);</span><br><span class="line">CarManager.execute(<span class="string">'requestInfo'</span>, <span class="string">'Ford Escort'</span>, <span class="string">'34232'</span>);</span><br><span class="line">CarManager.execute(<span class="string">'buyVehicle'</span>, <span class="string">'Ford Escort'</span>, <span class="string">'34232'</span>);</span><br></pre></td></tr></table></figure>
-
-<p>更像是对已有对象，封装了添加外部执行的方法。</p>
-<h2 id="外观模式"><a href="#外观模式" class="headerlink" title="外观模式"></a>外观模式</h2><p>原：该模式提供了面向一种更大型的代码体提供了一个更高级别的舒适的接口，隐藏了其真正的潜在复杂性。把这一模式想象成要是呈现给开发者简化的 API。，一些总是会提升使用性能的东西。</p>
-<p>白：内部消化逻辑代码，提供给开发者更简单的 API，其实就是封装复杂逻辑块，按逻辑分层搞代码。</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> <span class="built_in">module</span> = (<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> _private = &#123;</span><br><span class="line">    i: <span class="number">5</span>,</span><br><span class="line">    <span class="keyword">get</span>: function () &#123;</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="keyword">this</span>.i);</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="keyword">set</span>: function (val) &#123;</span><br><span class="line">      <span class="keyword">this</span>.i = val;</span><br><span class="line">    &#125;,</span><br><span class="line">    run: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="string">'running'</span>);</span><br><span class="line">    &#125;,</span><br><span class="line">    jump: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="string">'jumping'</span>);</span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;;</span><br><span class="line">  <span class="keyword">return</span> &#123;</span><br><span class="line">    facade: <span class="function"><span class="keyword">function</span> (<span class="params">args</span>) </span>&#123;</span><br><span class="line">      _private.set(args.val);</span><br><span class="line">      _private.get();</span><br><span class="line">      <span class="keyword">if</span> (args.run) &#123;</span><br><span class="line">        _private.run();</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;)();</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.facade(&#123; <span class="attr">run</span>: <span class="literal">true</span>, <span class="attr">val</span>: <span class="number">10</span> &#125;);</span><br></pre></td></tr></table></figure>
-
-<h2 id="工厂模式"><a href="#工厂模式" class="headerlink" title="工厂模式"></a>工厂模式</h2><p>原：一种关注对象创建概念的创建模式。不同之处在于它没有明确要求我们使用一个构造器。取而代之，一个工厂能提供一个创建对象的公共接口，我们可以在其中指定我们希望被创建的工厂对象的类型。</p>
-<p>白：创建基础类，之后按照这个类来建东西。</p>
-<h3 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a>使用场景</h3><ol>
-<li>当我们的对象或者组件设置涉及到高程度级别的复杂度时。</li>
-<li>当我们需要根据我们所在的环境方便的生成不同对象的实体时。</li>
-<li>当我们在许多共享同一个属性的许多小型对象或组件上工作时。</li>
-<li>当带有其他仅仅需要满足一种 API 约定的对象的组合对象工作时。 ？？</li>
-</ol>
-<h3 id="抽象工厂"><a href="#抽象工厂" class="headerlink" title="抽象工厂"></a>抽象工厂</h3><ol>
-<li>目标是以一个通用的目标将一组独立的工厂进行封装。它将一对对象的实现细节从它们的一般实例中分离。</li>
-<li>一般用于在一种必须从其创建或生产对象的方式处独立，或者需要同多种类型的对象一起工作。</li>
-</ol>
-<p>🌰：一个发动机工厂,它定义了获取或者注册发动机类型的方式.抽象工厂会被命名为 AbstractVehicleFactory.抽象工厂将允许像”car”或者”truck”的发动机类型的定义,并且构造工厂将仅实现满足发动机合同的类.(例如:Vehicle.prototype.driven 和 Vehicle.prototype.breakDown)。</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> AbstractVehicleFactory = (<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> types = &#123;&#125;;</span><br><span class="line">  <span class="keyword">return</span> &#123;</span><br><span class="line">    getVehicle: <span class="function"><span class="keyword">function</span> (<span class="params">type, customizations</span>) </span>&#123;</span><br><span class="line">      <span class="keyword">var</span> Vehicle = types[type];</span><br><span class="line">      <span class="keyword">return</span> Vehicle ? <span class="keyword">new</span> Vehicle(customizations) : <span class="literal">null</span>;</span><br><span class="line">    &#125;,</span><br><span class="line">    registerVehicle: <span class="function"><span class="keyword">function</span> (<span class="params">type, Vehicle</span>) </span>&#123;</span><br><span class="line">      <span class="keyword">var</span> proto = Vehicle.prototype;</span><br><span class="line">      <span class="keyword">if</span> (proto.drive &amp;&amp; proto.breakDown) &#123;</span><br><span class="line">        types[type] = Vehicle;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">return</span> AbstractVehicleFactory;</span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;)();</span><br><span class="line"></span><br><span class="line"><span class="comment">// usage</span></span><br><span class="line">AbstractVehicleFactory.registerVehicle(<span class="string">'car'</span>, Car);</span><br><span class="line">AbstractVehicleFactory.registerVehicle(<span class="string">'truck'</span>, Truck);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> car = AbstractVehicleFactory.getVehicle(<span class="string">'car'</span>, &#123;</span><br><span class="line">  color: <span class="string">'lime grern'</span>,</span><br><span class="line">  state: <span class="string">'link new'</span>,</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> truck = AbstractVehicleFactory.getVehicle(<span class="string">'truck'</span>, &#123;</span><br><span class="line">  wheelSize: <span class="string">'lime grern'</span>,</span><br><span class="line">  color: <span class="string">'link new'</span>,</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-
-<h2 id="Mixin-模式"><a href="#Mixin-模式" class="headerlink" title="Mixin 模式"></a>Mixin 模式</h2><p>原：提供能被一个或者一组子类简单继承功能的类，意在重用功能。</p>
-<p>白：继承。。。原型链拓展。。。类比早期 react 的 mixin，vue 的 mixins。。。</p>
-<h3 id="优缺点-2"><a href="#优缺点-2" class="headerlink" title="优缺点"></a>优缺点</h3><p>优点：在一个系统中降解功能的重复性，增加功能的重用性。</p>
-<p>缺点：将功能注入对象原型会造成原型污染，造成一定程度上的原油功能的不确定性。</p>
-<h2 id="装饰器模式"><a href="#装饰器模式" class="headerlink" title="装饰器模式"></a>装饰器模式</h2><p>原：提供了向一个系统中现有的类动态添加行为的能力，不关心类的基础功能，只是将它自身拷贝到超类之中。</p>
-<p>白：手机与手机壳的关系。</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 多个装饰器的装饰对象</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">MacBook</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.cost = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">100</span>;</span><br><span class="line">  &#125;;</span><br><span class="line">  <span class="keyword">this</span>.screenSize = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">15</span>;</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 重写里面的方法</span></span><br><span class="line"><span class="comment">// 装饰器1</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Memory</span>(<span class="params">macbook</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> v = macbook.cost();</span><br><span class="line">  macbook.cost = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> v + <span class="number">75</span>;</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 装饰器2</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Engraving</span>(<span class="params">macbook</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> v = macbook.cost();</span><br><span class="line">  macbook.cost = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> v + <span class="number">200</span>;</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 装饰器3</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Insurance</span>(<span class="params">macbook</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> v = macbook.cost();</span><br><span class="line">  macbook.cost = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> v + <span class="number">250</span>;</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> mb = <span class="keyword">new</span> MacBook();</span><br><span class="line">Memory(mb);</span><br><span class="line">Engraving(mb);</span><br><span class="line">Insurance(mb);</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(mb.cost()); <span class="comment">// 100 + 75 + 200 + 250</span></span><br><span class="line"><span class="built_in">console</span>.log(mb.screenSize()); <span class="comment">// 15</span></span><br></pre></td></tr></table></figure>
-
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 装饰类</span></span><br><span class="line">@testDec</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Demo</span> </span>&#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">testDec</span>(<span class="params">target</span>) </span>&#123;</span><br><span class="line">  target.isDec = <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(Demo.isDec); <span class="comment">// true</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 装饰器原理</span></span><br><span class="line">@decorator</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span> </span>&#123;&#125;</span><br><span class="line"><span class="comment">// 等同于</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span> </span>&#123;&#125;</span><br><span class="line">A = decorator(A) || A;</span><br><span class="line"></span><br><span class="line"><span class="comment">//可以传参数</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">testDec</span>(<span class="params">isDec</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> (<span class="params">target</span>) </span>&#123;</span><br><span class="line">    target.isDec = isDec;</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// usage</span></span><br><span class="line">@testDec(tue)</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Demo</span> </span>&#123;&#125;</span><br><span class="line"><span class="built_in">console</span>.log(Demo.isDec); <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
-
-<p>主要使用装饰类和装饰方法</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 装饰类</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">mixins</span>(<span class="params">...list</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> (<span class="params">target</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">Object</span>.assgin(target.prototype, ...list);</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> Foo = &#123;</span><br><span class="line">  foo() &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'foo'</span>);</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">@mixins(Foo)</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyClass</span> </span>&#123;&#125;</span><br><span class="line"><span class="keyword">const</span> myClass = <span class="keyword">new</span> MyClass();</span><br><span class="line">myClass.foo(); <span class="comment">// 'foo'</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 装饰方法</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">readonly</span>(<span class="params">target, name, descriptor</span>) </span>&#123;</span><br><span class="line">  descriptor.writable = <span class="literal">false</span>;</span><br><span class="line">  <span class="keyword">return</span> descriptor;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>() &#123;</span><br><span class="line">    <span class="keyword">this</span>.first = <span class="string">'A'</span>;</span><br><span class="line">    <span class="keyword">this</span>.last = <span class="string">'B'</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  @readonly</span><br><span class="line">  name() &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">`<span class="subst">$&#123;<span class="keyword">this</span>.first&#125;</span> <span class="subst">$&#123;<span class="keyword">this</span>.last&#125;</span>`</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> p = <span class="keyword">new</span> Person();</span><br><span class="line"><span class="built_in">console</span>.log(p.name()); <span class="comment">// name只读，会报错</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 打印日志</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">log</span>(<span class="params">target, name, descriptor</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> oldValue = descriptor.value;</span><br><span class="line"></span><br><span class="line">  descriptor.value = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">`<span class="subst">$&#123;name&#125;</span>`</span>, <span class="built_in">arguments</span>);</span><br><span class="line">    <span class="keyword">return</span> oldValue.apply(<span class="keyword">this</span>, <span class="built_in">arguments</span>);</span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> descriptor;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Math</span> </span>&#123;</span><br><span class="line">  @log</span><br><span class="line">  add(a, b) &#123;</span><br><span class="line">    <span class="keyword">return</span> a + b;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> math = <span class="keyword">new</span> <span class="built_in">Math</span>();</span><br><span class="line"><span class="keyword">const</span> result = math.add(<span class="number">2</span>, <span class="number">4</span>);</span><br></pre></td></tr></table></figure>
-
-<h3 id="优缺点-3"><a href="#优缺点-3" class="headerlink" title="优缺点"></a>优缺点</h3><p>好多设计模式是优点同时也是缺点。。。</p>
-<p>优点：对象可以用新的行为装饰从而继续使用，并不用担心基础对象被改变。</p>
-<p>缺点：使应用程序变得复杂更难管理</p>
-<h2 id="适配器模式"><a href="#适配器模式" class="headerlink" title="适配器模式"></a>适配器模式</h2><p>原：将一个对象或者类的接口翻译成某个指定的系统可以使用另外一个接口。</p>
-<p>白：iphone 港版充电器与国行充电器，转接口。</p>
-<h2 id="享元模式"><a href="#享元模式" class="headerlink" title="享元模式"></a>享元模式</h2><p>原：是一个优化重复、缓慢和低效数据共享代码的经典结构化解决方案。目标 hi 以相关对象尽可能多的共享数据，来减少应用程序中内存的使用。</p>
-<p>白：为减少对象创建的个数。</p>
-<p>当有大量对象时，有可能会造成内存溢出，我们将其中共同的部分抽象出来，如果有相同的业务请求，直接返回在内存中已有的对象，避免重新创建。</p>
-<h3 id="优缺点-4"><a href="#优缺点-4" class="headerlink" title="优缺点"></a>优缺点</h3><p>优点：大大减少对象的创建，降低系统的内存，使效率提高</p>
-<p>缺点：提高系统复杂度，需要分离出外部状态和内部状态，而且外部状态具有固有化性质，不应该随着内部状态变化而变化，否则会造成系统的混乱。</p>
-<h2 id="MVC-模式"><a href="#MVC-模式" class="headerlink" title="MVC 模式"></a>MVC 模式</h2><p>原：一种架构设计模式，通过分离关注点的方式来改进应用组织方式。它促成了业务数据(Models)从用户界面(Views)中分离出来，还有第三个组成部分(Controllers)负责管理传统意义上的业务逻辑和用户输入。</p>
-<p>白：Models 处理数据，Views 展示 UI，Controllers 搞搞逻辑。。。其实就是切分思想。</p>
-<h3 id="对比-MVP"><a href="#对比-MVP" class="headerlink" title="对比 MVP"></a>对比 MVP</h3><p>P 代表展示器，在 MVP 中，P 观察着模型并且当模型发生改变的时候对视图进行更新，P 切实的将模型绑定到了视图，这一责任在 MVC 中被 Controller 提前持有了。</p>
-<p>相较于 MVC 的好处是，增强了应用的可测试性，并提供了一个更加干净的视图和模型之间的隔离。</p>
-<p>但是伴随着缺乏数据绑定支持的缺陷，意味着必须对这个任务做另外的处理。</p>
-<h2 id="对比-MVVM"><a href="#对比-MVVM" class="headerlink" title="对比 MVVM"></a>对比 MVVM</h2><p>数据驱动，数据与页面绑定。。。类比 Vue</p>
-<h2 id="组合模式"><a href="#组合模式" class="headerlink" title="组合模式"></a>组合模式</h2><p>原：描一组对象可像单个对象一样对待，这允许我们能统一的处理单个对象或多个对象，这意味着无论是一个对象还是一千个对象我们都能以通用行为处理。</p>
-<p>白：就是封装一组行为。。。封装。📦</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 单一节点</span></span><br><span class="line">$(<span class="string">'#a'</span>).addClass(<span class="string">'active'</span>);</span><br><span class="line">$(<span class="string">'#b'</span>).addClass(<span class="string">'active'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">//一组节点</span></span><br><span class="line">$(<span class="string">'div'</span>).addClass(<span class="string">'active'</span>);</span><br><span class="line">$(<span class="string">'.item'</span>).addClass(<span class="string">'active'</span>);</span><br><span class="line">$(<span class="string">'input'</span>).addClass(<span class="string">'active'</span>);</span><br></pre></td></tr></table></figure>
-
-<p>jQ 的 addClass</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 单个多个一样的处理，多个要循环遍历</span></span><br><span class="line">addClass: <span class="function"><span class="keyword">function</span>(<span class="params">value</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> classNames, i, l, elem, setClass, c, cl;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (jQuery.isFunction(value)) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.each(<span class="function"><span class="keyword">function</span>(<span class="params">j</span>) </span>&#123;</span><br><span class="line">      jQuery(<span class="keyword">this</span>).addClass(value.call(<span class="keyword">this</span>, j, <span class="keyword">this</span>.className));</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (value &amp;&amp; <span class="keyword">typeof</span> value === <span class="string">'string'</span>) &#123;</span><br><span class="line">    classNames = value.split(rspace);</span><br><span class="line">    <span class="keyword">for</span> ( i = <span class="number">0</span>, l = <span class="keyword">this</span>.length; i &lt; l; i++ ) &#123;</span><br><span class="line">      elem = <span class="keyword">this</span>[ i ];</span><br><span class="line"></span><br><span class="line">      <span class="keyword">if</span> ( elem.nodeType === <span class="number">1</span> ) &#123;</span><br><span class="line">        <span class="keyword">if</span> ( !elem.className &amp;&amp; classNames.length === <span class="number">1</span> ) &#123;</span><br><span class="line">          elem.className = value;</span><br><span class="line"></span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">          setClass = <span class="string">" "</span> + elem.className + <span class="string">" "</span>;</span><br><span class="line"></span><br><span class="line">          <span class="keyword">for</span> ( c = <span class="number">0</span>, cl = classNames.length; c &lt; cl; c++ ) &#123;</span><br><span class="line">            <span class="keyword">if</span> ( !~setClass.indexOf( <span class="string">" "</span> + classNames[ c ] + <span class="string">" "</span> ) ) &#123;</span><br><span class="line">              setClass += classNames[ c ] + <span class="string">" "</span>;</span><br><span class="line">            &#125;</span><br><span class="line">          &#125;</span><br><span class="line">          elem.className = jQuery.trim( setClass );</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="迭代器模式"><a href="#迭代器模式" class="headerlink" title="迭代器模式"></a>迭代器模式</h2><p>原：提供一种方法顺序访问一个容器对象中的各个元素，而不需要暴露该对象的内部表示。</p>
-<p>白：对象内部实现指针指向。。。[Symbol.iterator]</p>
-<h2 id="策略模式"><a href="#策略模式" class="headerlink" title="策略模式"></a>策略模式</h2><p>当一个逻辑中，存在很多 if else 或者 switch，并且它们解决的问题是一样的，就可以使用。</p>
-<p>白：把条件语句的表现形式通过对象键值对展现。</p>
-<h2 id="责任链模式"><a href="#责任链模式" class="headerlink" title="责任链模式"></a>责任链模式</h2><p>原：很多对象由每一个对象对其下家引用而连接起来形成一条链，请求在这条链上传递，直到链上的某一个对象决定处理此请求。发出这个请求的客户端并不知道链上的哪一个对象最终处理这个请求，这使得系统可以在不影响客户端的情况下动态地重新组织和分配责任。</p>
-<p>白：if else else if…</p>
-<h2 id="代理模式"><a href="#代理模式" class="headerlink" title="代理模式"></a>代理模式</h2><p>原：代理以一种中间人的角色，帮我们处理我们无能为力的事情。</p>
-<p>当我们遇到以下场景：</p>
-<ul>
-<li>无法直接访问某个对象</li>
-<li>不想直接访问某个对象</li>
-<li>访问某个对象存在困难</li>
-</ul>
-<p>就需要使用代理模式</p>
-<p>白：代理处理我们的委托，去请求对象的结果</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://github.com/wangqinyong1994/blog/2020/10/14/设计模式/" data-id="ckr0gf7tj000rogt54j0rgaio" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/前端-设计模式/">前端 设计模式</a></li></ul>
 
     </footer>
   </div>
@@ -2105,7 +1795,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Chrome/">Chrome</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Java/">Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/React/">React</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Spring/">Spring</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/qiankun-微前端-umi/">qiankun 微前端 umi</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/vscode-eslint-prettier/">vscode eslint prettier</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/webpack/">webpack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/上卷-this-原型对象/">上卷 this 原型对象</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/上卷-作用域和闭包/">上卷 作用域和闭包</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/上卷-对象/">上卷 对象</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/中卷-异步与性能/">中卷 异步与性能</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/中卷-类型-值/">中卷 类型 值</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/你不知道的JavaScript/">你不知道的JavaScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/前端-工程化-npm/">前端 工程化 npm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/前端-设计模式/">前端 设计模式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/单点登录-SSO/">单点登录 SSO</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/序/">序</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/测试/">测试</a></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Chrome/">Chrome</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Java/">Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/React/">React</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Spring/">Spring</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/qiankun-微前端-umi/">qiankun 微前端 umi</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/vite-打包工具/">vite 打包工具</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/vscode-eslint-prettier/">vscode eslint prettier</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/webpack/">webpack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/上卷-this-原型对象/">上卷 this 原型对象</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/上卷-作用域和闭包/">上卷 作用域和闭包</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/上卷-对象/">上卷 对象</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/中卷-异步与性能/">中卷 异步与性能</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/中卷-类型-值/">中卷 类型 值</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/你不知道的JavaScript/">你不知道的JavaScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/前端-工程化-npm/">前端 工程化 npm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/前端-设计模式/">前端 设计模式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/单点登录-SSO/">单点登录 SSO</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/序/">序</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/测试/">测试</a></li></ul>
     </div>
   </div>
 
@@ -2115,7 +1805,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/blog/tags/Chrome/" style="font-size: 10px;">Chrome</a> <a href="/blog/tags/Java/" style="font-size: 20px;">Java</a> <a href="/blog/tags/React/" style="font-size: 10px;">React</a> <a href="/blog/tags/Spring/" style="font-size: 10px;">Spring</a> <a href="/blog/tags/qiankun-微前端-umi/" style="font-size: 10px;">qiankun 微前端 umi</a> <a href="/blog/tags/vscode-eslint-prettier/" style="font-size: 10px;">vscode eslint prettier</a> <a href="/blog/tags/webpack/" style="font-size: 10px;">webpack</a> <a href="/blog/tags/上卷-this-原型对象/" style="font-size: 10px;">上卷 this 原型对象</a> <a href="/blog/tags/上卷-作用域和闭包/" style="font-size: 10px;">上卷 作用域和闭包</a> <a href="/blog/tags/上卷-对象/" style="font-size: 10px;">上卷 对象</a> <a href="/blog/tags/中卷-异步与性能/" style="font-size: 10px;">中卷 异步与性能</a> <a href="/blog/tags/中卷-类型-值/" style="font-size: 10px;">中卷 类型 值</a> <a href="/blog/tags/你不知道的JavaScript/" style="font-size: 10px;">你不知道的JavaScript</a> <a href="/blog/tags/前端-工程化-npm/" style="font-size: 10px;">前端 工程化 npm</a> <a href="/blog/tags/前端-设计模式/" style="font-size: 10px;">前端 设计模式</a> <a href="/blog/tags/单点登录-SSO/" style="font-size: 10px;">单点登录 SSO</a> <a href="/blog/tags/序/" style="font-size: 10px;">序</a> <a href="/blog/tags/测试/" style="font-size: 10px;">测试</a>
+      <a href="/blog/tags/Chrome/" style="font-size: 10px;">Chrome</a> <a href="/blog/tags/Java/" style="font-size: 20px;">Java</a> <a href="/blog/tags/React/" style="font-size: 10px;">React</a> <a href="/blog/tags/Spring/" style="font-size: 10px;">Spring</a> <a href="/blog/tags/qiankun-微前端-umi/" style="font-size: 10px;">qiankun 微前端 umi</a> <a href="/blog/tags/vite-打包工具/" style="font-size: 10px;">vite 打包工具</a> <a href="/blog/tags/vscode-eslint-prettier/" style="font-size: 10px;">vscode eslint prettier</a> <a href="/blog/tags/webpack/" style="font-size: 10px;">webpack</a> <a href="/blog/tags/上卷-this-原型对象/" style="font-size: 10px;">上卷 this 原型对象</a> <a href="/blog/tags/上卷-作用域和闭包/" style="font-size: 10px;">上卷 作用域和闭包</a> <a href="/blog/tags/上卷-对象/" style="font-size: 10px;">上卷 对象</a> <a href="/blog/tags/中卷-异步与性能/" style="font-size: 10px;">中卷 异步与性能</a> <a href="/blog/tags/中卷-类型-值/" style="font-size: 10px;">中卷 类型 值</a> <a href="/blog/tags/你不知道的JavaScript/" style="font-size: 10px;">你不知道的JavaScript</a> <a href="/blog/tags/前端-工程化-npm/" style="font-size: 10px;">前端 工程化 npm</a> <a href="/blog/tags/前端-设计模式/" style="font-size: 10px;">前端 设计模式</a> <a href="/blog/tags/单点登录-SSO/" style="font-size: 10px;">单点登录 SSO</a> <a href="/blog/tags/序/" style="font-size: 10px;">序</a> <a href="/blog/tags/测试/" style="font-size: 10px;">测试</a>
     </div>
   </div>
 
@@ -2124,7 +1814,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2021/07/">July 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2021/03/">March 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2021/02/">February 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2021/01/">January 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2020/12/">December 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2020/11/">November 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2020/10/">October 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2020/07/">July 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/07/">July 2019</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2021/09/">September 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2021/07/">July 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2021/03/">March 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2021/02/">February 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2021/01/">January 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2020/12/">December 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2020/11/">November 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2020/10/">October 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2020/07/">July 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/07/">July 2019</a></li></ul>
     </div>
   </div>
 
@@ -2135,6 +1825,10 @@
     <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/blog/2021/09/10/vite/">vite</a>
+          </li>
         
           <li>
             <a href="/blog/2021/07/12/Spring/">Spring</a>
@@ -2150,10 +1844,6 @@
         
           <li>
             <a href="/blog/2021/03/24/java高级/">Java高级</a>
-          </li>
-        
-          <li>
-            <a href="/blog/2021/02/03/SSO实践/">SSO实践</a>
           </li>
         
       </ul>
